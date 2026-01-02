@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../../../../snap/tiled/4760/first.tsx"/>
+ <object name="hidden_chest" type="chest" gid="98" width="70" height="70">
+  <properties>
+   <property name="lock" value="&lt;&lt;&gt;&lt;"/>
+   <property name="loot" value="healing_potion:3, key_door1:1"/>
+  </properties>
+ </object>
+</template>

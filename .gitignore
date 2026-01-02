@@ -1,0 +1,114 @@
+### Операционные системы ###
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.cab
+*.msi
+*.msix
+*.lnk
+
+### Python ###
+# Кэш и временные файлы
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Билды и дистрибутивы
+build/
+dist/
+*.egg-info/
+*.manifest
+*.spec
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+ENV/
+
+# Тесты и покрытие
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter (если не используете)
+.ipynb_checkpoints
+
+### PyCharm ###
+# ВАЖНО: раскомментируйте строчку ниже, если хотите игнорировать ВСЮ папку .idea
+ .idea/
+
+# ИЛИ выборочно (рекомендуется):
+#.idea/**/workspace.xml
+#.idea/**/tasks.xml
+#.idea/**/shelf
+#.idea/**/dictionaries
+#.idea/**/usage.statistics.xml
+#.idea/**/contentModel.xml
+#.idea/**/dataSources/
+#.idea/**/dataSources.ids
+#.idea/**/dataSources.local.xml
+#.idea/**/dbnavigator.xml
+#.idea/**/gradle.xml
+#.idea/**/libraries
+#.idea/**/misc.xml
+#.idea/**/modules.xml
+#.idea/**/uiDesigner.xml
+#.idea/**/runConfigurations/
+#.idea/**/sonarlint/
+#.idea/**/azureSettings.xml
+#.idea/codestream.xml
+
+# Файлы проектов
+*.iml
+*.ipr
+*.iws
+out/
+
+# CMake
+cmake-build-*/
+
+### Игровой проект ITCUBIA ###
+# Логи игры
+logs/
+*.log
+
+# Пользовательские настройки
+settings/
+key_bindings.json
+config.local.json
+
+# Сохранения игрока (если будут)
+savegames/
+*.save
+
+# Временные файлы игры
+temp/
+tmp/
+cache/
+
+# Бэкапы
+*.bak
+*.backup
+
+# Скомпилированные ресурсы (если будут генерироваться)
+compiled_res/
+
+# Документация/сайт (если mkdocs)
+site/
+
+
+# made by deep seek)

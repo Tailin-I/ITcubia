@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="79">
+ <tileset firstgid="1" source="first.tsx"/>
+ <tileset firstgid="157" source="../../../../snap/tiled/4760/first.tsx"/>
+ <layer id="1" name="ground" width="150" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0rENACAMA0FPzEJZiLFoWAEpRFec3Lr4SlIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8LnV4ANz7Lu64gVdAQAAAADTHca9vao=
+  </data>
+ </layer>
+ <layer id="2" name="walls" width="150" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt3V1OwzAQRWEvgi1nAewYIYqEUEkdZ+6d8XA+yW9tfuzTtAkPHGOMNwYjcByPAUSiKyjQFRToCgp0BQW6gkKHrjqcQze7r8kx9j+HjlgTKKx2RYtf+Fw+x7xAwdHVcTKglzHPrq4y9w8/9brObv9deAzwU3Z1ddtct/pQd6V8PepSdcWzi/+tUld33tfF2b1z9HCch2K7ivc55z1juKj3WamrZ8fC8y4t5fpX64qWvBTzXK0r5NihK64z+3E2cPf7iO+y2pS/N2a6GievubsP+Dk+76+2H7V/usqTcS80s5+7x8H1ykvV0ZXtONY8qsvKw6nSsfxFeSyR51px7n7q2vAq5b2AslfUFrH+kZ+p2ffSVm0RHUSuMV314Lq+XNnezP0pXdVWratX26Spdc65q9hVpf1hzU5d0dQ+qv1uz94PYkQ+Z1Chqf1EPg9XcDS16zPtyiLnMfJvEqzx3lbWztVhR13P67fMrtAXXUGh83cO8tAVFOgKCnQFBbqCwndX2f8HkdFrfDb1AX/0+jY=
+  </data>
+ </layer>
+ <layer id="3" name="collisions" width="150" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2uFqg0AQRWFfbMH3f6r8SAsh2Krj3NmZ2fPBQqFV43pijHZs2z4YDMHYAEfjPfbZrwO90BUU6AoKdAUFuoJCh65+9gGJVO9qbHSVUfWukJO1K84Pb5wrj3G+gkJEVzw/mmvG+TSqq/9+R1/9qLuimzUpu7rbFP31oe5K+ffIS9UV9y7WlqmrJ8t1MQJHwH7sgvWa1nm2XOS8zxhR1NvM1NXRa5k176tQzWvCrmgpmGKes3WFOSp0NbgXWk5kV08/j/gsy015vXHW1dHPqC3i/X7lc5CmapvxXYiu+lF1dGc9qu+D39t4unz2ESnTa/mLsivPfc04d5+6Nmyl6Eo9B1XmdmUeXXm+p64uS1u5Pe3K+7xEVz14dOXpSqeVrjNWla2rs3XSlF3k3GXsKtP2YFOpK5qqI9t1++ztwIfnfQYVmqrnqCvLMVTeA1U3VfWedmZeXX2sy+WZBMe4NktXXse6w3Owu7ru1zfL9dUqcwM7uoKC4v8ZALqCAl1Bga6gQFdQ+O2KwfAeLyDFC4g=
+  </data>
+ </layer>
+ <objectgroup id="5" name="events">
+  <object id="10" name="b1" type="teleport" x="1753" y="1754" width="64" height="200">
+   <properties>
+    <property name="target_x" type="int" value="28"/>
+    <property name="target_y" type="int" value="29"/>
+   </properties>
+  </object>
+  <object id="48" name="hidden_chest" type="chest" x="493.333" y="1683.67" width="210" height="206.667">
+   <properties>
+    <property name="lock" value="&lt;&lt;&gt;&gt;"/>
+    <property name="loot" value="healing_potion:3, key_door1:1"/>
+    <property name="tile_x" type="int" value="9"/>
+    <property name="tile_y" type="int" value="25"/>
+   </properties>
+  </object>
+  <object id="52" name="simple_chest" type="chest" x="1539" y="1537" width="141" height="143">
+   <properties>
+    <property name="lock" value=""/>
+    <property name="loot" value="healing_potion"/>
+   </properties>
+  </object>
+  <object id="55" name="chest_as_a_chest" type="chest" x="1413" y="1962" width="130" height="138">
+   <properties>
+    <property name="lock" value="&gt;&lt;&gt;&lt;"/>
+    <property name="loot" value=""/>
+   </properties>
+  </object>
+  <object id="67" name="to_end" type="teleport" x="2380" y="1260" width="70" height="140">
+   <properties>
+    <property name="target_x" type="int" value="126"/>
+    <property name="target_y" type="int" value="27"/>
+   </properties>
+  </object>
+  <object id="70" name="end_chest" type="chest" x="8750.67" y="1540" width="284" height="141.333">
+   <properties>
+    <property name="lock" value="&lt;&lt;&lt;&lt;&lt;"/>
+    <property name="loot" value="healing_potion:40000, key_door1:200"/>
+   </properties>
+  </object>
+  <object id="72" name="bottom_chest" type="chest" x="1050" y="2730" width="210" height="140">
+   <properties>
+    <property name="lock" value="&gt;&lt;&gt;"/>
+    <property name="loot" value="key_door1:1,mana_potion:3"/>
+   </properties>
+  </object>
+  <object id="74" name="to sec map" type="teleport" x="74.6667" y="2733.33" width="65.3333" height="209.333">
+   <properties>
+    <property name="target_map" value="secmap"/>
+    <property name="target_x" type="int" value="46"/>
+    <property name="target_y" type="int" value="11"/>
+   </properties>
+  </object>
+  <object id="76" name="chest_next_to_secmap" type="chest" x="74.6667" y="2945.33" width="205.333" height="208">
+   <properties>
+    <property name="loot" value="mana_potion:2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="6" name="containers" width="150" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2MEJADAIA0Bn7f5DdAAf0iKIcDdBXiEkAgAAAAAAAAAAAAAAAIDKmQ7wYWNmYDe9AwAwzyYDAAAAAIA3vnUAgMxGAgAAADpcFZ4CTQ==
+  </data>
+ </layer>
+</map>
