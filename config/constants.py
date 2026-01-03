@@ -17,6 +17,7 @@ SCREEN_TITLE = "IT-Кубия"
 # ЦВЕТА
 TEXT_COLOR = arcade.color.LIGHT_GRAY
 MENU_BACKGROUND_COLOR = (15,21,65)# Тёмно-синий
+MENU_BACKGROUND_COLOR_TRANSLUCENT = (15,21,65, 70)# Тёмно-синий
 UI_MAIN_COLOR = arcade.color.GOLD
 UI_TITLE_COLOR = arcade.color.CYAN
 UI_SUBTITLE_COLOR = arcade.color.LIGHT_BLUE

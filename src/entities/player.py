@@ -43,8 +43,12 @@ class Player(Entity):
         self.center_x = pos[0]
         self.center_y = pos[1]
 
-        # Скорость игрока
-        self.speed = 10
+        self.max_health = self.data.get_player("max_health")
+        self.health = self.data.get_player("health")
+        self.level = self.data.get_player("level")
+        self.exp =  self.data.get_player("exp")
+        self.speed = self.data.get_player("speed")
+        self.strength =  self.data.get_player("strength")
 
         # Текущий индекс текстуры для анимации
         self.cur_texture_index = 0
@@ -170,3 +174,4 @@ class Player(Entity):
         elif not self.ghost_mode and self.color != self.normal_color:
             # Возвращаем нормальный цвет
             self.color = self.normal_color
+

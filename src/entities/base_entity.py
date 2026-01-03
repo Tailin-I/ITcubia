@@ -16,8 +16,13 @@ class Entity(arcade.Sprite):
         self.time_elapsed = 0  # задержка времени для анимации
 
         # Базовые параметры
+        self.level = 1
+        self.exp = 0
+        self.max_health = 100
+        self.health = self.max_health
         self.speed = 0
-        self.health = 100
+        self.strength = 1
+
         self.is_alive = True
         self.direction = "down"
 

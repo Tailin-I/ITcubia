@@ -286,6 +286,8 @@ class GameplayState(BaseState):
         if self.input_manager.get_action("escape"):
             self._open_pause_menu()
 
+        if self.input_manager.get_action("stats"):
+            self.gsm.push_overlay("stats")
 
         if C.cheat_mode:
             # F2 - чит-консоль
@@ -294,9 +296,13 @@ class GameplayState(BaseState):
 
             if self.input_manager.get_action("ghost_mode"):
                 self.player.ghost_mode = not self.player.ghost_mode
-
             if self.input_manager.get_action("debug_mode"):
                 C.debug_mode = not C.debug_mode
+            if self.input_manager.get_action("lose_health"):
+                print(self.game_data.get_player("health"))
+                self.game_data.take_damage(20)
+
+
 
 
     def _init_ui(self):

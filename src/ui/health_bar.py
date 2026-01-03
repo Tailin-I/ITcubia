@@ -9,7 +9,8 @@ class HealthBar(UIComponent):
     def __init__(self, entity, x, y, width=200, height=20):
         super().__init__(x, y, width, height)
         self.entity = entity  # Сущность, за которой следим
-        self.max_value = entity.health
+        self.max_value = entity.max_health
+        print(entity.max_health)
         self.current_value = entity.health
 
         # Цвета из AssetLoader

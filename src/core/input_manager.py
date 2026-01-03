@@ -31,6 +31,7 @@ class InputManager:
 
             'stats': ["B"],
 
+            'lose_health': ["H"],
             'cheat_console': ["F2"],
             'ghost_mode': ["NUM_0"],
             'debug_mode': ["NUM_1"]
