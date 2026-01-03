@@ -10,7 +10,6 @@ class HealthBar(UIComponent):
         super().__init__(x, y, width, height)
         self.entity = entity  # Сущность, за которой следим
         self.max_value = entity.max_health
-        print(entity.max_health)
         self.current_value = entity.health
 
         # Цвета из AssetLoader
@@ -56,7 +55,7 @@ class HealthBar(UIComponent):
 
         # Текст (опционально)
         arcade.Text(
-            f"HP: {int(self.current_value)}/{int(self.max_value)}",
+            f"HP: {self.current_value}/{self.max_value}",
             self.x, self.y,
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="center"

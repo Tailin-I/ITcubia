@@ -73,6 +73,45 @@ class MapLoader:
                 except Exception as e:
                     self.logger.warning(f"Ошибка создания спрайта: {e}")
 
+    def load_monsters(self, scale: float = 1.0):
+        """Загружает монстров из слоя 'entities' в Tiled"""
+        monsters = []
+
+        # Ищем слой с монстрами
+        for layer_name, object_list in self.tile_map.object_lists.items():
+            if layer_name.lower() == 'entities':
+
+                for obj in object_list:
+                    print(obj.properties)
+                    monster = self._create_monster_from_object(obj, scale)
+                    if monster:
+                        monsters.append(monster)
+                break
+
+        return monsters
+
+    def _create_monster_from_object(self, obj, scale: float):
+        """Создаёт монстра из точки Tiled"""
+        try:
+            # Просто берём координаты из shape
+            x, y = obj.shape
+
+            print(f"Точка: name={obj.name}, shape=({x}, {y}), type={obj.type}")
+
+            # Создаём
+            from src.entities.monster import Monster
+            monster = Monster(
+                monster_type=obj.type.lower(),
+                position=(x, y),
+                properties=obj.properties,
+                scale=scale
+            )
+
+            return monster
+
+        except Exception as e:
+            print(f"Ошибка: {e}")
+            return None
     def load(self, map_file: str, scale: float = C.SCALE_FACTOR) -> bool:
         """
         Загружает Tiled карту.

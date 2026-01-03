@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="9" nextobjectid="85">
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="9" nextobjectid="98">
  <tileset firstgid="1" source="first.tsx"/>
  <tileset firstgid="157" source="../../../../snap/tiled/4760/first.tsx"/>
  <layer id="1" name="ground" width="150" height="50">
@@ -9,12 +9,12 @@
  </layer>
  <layer id="2" name="walls" width="150" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt3V1OwzAQRWEvgi1nAewYIYqEUEkdZ+6d8XA+yW9tfuzTtAkPHGOMNwYjcByPAUSiKyjQFRToCgp0BQW6gkKHrjqcQze7r8kx9j+HjlgTKKx2RYtf+Fw+x7xAwdHVcTKglzHPrq4y9w8/9brObv9deAzwU3Z1ddtct/pQd6V8PepSdcWzi/+tUld33tfF2b1z9HCch2K7ivc55z1juKj3WamrZ8fC8y4t5fpX64qWvBTzXK0r5NihK64z+3E2cPf7iO+y2pS/N2a6GievubsP+Dk+76+2H7V/usqTcS80s5+7x8H1ykvV0ZXtONY8qsvKw6nSsfxFeSyR51px7n7q2vAq5b2AslfUFrH+kZ+p2ffSVm0RHUSuMV314Lq+XNnezP0pXdVWratX26Spdc65q9hVpf1hzU5d0dQ+qv1uz94PYkQ+Z1Chqf1EPg9XcDS16zPtyiLnMfJvEqzx3lbWztVhR13P67fMrtAXXUGh83cO8tAVFOgKCnQFBbqCwndX2f8HkdFrfDb1AX/0+jY=
+   eJztnd1twzAMBjVE1swYHqAbF0ZaoAgSR5b58a93AN9sURLPciQ/ZBtj3AjCMLafALAEr0ABXoECvAIFeAUK8AoUdPCqwxi6Ub0m26g/ho5QE1Cw6hUuPuC5fA3zAgo8vNoOAvREzLOXV5H5wR91XWfb/xL2AfxRenW2bdatPqi9Ul4PeVF5xdnF/yaTV1fu68LR3tk6PMahaFdxn+e8R4QX6pyZvHrVF867tCjrn80rXPJFMc/ZvIIYKnjFOlMPTweuvo94l+VG+XtjxqtxcM3VHOCPx/P+qX2r/HgVR8ReaCbP1X6wXvmi8uhMOx41t/Iyc3iSqS/vUPbFcqwZ5+4vXR1eRbkXUPoKubGov+UzNXsvbuXGwgPLGuNVD7zWlzPtzexP8So32bz61CZOreM5dxm9ypQP1qjkFU7VIdvv9ug8YIPlOYMKnKqH5Xm4Ag+nqp5pZ8ZyHi2/SVDj2qzUbr/+bpi78news3Qd1zOrXu1YuAU9iVyvoC+d3zkQB16BArwCBXgFCvAKFPx6Ff0/iESv2J36BjB8+30=
   </data>
  </layer>
  <layer id="3" name="collisions" width="150" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt2uFqg0AQRWFfbMH3f6r8SAsh2Krj3NmZ2fPBQqFV43pijHZs2z4YDMHYAEfjPfbZrwO90BUU6AoKdAUFuoJCh65+9gGJVO9qbHSVUfWukJO1K84Pb5wrj3G+gkJEVzw/mmvG+TSqq/9+R1/9qLuimzUpu7rbFP31oe5K+ffIS9UV9y7WlqmrJ8t1MQJHwH7sgvWa1nm2XOS8zxhR1NvM1NXRa5k176tQzWvCrmgpmGKes3WFOSp0NbgXWk5kV08/j/gsy015vXHW1dHPqC3i/X7lc5CmapvxXYiu+lF1dGc9qu+D39t4unz2ESnTa/mLsivPfc04d5+6Nmyl6Eo9B1XmdmUeXXm+p64uS1u5Pe3K+7xEVz14dOXpSqeVrjNWla2rs3XSlF3k3GXsKtP2YFOpK5qqI9t1++ztwIfnfQYVmqrnqCvLMVTeA1U3VfWedmZeXX2sy+WZBMe4NktXXse6w3Owu7ru1zfL9dUqcwM7uoKC4v8ZALqCAl1Bga6gQFdQ+O2KwfAeLyDFC4g=
+   eJzt2uGOgjAQRWFerAnv/1T+UBNDULCdO52Zni9p1mQXkHoExG3btjcGQzA2wFB7jn3280AtdAUFuoICXUGBrqBQoavXPiCQ7F21ja4iyt4VYurtiuPDE8fKcxyvoODRFd8fzTXjeOrV1a/f0Vc96q7oZk3Krv5tiv7qUHel/HvEpeqKexdri9TVyHJVNMfhsB+7YL1d67xaznPeZwwv6m1G6ursucya91Wo5jVgV7TkTDHP0brCHBm6atwLTcezq9HzEeey2JTXG1ddnT1Gbh7v9zvnQZrKbcZnIbqqR9XRP+tRfR48bmN0+ejDU6Tn8o2yK8t9jTh3n6o23EvRlXoOssztyiy6snxP3V2WtmIb7cr6uERXNVh0ZelOp5muM1YVraurddJUP8+5i9hVpO2hT6auaCqPaNfts7cDG5b3GVRoKp+zrnpeQ+U9UHVTWe9pR2bV1ce6TL6T4DXOracr1Xd+Kxwzqu7XUc/1VTv8BI5GugK+Ufw/A0BXUKArKNAVFOgKCu+uGAzr8QCGCAwC
   </data>
  </layer>
  <objectgroup id="5" name="events">
@@ -74,22 +74,43 @@
     <property name="loot" value="mana_potion:2"/>
    </properties>
   </object>
+  <object id="86" name="just_chest" type="chest" x="74.6667" y="3219.33" width="205.333" height="208">
+   <properties>
+    <property name="lock" value="&lt;"/>
+    <property name="loot" value="mana_potion:2"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="6" name="containers" width="150" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt2MEJADAIA0Bn7f5DdAAf0iKIcDdBXiEkAgAAAAAAAAAAAAAAAIDKmQ7wYWNmYDe9AwAwzyYDAAAAAIA3vnUAgMxGAgAAADpcFZ4CTQ==
+   eJzt2LENACAMA8HMyv5DMAAFgiaxdDeBq+iVKgAAAAAAAAAAAAAAAABuVveAD4mbgWzuDgBAP00GAAAAAABv/NYBAE4aCQAAMmh3YLoN3f0Crw==
   </data>
  </layer>
  <objectgroup id="8" name="entities">
-  <object id="79" name="first_bug" type="bug" gid="155" x="455.667" y="2561.67" width="70" height="70">
+  <object id="94" name="second_bug" type="bug" x="512" y="2654.67">
+   <properties>
+    <property name="health" type="int" value="10"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="95" name="first_bug" type="bug" x="424" y="3066.67">
    <properties>
     <property name="health" type="int" value="20"/>
    </properties>
+   <point/>
   </object>
-  <object id="80" name="second_bug" type="bug" gid="155" x="299.667" y="3061.67" width="70" height="70">
+  <object id="96" name="megabug" type="bug" x="701.333" y="2896">
    <properties>
-    <property name="health" type="int" value="19"/>
+    <property name="health" type="int" value="50"/>
+    <property name="loot" value="healing_potion:3, key_door1:1"/>
    </properties>
+   <point/>
+  </object>
+  <object id="97" name="hidden_bug" type="bug" x="946.667" y="2974.67">
+   <properties>
+    <property name="health" type="int" value="6"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
 </map>

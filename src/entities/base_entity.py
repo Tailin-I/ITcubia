@@ -18,7 +18,7 @@ class Entity(arcade.Sprite):
         # Базовые параметры
         self.level = 1
         self.exp = 0
-        self.max_health = 100
+        self.max_health = 99
         self.health = self.max_health
         self.speed = 0
         self.strength = 1

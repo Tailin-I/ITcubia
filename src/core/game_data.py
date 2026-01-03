@@ -170,14 +170,17 @@ class GameData:
 
     def heal(self, amount: int):
         """Восстановление здоровья"""
+        ns.notification(f"получено лечение: {amount}")
         return self.change_player_stat("health", "add", amount)
 
     def take_damage(self, amount: int):
         """Получение урона"""
+        ns.notification(f"получен урон: {amount}")
         return self.change_player_stat("health", "subtract", amount)
 
     def add_exp(self, amount: int):
         """Добавление опыта"""
+        ns.notification(f"+{amount} exp")
         return self.change_player_stat("exp", "add", amount)
 
     def increase_strength(self, amount: int = 1):

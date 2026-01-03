@@ -5,18 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="отладка 2">
-      <change afterPath="$PROJECT_DIR$/src/states/stats_state.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/monsters/bug.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frame/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/frame/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/chest.tx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/dungeon_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/dungeon_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/forest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/test.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/res/maps/testmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testmap.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/player/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/tiledata.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/input_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/input_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/health_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/health_bar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +42,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -61,22 +67,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.export structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.gamepanel.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_structure.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/Tailin/PycharmProjects/ITcubia-master&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.export structure.executor": "Run",
+    "Python.gamepanel.executor": "Run",
+    "Python.generate_structure.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/Tailin/PycharmProjects/ITCUBIA/res/monsters",
+    "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res/monsters" />
       <recent name="$PROJECT_DIR$/res/tiles" />
       <recent name="$PROJECT_DIR$/res" />
       <recent name="$PROJECT_DIR$/res/ui" />
@@ -90,7 +97,7 @@
       <recent name="$PROJECT_DIR$/src/states" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.export structure">
+  <component name="RunManager" selected="Python.main">
     <configuration name="export structure" type="PythonConfigurationType" factoryName="Python">
       <module name="ITCUBIA" />
       <option name="ENV_FILES" value="" />
@@ -556,7 +563,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/states/game_state.py</url>
-          <line>271</line>
+          <line>308</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

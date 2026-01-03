@@ -49,6 +49,14 @@ class GameplayState(BaseState):
         self.map_loader.load(
             "maps/testmap.tmx" # НОВЫЙ ФАЙЛ
         )
+        self.monsters = arcade.SpriteList()
+        loaded_monsters = self.map_loader.load_monsters(4)
+        for monster in loaded_monsters:
+            self.monsters.append(monster)
+            print(f"Монстр на ({monster.center_x}, {monster.center_y})")
+
+        # Предметы на земле
+        self.loot_on_ground = arcade.SpriteList()
 
         self.map_left = 0
         self.map_bottom = 0
@@ -205,10 +213,33 @@ class GameplayState(BaseState):
         if self.is_paused:
             return
 
+        # Обновляем монстров
+        for monster in self.monsters:
+            if monster.is_alive:
+                monster.update(delta_time, self.player, self.collision_layer)
 
+        # Убираем мёртвых монстров и создаём лут
+        alive_monsters = []
+        for monster in self.monsters:
+            if monster.health <= 0 and monster.is_alive:
+                monster.is_alive = False
+                monster.visible = False
+
+                # Выпадает лут
+                loot = monster.drop_loot()
+                self.loot_on_ground.extend(loot)
+            elif monster.is_alive:
+                alive_monsters.append(monster)
+
+        # Обновляем список
+        self.monsters.clear()
+        self.monsters.extend(alive_monsters)
+
+        # Подбираем лут
+        self._pickup_loot()
 
         # Обновляем игрока
-        self.player.update(delta_time, collision_layer=self.collision_layer)
+        self.player.update(delta_time, collision_layer=self.collision_layer, monsters=self.monsters)
         # Обновляем оповещения
         ns.update(delta_time)
 
@@ -237,6 +268,8 @@ class GameplayState(BaseState):
         for ui_element in self.ui_elements:
             ui_element.update(delta_time)
 
+
+
     def draw(self):
         """Отрисовка игры"""
         # Активируем камеру
@@ -250,6 +283,10 @@ class GameplayState(BaseState):
 
         # Рисуем игрока
         self.player_list.draw()
+
+        # Рисуем монстров и лут
+        self.monsters.draw()
+        # self.loot_on_ground.draw()
 
         # Отключаем камеру для UI (если нужно)
         self.default_camera.use()
@@ -278,6 +315,18 @@ class GameplayState(BaseState):
                 y=self.gsm.window.height - self.tile_size/2
             )
 
+    def _pickup_loot(self):
+        """Подбирает предметы с земли"""
+        picked_up = arcade.check_for_collision_with_list(self.player, self.loot_on_ground)
+
+        for loot in picked_up:
+            if hasattr(loot, 'item_data'):
+                item = loot.item_data
+                # TODO: Добавить в инвентарь
+                ns.notification(f"Подобран: {item.name}")
+
+            loot.remove_from_sprite_lists()
+
     def handle_key_press(self, key: int, modifiers: int):
         if not self.input_manager:
             return
@@ -298,9 +347,9 @@ class GameplayState(BaseState):
                 self.player.ghost_mode = not self.player.ghost_mode
             if self.input_manager.get_action("debug_mode"):
                 C.debug_mode = not C.debug_mode
-            if self.input_manager.get_action("lose_health"):
-                print(self.game_data.get_player("health"))
-                self.game_data.take_damage(20)
+            if self.input_manager.get_action("heal"):
+                self.game_data.heal(20)
+                self.game_data.add_exp(100)
 
 
 

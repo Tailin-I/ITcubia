@@ -1,6 +1,8 @@
 import arcade
+from arcade import SpriteList
 
 from .base_entity import Entity
+from .monster import Monster
 from ..core.game_data import game_data
 
 
@@ -36,12 +38,17 @@ class Player(Entity):
         # Для отслеживания смены направления
         self.last_direction = None
 
-        self.setdefault()
-
-    def setdefault(self):
         pos = self.data.get_player_position()
         self.center_x = pos[0]
         self.center_y = pos[1]
+        self.cur_texture_index = 0
+
+        self.update_data()
+
+
+
+    def update_data(self):
+
 
         self.max_health = self.data.get_player("max_health")
         self.health = self.data.get_player("health")
@@ -51,11 +58,12 @@ class Player(Entity):
         self.strength =  self.data.get_player("strength")
 
         # Текущий индекс текстуры для анимации
-        self.cur_texture_index = 0
+
 
     def update(self, delta_time: float = 1 / 60, *args, **kwargs) -> None:
-        # if self.
+
         super().update(delta_time)
+        self.update_data()
         self.time_elapsed += delta_time
 
         dx, dy = 0, 0
@@ -92,17 +100,19 @@ class Player(Entity):
 
         # Перемещение с учетом коллизий
         collision_layer = kwargs.get('collision_layer')
+        monsters = kwargs.get('monsters')
 
-        self._move_with_tiled_collision(collision_layer, dx, dy)
+        self._move_with_tiled_collision(collision_layer, monsters, dx, dy)
 
         self._update_ghost_appearance()
 
-    def _move_with_tiled_collision(self, collision_layer, dx, dy):
+
+    def _move_with_tiled_collision(self, collision_layer, monsters: SpriteList[Monster], dx, dy):
         """
         метод коллизий.
         """
-        # Если нет слоя коллизий или режим призрака
-        if not collision_layer or self.ghost_mode:
+        # Если режим призрака
+        if self.ghost_mode:
             self.center_x += dx
             self.center_y += dy
             return
@@ -110,15 +120,18 @@ class Player(Entity):
         # Сохраняем старую позицию
         old_x, old_y = self.center_x, self.center_y
 
-        # проверяем движение по X
         self.center_x += dx
-        if arcade.check_for_collision_with_list(self, collision_layer):
-            self.center_x = old_x  # Откатываем, если есть коллизия
-
-        # проверяем движение по Y
         self.center_y += dy
         if arcade.check_for_collision_with_list(self, collision_layer):
-            self.center_y = old_y  # Откатываем, если есть коллизия
+            self.center_x = old_x
+            self.center_y = old_y
+        if arcade.check_for_collision_with_list(self, monsters):
+            for m in monsters:
+                if m.collides_with_sprite(self):
+                    m.interact()
+            self.center_y = old_y
+            self.center_x = old_x
+
     def _set_direction_texture(self, direction):
         """Сразу устанавливает первую текстуру направления"""
         if direction == "up":
