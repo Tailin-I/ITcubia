@@ -8,49 +8,57 @@ class GameData:
     """центр всех данных игры"""
 
     def __init__(self):
-        # Данные игрока
         self.logger = logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")
-        self.first_req = 500
+        self.base_req_exp = 500
 
-        self.player = {
-
+        # Данные игрока
+        self.player_data = {
+            "id": "player",
+            "type": "player",
             "position": {"x": 400, "y": 300},
-
             "level": 1,
             "exp": 0,
-            "req_exp": self.first_req,
-            "max_health": 40,
+            "req_exp": self.base_req_exp,
             "health": 39,
+            "max_health": 40,
+            "strength": 1,
             "speed": 10,
-            "strength": 1
-
+            # Инвентарь
+            "inventory": [],
+            "equipment": {
+                "weapon": None,
+                "accessory_1": None,
+                "accessory_2": None,
+                "accessory_3": None
+            }
         }
 
-        # Инвентарь игрока (список предметов)
-        self.inventory = {
-            "items": [],
-            "equipped": [],
-            "gold": 0
-        }
+        # Данные монстров (загружаются из Tiled)
+        self.monsters_data = {}
 
-        # Прогресс квестов
-        self.quests = {
-            "active": [],  # Активные квесты
-            "completed": [],  # Завершенные
-            "failed": []  # Проваленные
-        }
 
-        # Статистика игры
-        self.stats = {
-            "play_time": 0,
-            "enemies_killed": 0,
-            "items_collected": 0,
-        }
+    def get_entity_data(self, entity_id):
+        """Получить данные любой сущности"""
+        if entity_id == "player":
+            return self.player_data
+        elif entity_id in self.monsters_data:
+            return self.monsters_data[entity_id]
 
-        # Настройки
-        self.settings = {
-            "volume": 0.7
-        }
+    def update_entity_data(self, entity_id, updates):
+        """Обновить данные сущности"""
+        data = self.get_entity_data(entity_id)
+        if data:
+            data.update(updates)
+            # Здесь можно триггерить события
+
+    def add_monster(self, monster_id, monster_data):
+        """Добавить монстра"""
+        self.monsters_data[monster_id] = monster_data
+
+    def remove_monster(self, monster_id):
+        """Удалить монстра"""
+        if monster_id in self.monsters_data:
+            del self.monsters_data[monster_id]
 
     def save_to_file(self, filename="savegame.dat"):
         """Сохраняем в бинарный файл"""
@@ -67,35 +75,22 @@ class GameData:
         except FileNotFoundError:
             self.logger.warning("Файл сохранения не найден, используем значения по умолчанию")
 
-    def export_json(self, filename="savegame_backup.json"):
-        """Экспорт в JSON (для отладки)"""
-        # Преобразуем в словарь
-        export_data = {
-            "player": self.player,
-            "inventory": self.inventory,
-            "quests": self.quests,
-            "stats": self.stats,
-            "settings": self.settings
-        }
-
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(export_data, f, indent=2, ensure_ascii=False)
 
     # Удобные методы для доступа
     def get_player_position(self):
-        return (self.player["position"]["x"],
-                self.player["position"]["y"])
+        return (self.player_data["position"]["x"],
+                self.player_data["position"]["y"])
 
     def get_player(self, arg):
-        if arg in self.player:
-            return self.player[arg]
+        if arg in self.player_data:
+            return self.player_data[arg]
         return None
 
     def set_player_position(self, x, y, map_name=None):
-        self.player["position"]["x"] = x
-        self.player["position"]["y"] = y
+        self.player_data["position"]["x"] = x
+        self.player_data["position"]["y"] = y
         if map_name:
-            self.player["position"]["map"] = map_name
+            self.player_data["position"]["map"] = map_name
 
     def change_player_stat(self, stat_name: str, operation: str, value: int):
         """
@@ -106,11 +101,11 @@ class GameData:
             operation: Операция ('set', 'add', 'subtract', 'multiply', 'divide')
             value: Значение для операции
         """
-        if stat_name not in self.player:
+        if stat_name not in self.player_data:
             self.logger.warning(f"Характеристика '{stat_name}' не найдена")
             return False
 
-        current = self.player[stat_name]
+        current = self.player_data[stat_name]
 
         try:
             if operation == "set":
@@ -130,7 +125,7 @@ class GameData:
             # Применяем ограничения для разных характеристик
             new_value = self._apply_stat_limits(stat_name, new_value)
 
-            self.player[stat_name] = new_value
+            self.player_data[stat_name] = new_value
             self.logger.debug(f"{stat_name}: {current} -> {new_value} ({operation} {value})")
             return True
 
@@ -141,7 +136,7 @@ class GameData:
     def _apply_stat_limits(self, stat_name: str, value):
         """Применяет ограничения для характеристик"""
         if stat_name == "health":
-            return max(0, min(value, self.player["max_health"]))
+            return max(0, min(value, self.player_data["max_health"]))
         elif stat_name == "max_health":
             return max(1, value)
         elif stat_name in ["strength", "speed", "level"]:
@@ -149,24 +144,24 @@ class GameData:
         elif stat_name == "exp":
             # Автоматический уровень при накоплении опыта
             new_exp = max(0, value)
-            if new_exp >= self.player["req_exp"]:
+            if new_exp >= self.player_data["req_exp"]:
                 self._level_up()
             return new_exp
         return value
 
     def _level_up(self):
         """Повышение уровня"""
-        self.player["level"] += 1
-        self.player["exp"] = self.player["exp"] - self.player["req_exp"]
-        self.player["req_exp"] = int(self.player["req_exp"] * 1.5)  # Увеличиваем требуемый опыт
+        self.player_data["level"] += 1
+        self.player_data["exp"] = self.player_data["exp"] - self.player_data["req_exp"]
+        self.player_data["req_exp"] = int(self.player_data["req_exp"] * 1.5)  # Увеличиваем требуемый опыт
 
         # Улучшаем характеристики при повышении уровня
-        self.player["max_health"] += 12
-        self.player["health"] += 12
-        self.player["strength"] += 1
+        self.player_data["max_health"] += 12
+        self.player_data["health"] += 12
+        self.player_data["strength"] += 1
 
         ns.notification("Новый уровень")
-        self.logger.info(f"Уровень повышен! Теперь уровень {self.player['level']}")
+        self.logger.info(f"Уровень повышен! Теперь уровень {self.player_data['level']}")
 
     def heal(self, amount: int):
         """Восстановление здоровья"""

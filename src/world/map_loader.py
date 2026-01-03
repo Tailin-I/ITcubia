@@ -44,7 +44,9 @@ class MapLoader:
 
     def _create_chest_sprites_from_layer(self, containers_layer, scale):
         """Создает спрайты сундуков из визуального слоя"""
-
+        if not containers_layer:
+            self.logger.warning("Слой containers пустой!")
+            return
 
         for tile_sprite in containers_layer:
             sprite_x = tile_sprite.center_x
@@ -69,9 +71,35 @@ class MapLoader:
 
                     chest_event.set_sprite(sprite)
                     self.event_manager.chest_sprites.append(sprite)
+                    self.logger.debug(f"Создан спрайт сундука: {chest_event.event_id}")
 
                 except Exception as e:
                     self.logger.warning(f"Ошибка создания спрайта: {e}")
+            else:
+                self.logger.warning(f"Не найдено событие для сундука на ({sprite_x}, {sprite_y})")
+    def _create_monster_from_object(self, obj, index, scale: float):
+        """Создаёт монстра из точки Tiled"""
+        try:
+            # Координаты
+            x, y = obj.shape
+
+            # Генерируем уникальный ID
+            monster_id = f"monster_{obj.type}_{index}"
+
+            # Создаём монстра
+            from src.entities.monster import Monster
+            monster = Monster(
+                monster_id=monster_id,
+                monster_type=obj.type.lower(),
+                position=(x, y),
+                properties=obj.properties,
+                scale=scale
+            )
+
+            return monster
+        except Exception as e:
+            self.logger.warning(f"Ошибка создания монстра: {e}")
+            return None
 
     def load_monsters(self, scale: float = 1.0):
         """Загружает монстров из слоя 'entities' в Tiled"""
@@ -80,38 +108,14 @@ class MapLoader:
         # Ищем слой с монстрами
         for layer_name, object_list in self.tile_map.object_lists.items():
             if layer_name.lower() == 'entities':
-
-                for obj in object_list:
-                    print(obj.properties)
-                    monster = self._create_monster_from_object(obj, scale)
+                for index, obj in enumerate(object_list):
+                    monster = self._create_monster_from_object(obj, index, scale)
                     if monster:
                         monsters.append(monster)
+                        self.logger.debug(f"Создан монстр: {monster.entity_id}")
                 break
 
         return monsters
-
-    def _create_monster_from_object(self, obj, scale: float):
-        """Создаёт монстра из точки Tiled"""
-        try:
-            # Просто берём координаты из shape
-            x, y = obj.shape
-
-            print(f"Точка: name={obj.name}, shape=({x}, {y}), type={obj.type}")
-
-            # Создаём
-            from src.entities.monster import Monster
-            monster = Monster(
-                monster_type=obj.type.lower(),
-                position=(x, y),
-                properties=obj.properties,
-                scale=scale
-            )
-
-            return monster
-
-        except Exception as e:
-            print(f"Ошибка: {e}")
-            return None
     def load(self, map_file: str, scale: float = C.SCALE_FACTOR) -> bool:
         """
         Загружает Tiled карту.

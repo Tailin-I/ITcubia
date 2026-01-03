@@ -6,8 +6,8 @@ TILE_SIZE = 64  # Желаемый размер тайлов
 SCALE_FACTOR = TILE_SIZE / ORIGINAL_TILE_SIZE
 
 # ПАРАМЕТРЫ ОКНА
-SCREEN_WIDTH = 1440
-SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 21.5 * TILE_SIZE
+SCREEN_HEIGHT = 12* TILE_SIZE
 
 VIEWPORT_WIDTH = SCREEN_WIDTH  # Фиксированная ширина обзора
 VIEWPORT_HEIGHT = SCREEN_HEIGHT  # Фиксированная высота обзора
@@ -27,8 +27,15 @@ DEEPSEEK_COLOR = (76, 106, 253)
 DEEPSEEK_COLOR_TRANSLUCENT = (76, 106, 253, 70)
 
 
+
+# читы
 cheat_mode = True
 debug_mode = False
+show_area_mode = False
+
+ghost_mode = False
+player_color = (255, 255, 255, 255)  # Белый, непрозрачный
+ghost_color = (100, 100, 255, 128)  # Синий, полупрозрачный
 
 # # Текст оповещений
 # text_to_draw = []

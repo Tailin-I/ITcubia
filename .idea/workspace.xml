@@ -4,21 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="отладка 2">
-      <change afterPath="$PROJECT_DIR$/res/monsters/bug.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="перед организацией хранения данных в game_data.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/chest.tx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/dungeon_1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/dungeon_2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/forest.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/testmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testmap.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/tiledata.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/input_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/input_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/chest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/chest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/items/base_item.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/items/base_item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/chest_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/chest_event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/event_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/cheat_console_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/cheat_console_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/health_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/health_bar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
@@ -461,7 +459,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767371709433</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="перед организацией хранения данных в game_data.py">
+      <option name="closed" value="true" />
+      <created>1767457920999</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1767457920999</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -513,7 +519,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="загрузчик файлов Resource Manager&#10;+ оптимизация" />
     <MESSAGE value="requirements.txt" />
     <MESSAGE value="перед сменой структуры" />
     <MESSAGE value="новая структура" />
@@ -538,7 +543,8 @@
     <MESSAGE value="п" />
     <MESSAGE value="отладка 1" />
     <MESSAGE value="отладка 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="отладка 2" />
+    <MESSAGE value="перед организацией хранения данных в game_data.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="перед организацией хранения данных в game_data.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -563,13 +569,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/states/game_state.py</url>
-          <line>308</line>
+          <line>315</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/generate_structure.py</url>
           <line>38</line>
           <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/entities/base_entity.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -34,7 +34,9 @@ class InputManager:
             'heal': ["H"],
             'cheat_console': ["F2"],
             'ghost_mode': ["NUM_0"],
-            'debug_mode': ["NUM_1"]
+            'debug_mode': ["NUM_1"],
+            'show_area_mode': ["NUM_2"]
+
 
         }
 
@@ -361,7 +363,7 @@ class InputManager:
         """Проверяет, активно ли действие"""
         return self.actions.get(action_name, False)
 
-    def get_key_string_for_code(self, key_code):
+    def get_key_string_for_code(self, key_code) -> str:
         """Возвращает строковое представление клавиши по коду"""
         return self.code_to_string.get(key_code, f"Key_{key_code}")
 

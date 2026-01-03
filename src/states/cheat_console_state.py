@@ -34,13 +34,14 @@ class CheatConsoleState(BaseState):
     def handle_key_press(self, key, modifiers):
         if "|" in self.input_buffer:
             first_part, second_part = self.input_buffer.split("|")
-            if self.gsm.input_manager.get_action("select"):
+            if self.gsm.input_manager.get_action("select") and first_part+second_part!="":
                 self._execute_command(first_part + second_part)
                 self._add_to_list(first_part + second_part)
                 self.input_buffer = "|"
                 self.can_close = True
 
-            elif self.gsm.input_manager.get_action("left") and self.input_buffer.startswith("|"):
+            elif self.gsm.input_manager.get_action("left") and self.input_buffer.startswith("|") and len(
+                    self.gsm.input_manager.get_key_string_for_code(key)) != 1 and len(self.history) > 0:
                 self.input_buffer = self.input_buffer[1:]
             else:
                 self.input_buffer = self.gsm.input_manager.typing(key, first_part, second_part)
@@ -263,6 +264,28 @@ class CheatConsoleState(BaseState):
             C.debug_mode = not C.debug_mode
 
             if C.debug_mode:
+                self.text_to_draw = ["Хммммм",
+                                     "И правда что-то барахлит..",
+                                     "Смотри!.",
+                                     "Но не везде..."]
+            else:
+                self.text_to_draw = ["Ок",
+                                     "Хватит с тебя!"]
+
+        elif command == "GHOST":
+            C.ghost_mode = not C.ghost_mode
+
+            if C.ghost_mode:
+                self.text_to_draw = ["Ты прав!",
+                                     "Зачем нужны стены?",
+                                     "Теперь ты призрак"]
+            else:
+                self.text_to_draw = ["Нагулялся?)",
+                                     "..."]
+        elif command == "AREAS":
+            C.show_area_mode = not C.show_area_mode
+
+            if C.show_area_mode:
                 self.text_to_draw = ["Не забывай кто здесь бог!",
                                      "АБРАКАДАБРА",
                                      "Загляни в неизведанное.",
@@ -272,17 +295,6 @@ class CheatConsoleState(BaseState):
                                      "теперь...",
                                      "Ты нормальный человек"]
 
-        elif command == "GHOST":
-            player = self.gsm.current_state.player
-            player.ghost_mode = not player.ghost_mode
-
-            if player.ghost_mode:
-                self.text_to_draw = ["Ты прав!",
-                                     "Зачем нужны стены?",
-                                     "Теперь ты призрак"]
-            else:
-                self.text_to_draw = ["Нагулялся?)",
-                                     "..."]
         elif command == "GOODBYE":
             C.cheat_mode = False
 

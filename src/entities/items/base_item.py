@@ -10,7 +10,7 @@ class Item(Entity):
     def __init__(self, item_id: str, name: str, texture_path: str, scale: float = 1.0):
         # Загружаем текстуру
         texture = arcade.load_texture(texture_path)
-        super().__init__([texture], scale)
+        super().__init__(item_id, [texture], scale)
 
 
         self.item_id = item_id

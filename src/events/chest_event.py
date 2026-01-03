@@ -26,6 +26,8 @@ class ChestEvent(GameEvent):
         loot_str = properties.get("loot", "")
         self.loot_items = ItemFactory.parse_loot_string(loot_str)
 
+        self.logger.info(f"Создан сундук: id={event_id}, loot='{loot_str}', items={len(self.loot_items)}")
+
 
     def activate(self, player, game_state):
         """Игрок взаимодействует с сундуком"""
@@ -93,16 +95,18 @@ class ChestEvent(GameEvent):
 
     def _add_to_inventory(self, player, item):
         """Добавляет предмет в инвентарь игрока"""
+        inventory = player.inventory  # Это свойство из Player класса
+
         # Ищем, есть ли уже такой предмет
         found = False
-        for inv_item in player.data.inventory["items"]:
+        for inv_item in inventory:
             if inv_item.get("id") == item.item_id and item.is_stackable:
                 inv_item["count"] += item.count
                 found = True
                 break
 
         if not found:
-            player.data.inventory["items"].append({
+            inventory.append({
                 "id": item.item_id,
                 "name": item.name,
                 "count": item.count,

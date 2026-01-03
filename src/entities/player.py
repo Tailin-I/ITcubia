@@ -3,68 +3,56 @@ from arcade import SpriteList
 
 from .base_entity import Entity
 from .monster import Monster
-from ..core.game_data import game_data
+from config import constants as C
 
 
 class Player(Entity):
     def __init__(self, texture_dict, input_manager, scale=1):
-        self.data = game_data
-
-        # режим призрака
-        self.ghost_mode = False
-        self.normal_color = (255, 255, 255, 255)  # Белый, непрозрачный
-        self.ghost_color = (100, 100, 255, 128)  # Синий, полупрозрачный
-
-        # словарь текстур -> список
+        # Собираем все текстуры в один список
         all_textures = []
         for direction in ["up", "down", "left", "right"]:
             all_textures.extend(texture_dict[direction])
 
-        # Вызываем конструктор Entity с масштабом
-        super().__init__(all_textures, scale)
+        # Важно: entity_id = "player"
+        super().__init__(entity_id="player", texture_list=all_textures, scale=scale)
 
-        # Сохраняем словарь для удобного доступа
         self.texture_dict = texture_dict
         self.input_manager = input_manager
 
-        # Маппинг направлений на индексы текстур
+        # Маппинг направлений
         self.texture_indexes = {
             "up": 0,  # текстуры 0 и 1
             "down": 2,  # текстуры 2 и 3
             "left": 4,  # текстуры 4 и 5
             "right": 6  # текстуры 6 и 7
         }
+        self.last_direction = "down"
+        self.cur_texture_index = self.texture_indexes["down"]
 
-        # Для отслеживания смены направления
-        self.last_direction = None
+        # Позиция из GameData
+        pos_data = self.data_source.get_entity_data("player")
+        if pos_data:
+            pos = pos_data.get("position", {"x": 400, "y": 300})
+            self.center_x = pos["x"]
+            self.center_y = pos["y"]
 
-        pos = self.data.get_player_position()
-        self.center_x = pos[0]
-        self.center_y = pos[1]
-        self.cur_texture_index = 0
+        # Инициализируем текстуру
+        self.set_texture(self.cur_texture_index)
 
-        self.update_data()
+    @property
+    def speed(self):
+        """Скорость из GameData"""
+        data = self.data_source.get_entity_data("player")
+        return data.get("speed", 10) if data else 10
 
-
-
-    def update_data(self):
-
-
-        self.max_health = self.data.get_player("max_health")
-        self.health = self.data.get_player("health")
-        self.level = self.data.get_player("level")
-        self.exp =  self.data.get_player("exp")
-        self.speed = self.data.get_player("speed")
-        self.strength =  self.data.get_player("strength")
-
-        # Текущий индекс текстуры для анимации
-
+    @property
+    def inventory(self):
+        """Инвентарь из GameData"""
+        data = self.data_source.get_entity_data("player")
+        return data.get("inventory", [])
 
     def update(self, delta_time: float = 1 / 60, *args, **kwargs) -> None:
-
         super().update(delta_time)
-        self.update_data()
-        self.time_elapsed += delta_time
 
         dx, dy = 0, 0
         current_direction = None
@@ -103,16 +91,14 @@ class Player(Entity):
         monsters = kwargs.get('monsters')
 
         self._move_with_tiled_collision(collision_layer, monsters, dx, dy)
-
         self._update_ghost_appearance()
-
 
     def _move_with_tiled_collision(self, collision_layer, monsters: SpriteList[Monster], dx, dy):
         """
         метод коллизий.
         """
         # Если режим призрака
-        if self.ghost_mode:
+        if C.ghost_mode:
             self.center_x += dx
             self.center_y += dy
             return
@@ -142,6 +128,7 @@ class Player(Entity):
             self.cur_texture_index = 4
         elif direction == "right":
             self.cur_texture_index = 6
+
         self.set_texture(self.cur_texture_index)
 
     def _animate_direction(self, direction):
@@ -181,10 +168,10 @@ class Player(Entity):
 
     def _update_ghost_appearance(self):
         """Обновляет внешний вид в режиме призрака"""
-        if self.ghost_mode and self.color != self.ghost_color:
+        if C.ghost_mode and self.color != C.ghost_color:
             # Устанавливаем синий полупрозрачный цвет
-            self.color = self.ghost_color
-        elif not self.ghost_mode and self.color != self.normal_color:
+            self.color = C.ghost_color
+        elif not C.ghost_mode and self.color != C.player_color:
             # Возвращаем нормальный цвет
-            self.color = self.normal_color
+            self.color = C.player_color
 

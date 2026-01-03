@@ -159,6 +159,6 @@ class EventManager:
             if i.type == "chest":
                 i.draw_names()
 
-        if C.debug_mode:
+        if C.show_area_mode:
             for i in self.events:
                 i.draw_debug()

@@ -1,3 +1,5 @@
+import time
+
 import arcade
 from arcade import SpriteList, Camera2D
 
@@ -10,7 +12,6 @@ from ..world.map_loader import MapLoader
 from config import constants as C
 
 
-
 class GameplayState(BaseState):
     """
     Состояние основной игры.
@@ -20,17 +21,19 @@ class GameplayState(BaseState):
     def __init__(self, gsm, asset_loader):
         super().__init__("game", gsm, asset_loader)
 
-
         self.is_paused = False
+
+        # Для FPS
+        self.frame_count = 0
+        self.fps = 0
+        self.fps_timer = time.time()
 
         self.viewport_width = C.VIEWPORT_WIDTH
         self.viewport_height = C.VIEWPORT_HEIGHT
 
         self.input_manager = self.gsm.input_manager
 
-
         player_scale = self.tile_size / 63  # ≈1.0159 (почти не меняем)
-
 
         self.default_camera = Camera2D()
         self.default_camera.viewport = (
@@ -44,10 +47,9 @@ class GameplayState(BaseState):
 
         self.map_loader = MapLoader()
 
-
         # Загружаем Tiled карту
         self.map_loader.load(
-            "maps/testmap.tmx" # НОВЫЙ ФАЙЛ
+            "maps/testmap.tmx"  # НОВЫЙ ФАЙЛ
         )
         self.monsters = arcade.SpriteList()
         loaded_monsters = self.map_loader.load_monsters(4)
@@ -73,7 +75,7 @@ class GameplayState(BaseState):
         self.camera = arcade.camera.Camera2D()
 
         # Получаем позицию из game_data
-        pos = self.player.data.get_player_position()
+        pos = self.game_data.get_player_position()
         self.player.center_x = pos[0] * self.scale_factor
         self.player.center_y = pos[1] * self.scale_factor
 
@@ -140,7 +142,6 @@ class GameplayState(BaseState):
             path = f"maps/{map}.tmx"
             self.logger.info(f"Смена карты: {map}")
 
-
             # Загружаем новую карту
             success = self.map_loader.load(path)
             if not success:
@@ -162,7 +163,7 @@ class GameplayState(BaseState):
         self.player.center_y = tile_y
 
         # Обновляем данные игрока
-        self.player.data.set_player_position(tile_x, tile_y, map)
+        self.game_data.set_player_position(tile_x, tile_y, map)
 
         target_x = self.player.center_x
         target_y = self.player.center_y
@@ -207,7 +208,6 @@ class GameplayState(BaseState):
         """Вызывается при возобновлении игры"""
         self.is_paused = False
 
-
     def update(self, delta_time: float):
         """Обновление игровой логики"""
         if self.is_paused:
@@ -243,8 +243,6 @@ class GameplayState(BaseState):
         # Обновляем оповещения
         ns.update(delta_time)
 
-
-
         # Обновляем и проверяем события (КОЛЛИЗИИ!)
         if hasattr(self.map_loader, 'event_manager') and self.map_loader.event_manager:
             self.map_loader.event_manager.update(delta_time)
@@ -268,7 +266,14 @@ class GameplayState(BaseState):
         for ui_element in self.ui_elements:
             ui_element.update(delta_time)
 
-
+        # Счет FPS
+        if C.debug_mode:
+            self.frame_count += 1
+            current_time = time.time()
+            if current_time - self.fps_timer >= 1.0:  # Каждую секунду
+                self.fps = self.frame_count
+                self.frame_count = 0
+                self.fps_timer = current_time
 
     def draw(self):
         """Отрисовка игры"""
@@ -293,14 +298,16 @@ class GameplayState(BaseState):
         # Переключаемся на UI камеру
         self.default_camera.use()
 
-        # координаты
-
         if C.debug_mode:
-
             text = f"x:{int(self.player.center_x // self.tile_size)} y:{int(self.player.center_y // self.tile_size)}"
             arcade.Text(text,
                         self.gsm.window.width - 3 * self.tile_size,
                         self.gsm.window.height - self.tile_size,
+                        C.DEEPSEEK_COLOR,
+                        18).draw()
+            arcade.Text(f"FPS: {self.fps}",
+                        self.gsm.window.width - 3 * self.tile_size,
+                        self.gsm.window.height - 0.5 * self.tile_size,
                         C.DEEPSEEK_COLOR,
                         18).draw()
 
@@ -311,8 +318,8 @@ class GameplayState(BaseState):
 
             # Рисуем оповещения
             ns.draw(
-                x=self.tile_size/2,
-                y=self.gsm.window.height - self.tile_size/2
+                x=self.tile_size / 2,
+                y=self.gsm.window.height - self.tile_size / 2
             )
 
     def _pickup_loot(self):
@@ -344,15 +351,14 @@ class GameplayState(BaseState):
                 self.gsm.push_overlay("cheat_console")
 
             if self.input_manager.get_action("ghost_mode"):
-                self.player.ghost_mode = not self.player.ghost_mode
+                C.ghost_mode = not C.ghost_mode
             if self.input_manager.get_action("debug_mode"):
                 C.debug_mode = not C.debug_mode
+            if self.input_manager.get_action("show_area_mode"):
+                C.show_area_mode = not C.show_area_mode
             if self.input_manager.get_action("heal"):
                 self.game_data.heal(20)
                 self.game_data.add_exp(100)
-
-
-
 
     def _init_ui(self):
         """Инициализирует UI элементы"""

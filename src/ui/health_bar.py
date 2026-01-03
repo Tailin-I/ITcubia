@@ -9,19 +9,12 @@ class HealthBar(UIComponent):
     def __init__(self, entity, x, y, width=200, height=20):
         super().__init__(x, y, width, height)
         self.entity = entity  # Сущность, за которой следим
-        self.max_value = entity.max_health
-        self.current_value = entity.health
 
-        # Цвета из AssetLoader
+        # Цвета
         self.bg_color = arcade.color.DARK_SLATE_GRAY
         self.fill_color = arcade.color.RED
         self.border_color = arcade.color.GOLD
         self.border_width = 2
-
-    def update(self, delta_time):
-        """Обновляем значение здоровья"""
-        self.current_value = self.entity.health
-        self.max_value = max(self.max_value, self.current_value)
 
     def draw(self):
         if not self.visible:
@@ -36,7 +29,7 @@ class HealthBar(UIComponent):
         )
 
         # Заполнение (процент здоровья)
-        fill_width = max(0, (self.current_value / self.max_value) * self.width)
+        fill_width = max(0, (self.entity.health / self.entity.max_health) * self.width)
         if fill_width > 0:
             arcade.draw_rect_filled(
                 arcade.rect.XYWH(
@@ -55,7 +48,7 @@ class HealthBar(UIComponent):
 
         # Текст (опционально)
         arcade.Text(
-            f"HP: {self.current_value}/{self.max_value}",
+            f"HP: {self.entity.health}/{self.entity.max_health}",
             self.x, self.y,
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="center"
