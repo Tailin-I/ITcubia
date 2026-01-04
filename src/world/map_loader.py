@@ -6,6 +6,8 @@ from src.events.event_manager import EventManager
 from config import constants as C
 from pathlib import Path
 from src.entities.chest import ChestSprite
+from src.core.game_data import game_data
+
 
 class MapLoader:
     """Загрузчик карт Tiled."""
@@ -77,45 +79,45 @@ class MapLoader:
                     self.logger.warning(f"Ошибка создания спрайта: {e}")
             else:
                 self.logger.warning(f"Не найдено событие для сундука на ({sprite_x}, {sprite_y})")
-    def _create_monster_from_object(self, obj, index, scale: float):
-        """Создаёт монстра из точки Tiled"""
-        try:
-            # Координаты
-            x, y = obj.shape
-
-            # Генерируем уникальный ID
-            monster_id = f"monster_{obj.type}_{index}"
-
-            # Создаём монстра
-            from src.entities.monster import Monster
-            monster = Monster(
-                monster_id=monster_id,
-                monster_type=obj.type.lower(),
-                position=(x, y),
-                properties=obj.properties,
-                scale=scale
-            )
-
-            return monster
-        except Exception as e:
-            self.logger.warning(f"Ошибка создания монстра: {e}")
-            return None
-
-    def load_monsters(self, scale: float = 1.0):
-        """Загружает монстров из слоя 'entities' в Tiled"""
-        monsters = []
-
-        # Ищем слой с монстрами
-        for layer_name, object_list in self.tile_map.object_lists.items():
-            if layer_name.lower() == 'entities':
-                for index, obj in enumerate(object_list):
-                    monster = self._create_monster_from_object(obj, index, scale)
-                    if monster:
-                        monsters.append(monster)
-                        self.logger.debug(f"Создан монстр: {monster.entity_id}")
-                break
-
-        return monsters
+    # def _create_monster_from_object(self, obj, index, scale: float):
+    #     """Создаёт монстра из точки Tiled"""
+    #     try:
+    #         # Координаты
+    #         x, y = obj.shape
+    #
+    #         # Генерируем уникальный ID
+    #         monster_id = f"monster_{obj.type}_{index}"
+    #
+    #         # Создаём монстра
+    #         from src.entities.monster import Monster
+    #         monster = Monster(
+    #             monster_id=monster_id,
+    #             monster_type=obj.type.lower(),
+    #             position=(x, y),
+    #             properties=obj.properties,
+    #             scale=scale
+    #         )
+    #
+    #         return monster
+    #     except Exception as e:
+    #         self.logger.warning(f"Ошибка создания монстра: {e}")
+    #         return None
+    #
+    # def load_monsters(self, scale: float = 1.0):
+    #     """Загружает монстров из слоя 'entities' в Tiled"""
+    #     monsters = []
+    #
+    #     # Ищем слой с монстрами
+    #     for layer_name, object_list in self.tile_map.object_lists.items():
+    #         if layer_name.lower() == 'entities':
+    #             for index, obj in enumerate(object_list):
+    #                 monster = self._create_monster_from_object(obj, index, scale)
+    #                 if monster:
+    #                     monsters.append(monster)
+    #                     self.logger.debug(f"Создан монстр: {monster.entity_id}")
+    #             break
+    #
+    #     return monsters
     def load(self, map_file: str, scale: float = C.SCALE_FACTOR) -> bool:
         """
         Загружает Tiled карту.
@@ -153,6 +155,8 @@ class MapLoader:
 
             # Получаем границы карты
             self._calculate_bounds()
+
+            self.load_monster_zones(scale)
 
             # Получаем слои
             self.ground_layer = self.tile_map.sprite_lists.get("ground")
@@ -243,3 +247,105 @@ class MapLoader:
         """Отрисовывает события"""
         if self.event_manager:
             self.event_manager.draw()
+
+    def load_monster_zones(self, scale: float = 1.0):
+        """Загружает зоны для монстров из слоя 'zones'"""
+        if not self.tile_map:
+            return []
+
+        zones = []
+
+        for layer_name, object_list in self.tile_map.object_lists.items():
+            if layer_name.lower() == "zones":
+                for i, obj in enumerate(object_list):
+                    zone = self._create_zone_from_object(obj, scale, i)
+                    if zone:
+                        zones.append(zone)
+                        # Сохраняем в GameData
+                        game_data.add_monster_zone(zone["id"], zone)
+
+                self.logger.info(f"Загружено зон: {len(zones)}")
+                break
+
+        return zones
+
+    def _create_zone_from_object(self, obj, scale: float, index: int):
+        """Создает зону из объекта Tiled"""
+        try:
+            # Координаты и размер
+            x = getattr(obj, 'x') * scale
+            y = getattr(obj, 'y') * scale
+            width = getattr(obj, 'width') * scale
+            height = getattr(obj, 'height') * scale
+
+            # ID зоны
+            properties = getattr(obj, 'properties')
+            zone_id = properties.get('id', f"zone_{index}")
+
+            zone_data = {
+                "id": zone_id,
+                "rect": (x, y, width, height),
+                "properties": dict(properties)  # Конвертируем в обычный dict
+            }
+
+            self.logger.debug(f"Создана зона: {zone_id} ({x}, {y}, {width}, {height})")
+            return zone_data
+
+        except Exception as e:
+            self.logger.warning(f"Ошибка создания зоны {index}: {e}")
+            return None
+
+    def load_entities(self, entity_manager, scale: float = 1.0):
+        """Загружает всех существ (монстры и NPC) через EntityManager"""
+        monsters = []
+
+        if not self.tile_map:
+            return monsters
+
+        # Сначала загружаем зоны
+        self.load_monster_zones(scale)
+
+        # Затем загружаем существ
+        for layer_name, object_list in self.tile_map.object_lists.items():
+            if layer_name.lower() == 'entities':
+                for index, obj in enumerate(object_list):
+                    monster = self._create_entity_from_object(obj, entity_manager, scale, index)
+                    if monster:
+                        monsters.append(monster)
+
+                self.logger.info(f"Загружено существ: {len(monsters)}")
+                break
+
+        return monsters
+
+    def _create_entity_from_object(self, obj, entity_manager, scale: float, index: int):
+        """Создает сущность из объекта Tiled"""
+        try:
+            # Координаты
+            x, y = obj.shape if hasattr(obj, 'shape') else (obj.x, obj.y)
+            x *= scale
+            y *= scale
+
+            # Тип и свойства
+            monster_type = getattr(obj, 'type').lower()
+
+            # Собираем все свойства
+            properties = {}
+            if hasattr(obj, 'properties'):
+                for prop in obj.properties:
+                    properties[prop.name] = prop.value
+
+            # Создаем монстра через EntityManager
+            monster = entity_manager.spawn_monster(
+                monster_type=monster_type,
+                position=(x, y),
+                properties=properties,
+                scale=scale
+            )
+
+            self.logger.debug(f"Создан {monster_type}: id={monster.entity_id}, props={properties}")
+            return monster
+
+        except Exception as e:
+            self.logger.warning(f"Ошибка создания сущности {index}: {e}")
+            return None

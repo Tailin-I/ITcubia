@@ -218,6 +218,17 @@ class CheatConsoleState(BaseState):
                 f"ОЗ = {health_to_add}",
                 "Теперь тебя тоже не убить"
             ]
+        elif command == "SAVE":
+            self.game_data.save_to_file()
+
+            self.text_to_draw = ["Сохраняю..."]
+
+
+        elif command == "LOAD":
+
+            self.game_data.load_from_file()
+
+            self.text_to_draw = ["Загружаю..."]
 
         elif command.startswith("TP_"):
             parts = command.split("_")

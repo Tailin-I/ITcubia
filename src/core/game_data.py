@@ -1,7 +1,8 @@
-import json
 import logging
 import pickle
+
 from ..ui.notification_system import notifications as ns
+from config import constants as C
 
 
 class GameData:
@@ -15,7 +16,7 @@ class GameData:
         self.player_data = {
             "id": "player",
             "type": "player",
-            "position": {"x": 400, "y": 300},
+            "position": {"x": 10, "y": 5},
             "level": 1,
             "exp": 0,
             "req_exp": self.base_req_exp,
@@ -36,6 +37,25 @@ class GameData:
         # Данные монстров (загружаются из Tiled)
         self.monsters_data = {}
 
+        # Данные зон для монстров
+        self.monster_zones = {}
+
+        # Шаблоны монстров (дефолтные значения)
+        self.monster_templates = {
+            "bug": {
+                "health": 20,
+                "max_health": 20,
+                "damage": 1,
+                "speed": 2,
+                "aggro_range": 150,
+                "vision_range": 200,
+                "behavior": "aggressive",
+                # "patrol_speed": 1.5,
+                "chase_speed": 3,
+                "loot_table": []
+            }
+            # добавить другие типы позже
+        }
 
     def get_entity_data(self, entity_id):
         """Получить данные любой сущности"""
@@ -75,11 +95,10 @@ class GameData:
         except FileNotFoundError:
             self.logger.warning("Файл сохранения не найден, используем значения по умолчанию")
 
-
     # Удобные методы для доступа
     def get_player_position(self):
-        return (self.player_data["position"]["x"],
-                self.player_data["position"]["y"])
+        return (self.player_data["position"]["x"] * C.TILE_SIZE,
+                self.player_data["position"]["y"] * C.TILE_SIZE)
 
     def get_player(self, arg):
         if arg in self.player_data:
@@ -87,8 +106,8 @@ class GameData:
         return None
 
     def set_player_position(self, x, y, map_name=None):
-        self.player_data["position"]["x"] = x
-        self.player_data["position"]["y"] = y
+        self.player_data["position"]["x"] = x * C.TILE_SIZE
+        self.player_data["position"]["y"] = y * C.TILE_SIZE
         if map_name:
             self.player_data["position"]["map"] = map_name
 
@@ -193,6 +212,57 @@ class GameData:
     def add_item(self, item_id, count=1):
         """Добавляет предмет в инвентарь"""
         pass
+
+    def add_monster_zone(self, zone_id, zone_data):
+        """Добавить зону для монстров"""
+        self.monster_zones[zone_id] = zone_data
+
+    def get_monster_zone(self, zone_id):
+        """Получить зону по ID"""
+        return self.monster_zones.get(zone_id)
+
+    def find_nearest_zone(self, x, y, max_distance=500):
+        """Найти ближайшую зону к точке"""
+        nearest_zone = None
+        min_distance = float('inf')
+
+        for zone_id, zone in self.monster_zones.items():
+            zone_x, zone_y, zone_w, zone_h = zone["rect"]
+            # Центр зоны
+            center_x = zone_x + zone_w / 2
+            center_y = zone_y + zone_h / 2
+
+            distance = ((x - center_x) ** 2 + (y - center_y) ** 2) ** 0.5
+
+            if distance < min_distance and distance <= max_distance:
+                min_distance = distance
+                nearest_zone = zone
+                nearest_zone["id"] = zone_id
+
+        return nearest_zone
+
+    def create_monster_data(self, monster_id, monster_type, position, custom_props=None):
+        """Создать данные монстра с учетом дефолтных и кастомных свойств"""
+        # Копируем шаблон для этого типа
+        monster_data = self.monster_templates[monster_type].copy()
+
+        # Добавляем обязательные поля
+        monster_data.update({
+            "id": monster_id,
+            "type": monster_type,
+            "position": {"x": position[0], "y": position[1]},
+            "is_alive": True,
+            "zone_id": None,  # Будет установлено позже
+            "custom_properties": custom_props or {}
+        })
+
+        # Перезаписываем свойствами из Tiled
+        if custom_props:
+            for key, value in custom_props.items():
+                if key in monster_data:
+                    monster_data[key] = value
+
+        return monster_data
 
 
 # Глобальный экземпляр (будет один на всю игру)

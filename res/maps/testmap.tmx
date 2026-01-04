@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="9" nextobjectid="98">
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="10" nextobjectid="106">
  <tileset firstgid="1" source="first.tsx"/>
  <tileset firstgid="157" source="../../../../snap/tiled/4760/first.tsx"/>
  <layer id="1" name="ground" width="150" height="50">
@@ -87,20 +87,23 @@
   </data>
  </layer>
  <objectgroup id="8" name="entities">
-  <object id="94" name="second_bug" type="bug" x="512" y="2654.67">
+  <object id="94" name="second_bug" type="bug" x="356" y="2005.34">
    <properties>
+    <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="10"/>
    </properties>
    <point/>
   </object>
-  <object id="95" name="first_bug" type="bug" x="424" y="3066.67">
+  <object id="95" name="first_bug" type="bug" x="1612" y="3130.67">
    <properties>
+    <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="20"/>
    </properties>
    <point/>
   </object>
-  <object id="96" name="megabug" type="bug" x="701.333" y="2896">
+  <object id="96" name="megabug" type="bug" x="2873.33" y="1777.33">
    <properties>
+    <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="50"/>
     <property name="loot" value="healing_potion:3, key_door1:1"/>
    </properties>
@@ -108,9 +111,17 @@
   </object>
   <object id="97" name="hidden_bug" type="bug" x="946.667" y="2974.67">
    <properties>
+    <property name="aggro_range" type="int" value="50"/>
+    <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="6"/>
    </properties>
    <point/>
   </object>
+ </objectgroup>
+ <objectgroup id="9" name="zones">
+  <object id="105" name="zone_3" type="zone" x="1122.67" y="2873.33" width="981.333" height="558.667"/>
+  <object id="101" name="hiddenbug's zone" type="zone" x="558.667" y="2665.33" width="698.667" height="765.333"/>
+  <object id="102" name="zone_1" type="zone" x="73.3333" y="1466.67" width="494.667" height="1052"/>
+  <object id="104" name="zone_2" type="zone" x="2316" y="1472" width="1386.67" height="561.333"/>
  </objectgroup>
 </map>

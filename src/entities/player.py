@@ -32,7 +32,7 @@ class Player(Entity):
         # Позиция из GameData
         pos_data = self.data_source.get_entity_data("player")
         if pos_data:
-            pos = pos_data.get("position", {"x": 400, "y": 300})
+            pos = pos_data.get("position")
             self.center_x = pos["x"]
             self.center_y = pos["y"]
 

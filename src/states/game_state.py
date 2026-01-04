@@ -10,7 +10,7 @@ from ..ui.notification_system import notifications as ns
 from ..ui.vertical_bar import VerticalBar
 from ..world.map_loader import MapLoader
 from config import constants as C
-
+from src.entities.entity_manager import entity_manager
 
 class GameplayState(BaseState):
     """
@@ -22,6 +22,8 @@ class GameplayState(BaseState):
         super().__init__("game", gsm, asset_loader)
 
         self.is_paused = False
+
+        self.entity_manager = entity_manager
 
         # Для FPS
         self.frame_count = 0
@@ -52,11 +54,12 @@ class GameplayState(BaseState):
             "maps/testmap.tmx"  # НОВЫЙ ФАЙЛ
         )
         self.monsters = arcade.SpriteList()
-        loaded_monsters = self.map_loader.load_monsters(4)
+
+        # Загружаем существ через EntityManager
+        loaded_monsters = self.map_loader.load_entities(self.entity_manager, 4)
         for monster in loaded_monsters:
             self.monsters.append(monster)
-            print(f"Монстр на ({monster.center_x}, {monster.center_y})")
-
+            self.logger.debug(f"Монстр добавлен: {monster.entity_id} в зоне {monster.zone_id}")
         # Предметы на земле
         self.loot_on_ground = arcade.SpriteList()
 
@@ -163,7 +166,7 @@ class GameplayState(BaseState):
         self.player.center_y = tile_y
 
         # Обновляем данные игрока
-        self.game_data.set_player_position(tile_x, tile_y, map)
+        self.game_data.set_player_position(x, y, map)
 
         target_x = self.player.center_x
         target_y = self.player.center_y
@@ -218,23 +221,13 @@ class GameplayState(BaseState):
             if monster.is_alive:
                 monster.update(delta_time, self.player, self.collision_layer)
 
-        # Убираем мёртвых монстров и создаём лут
-        alive_monsters = []
-        for monster in self.monsters:
-            if monster.health <= 0 and monster.is_alive:
-                monster.is_alive = False
-                monster.visible = False
+        self.entity_manager.update_all(delta_time, self.player, self.collision_layer)
 
-                # Выпадает лут
-                loot = monster.drop_loot()
-                self.loot_on_ground.extend(loot)
-            elif monster.is_alive:
-                alive_monsters.append(monster)
-
-        # Обновляем список
+        # Обновляем список монстров для отрисовки
         self.monsters.clear()
-        self.monsters.extend(alive_monsters)
-
+        for monster in self.entity_manager.monsters:
+            if monster.is_alive:
+                self.monsters.append(monster)
         # Подбираем лут
         self._pickup_loot()
 
@@ -311,7 +304,7 @@ class GameplayState(BaseState):
                         C.DEEPSEEK_COLOR,
                         18).draw()
 
-
+        self.entity_manager.draw_debug()
         # Рисуем UI элементы
         for ui_element in self.ui_elements:
             ui_element.draw()

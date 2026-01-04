@@ -4,8 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="перед организацией хранения данных в game_data.py">
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="переделка монстра">
+      <change afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/testmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testmap.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/teleport_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/teleport_event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/cheat_console_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/cheat_console_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +91,7 @@
       <recent name="$PROJECT_DIR$/src/states" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.export structure">
+  <component name="RunManager" selected="Python.main">
     <configuration name="export structure" type="PythonConfigurationType" factoryName="Python">
       <module name="ITCUBIA" />
       <option name="ENV_FILES" value="" />
@@ -453,7 +463,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767457920999</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="переделка монстра">
+      <option name="closed" value="true" />
+      <created>1767535157991</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1767535157991</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -505,7 +523,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="requirements.txt" />
     <MESSAGE value="перед сменой структуры" />
     <MESSAGE value="новая структура" />
     <MESSAGE value="работа над структурой, перед упрознененте gamestate" />
@@ -530,7 +547,8 @@
     <MESSAGE value="отладка 1" />
     <MESSAGE value="отладка 2" />
     <MESSAGE value="перед организацией хранения данных в game_data.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="перед организацией хранения данных в game_data.py" />
+    <MESSAGE value="переделка монстра" />
+    <option name="LAST_COMMIT_MESSAGE" value="переделка монстра" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -555,7 +573,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/states/game_state.py</url>
-          <line>315</line>
+          <line>308</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -564,9 +582,8 @@
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/entities/base_entity.py</url>
-          <line>13</line>
-          <option name="timeStamp" value="23" />
+          <url>file://$PROJECT_DIR$/src/entities/__init__.py</url>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
