@@ -2,6 +2,7 @@ import arcade
 import logging
 
 from src.core.resource_manager import resource_manager
+from src.entities import entity_manager
 from src.events.event_manager import EventManager
 from config import constants as C
 from pathlib import Path
@@ -35,6 +36,9 @@ class MapLoader:
         Загружает Tiled карту.
         """
         try:
+            # Извлекаем имя карты из пути
+            map_name = Path(map_file).stem
+
             self.event_manager = EventManager()
 
             # Полный путь к файлу
@@ -81,6 +85,12 @@ class MapLoader:
             if self.containers_layer:
                 for container in self.containers_layer:
                     container.visible = False
+            # При загрузке зон добавляем имя карты
+            self.load_monster_zones(map_name)
+
+            # При загрузке существ передаем имя карты
+            self.load_entities(map_name)
+
 
             return True
 
@@ -147,25 +157,24 @@ class MapLoader:
             'height': height_px,
         }
 
-    def load_monster_zones(self):
+    def load_monster_zones(self, map_name: str = None):
         """Загружает зоны для монстров (прямоугольники)"""
         zones = []
 
         for layer_name, object_list in self.tile_map.object_lists.items():
             if layer_name.lower() == "zones":
                 for i, obj in enumerate(object_list):
-                    # print(obj.name)
-                    zone = self._create_zone_from_object(obj, i)
+                    zone = self._create_zone_from_object(obj, i, map_name)
                     if zone:
                         zones.append(zone)
                         game_data.add_monster_zone(zone["id"], zone)
 
-                self.logger.info(f"Загружено зон: {len(zones)}")
+                self.logger.info(f"Загружено зон для карты '{map_name}': {len(zones)}")
                 break
 
         return zones
 
-    def _create_zone_from_object(self, obj, index: int):
+    def _create_zone_from_object(self, obj, index: int, map_name: str = None):
         """Создает зону из прямоугольного объекта Tiled"""
         try:
             points = obj.shape
@@ -193,7 +202,8 @@ class MapLoader:
             zone_data = {
                 "id": zone_id,
                 "rect": (x, y, width, height),
-                "properties": properties
+                "properties": properties,
+                "map_name": map_name
             }
 
             self.logger.debug(f"Зона: {zone_id} ({x}, {y}, {width}, {height})")
@@ -203,30 +213,27 @@ class MapLoader:
             self.logger.warning(f"Ошибка создания зоны {index}: {e}")
             return None
 
-    def load_entities(self, entity_manager):
-        """Загружает существ (монстры и NPC)"""
+    def load_entities(self, map_name: str = None):
+        """Загружает существ (монстры и NPC) для конкретной карты"""
         monsters = []
 
         if not self.tile_map:
             return monsters
 
-        # Сначала загружаем зоны
-        self.load_monster_zones()
-
         # Загружаем существ
         for layer_name, object_list in self.tile_map.object_lists.items():
             if layer_name.lower() == 'entities':
                 for index, obj in enumerate(object_list):
-                    monster = self._create_entity_from_object(obj, entity_manager, index)
+                    monster = self._create_entity_from_object(obj, index, map_name)
                     if monster:
                         monsters.append(monster)
 
-                self.logger.info(f"Загружено существ: {len(monsters)}")
+                self.logger.info(f"Загружено существ для карты '{map_name}': {len(monsters)}")
                 break
 
         return monsters
 
-    def _create_entity_from_object(self, obj, entity_manager, index: int):
+    def _create_entity_from_object(self, obj, index: int, map_name: str = None):
         """Создает сущность из точечного объекта Tiled"""
         try:
             # Точечные объекты в Tiled хранят координаты в shape
@@ -260,7 +267,7 @@ class MapLoader:
                 monster_type=monster_type,
                 position=(x, y),
                 properties=properties,
-                scale=1.0  # Не масштабируем повторно!
+                map_name = map_name
             )
 
             if monster:

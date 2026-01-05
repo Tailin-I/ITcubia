@@ -13,22 +13,46 @@ class EntityManager:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.entities: Dict[str, Entity] = {}  # Все сущности по ID
         self.monsters: List[Monster] = []  # Только монстры
+        self.current_map_name = None
 
-    def spawn_monster(self, monster_type: str, position, properties=None, scale=1.0) -> Monster:
+    def set_current_map(self, map_name: str):
+        """Устанавливает текущую карту и очищает визуальные монстры"""
+        self.current_map_name = map_name
+        self.logger.info(f"Установлена карта: {map_name}")
+
+    def clear_monsters(self):
+        """Очищает ВСЕХ монстров (для смены карты)"""
+        for monster in self.monsters[:]:
+            self.remove_entity(monster.entity_id)
+        self.logger.info("Все монстры очищены")
+
+    def get_monsters_for_current_map(self):
+        """Возвращает монстров только для текущей карты (на основе данных в GameData)"""
+        current_map_monsters = []
+
+        for monster in self.monsters:
+            # Получаем данные монстра из GameData
+            data = game_data.get_entity_data(monster.entity_id)
+            if data and data.get("map_name") == self.current_map_name:
+                current_map_monsters.append(monster)
+
+        return current_map_monsters
+
+    def spawn_monster(self, monster_type: str, position, properties=None, scale=1.0, map_name: str = None) -> Monster:
         """
         Создает монстра.
         position: координаты (x, y) в пикселях
         scale: масштаб спрайта (не влияет на координаты!)
         """
         # Уникальный ID
-        monster_id = f"monster_{monster_type}_{len(self.entities)}"
-
+        monster_id = f"monster_{monster_type}_{len(self.entities)}_{map_name or 'unknown'}"
         # Создаем данные
         monster_data = game_data.create_monster_data(
             monster_id=monster_id,
             monster_type=monster_type,
             position=position,
-            custom_props=properties
+            custom_props=properties,
+            map_name=map_name
         )
 
         # Находим ближайшую зону

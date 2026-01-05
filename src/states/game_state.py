@@ -144,17 +144,23 @@ class GameplayState(BaseState):
             path = f"maps/{map}.tmx"
             self.logger.info(f"Смена карты: {map}")
 
+            # Очищаем монстров предыдущей карты
+            self.entity_manager.clear_monsters()
+
+            # Устанавливаем текущую карту в EntityManager
+            self.entity_manager.set_current_map(map)
+
             # Загружаем новую карту
             success = self.map_loader.load(path)
             if not success:
                 self.logger.error(f"Не удалось загрузить карту: {map}")
                 return False
 
-            # self.monsters = arcade.SpriteList()
-            #
-            # loaded_monsters = self.map_loader.load_entities(self.entity_manager)
-            # for monster in loaded_monsters:
-            #     self.monsters.append(monster)
+            # Загружаем монстров для новой карты
+            loaded_monsters = self.map_loader.load_entities(map)
+            for monster in loaded_monsters:
+                if monster.is_alive:
+                    self.monsters.append(monster)
 
             # Обновляем слой коллизий
             self.collision_layer = self.map_loader.get_collision_layer()
@@ -176,7 +182,6 @@ class GameplayState(BaseState):
         target_x = self.player.center_x
         target_y = self.player.center_y
 
-        # 3. ОГРАНИЧЕНИЕ ПОЗИЦИИ (Замена set_map_bounds)
         # Учитываем половину размера экрана, чтобы камера не показывала пустоту за краем
         half_screen_w = self.gsm.window.width / 2
         half_screen_h = self.gsm.window.height / 2
@@ -185,7 +190,7 @@ class GameplayState(BaseState):
         final_x = max(self.map_left + half_screen_w, min(target_x, self.map_right - half_screen_w))
         final_y = max(self.map_bottom + half_screen_h, min(target_y, self.map_top - half_screen_h))
 
-        # 4. ПРИМЕНЕНИЕ (Для мгновенного следования)
+        # ПРИМЕНЕНИЕ (Для мгновенного следования)
         self.camera.position = (final_x, final_y)
 
         ns.notification(f"Телепорт в ({x}, {y}). карта: {map or 'текущая'}")

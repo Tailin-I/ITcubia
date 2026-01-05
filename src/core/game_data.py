@@ -243,7 +243,7 @@ class GameData:
 
         return nearest_zone
 
-    def create_monster_data(self, monster_id, monster_type, position, custom_props=None):
+    def create_monster_data(self, monster_id, monster_type, position, custom_props=None,  map_name=None):
         """Создать данные монстра с учетом дефолтных и кастомных свойств"""
         # Копируем шаблон для этого типа
         monster_data = self.monster_templates[monster_type].copy()
@@ -255,7 +255,8 @@ class GameData:
             "position": {"x": position[0], "y": position[1]},
             "is_alive": True,
             "zone_id": None,  # Будет установлено позже
-            "custom_properties": custom_props or {}
+            "custom_properties": custom_props or {},
+            "map_name": map_name
         })
 
         # Перезаписываем свойствами из Tiled
