@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="10" nextobjectid="106">
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="10" nextobjectid="107">
  <tileset firstgid="1" source="first.tsx"/>
- <tileset firstgid="157" source="../../../../snap/tiled/4760/first.tsx"/>
+ <tileset firstgid="157" source="first.tsx"/>
  <layer id="1" name="ground" width="150" height="50">
   <data encoding="base64" compression="zlib">
    eJzt0rENACAMA0FPzEJZiLFoWAEpRFec3Lr4SlIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8LnV4ANz7Lu64gVdAQAAAADTHca9vao=

@@ -51,15 +51,14 @@ class GameplayState(BaseState):
 
         # Загружаем Tiled карту
         self.map_loader.load(
-            "maps/testmap.tmx"  # НОВЫЙ ФАЙЛ
+            "maps/testmap.tmx"
         )
         self.monsters = arcade.SpriteList()
 
-        # Загружаем существ через EntityManager
-        loaded_monsters = self.map_loader.load_entities(self.entity_manager, 4)
+        loaded_monsters = self.map_loader.load_entities(self.entity_manager)
         for monster in loaded_monsters:
             self.monsters.append(monster)
-            self.logger.debug(f"Монстр добавлен: {monster.entity_id} в зоне {monster.zone_id}")
+            self.logger.debug(f"Монстр добавлен: {monster.entity_id}")
         # Предметы на земле
         self.loot_on_ground = arcade.SpriteList()
 
@@ -150,6 +149,12 @@ class GameplayState(BaseState):
             if not success:
                 self.logger.error(f"Не удалось загрузить карту: {map}")
                 return False
+
+            # self.monsters = arcade.SpriteList()
+            #
+            # loaded_monsters = self.map_loader.load_entities(self.entity_manager)
+            # for monster in loaded_monsters:
+            #     self.monsters.append(monster)
 
             # Обновляем слой коллизий
             self.collision_layer = self.map_loader.get_collision_layer()
@@ -270,50 +275,48 @@ class GameplayState(BaseState):
 
     def draw(self):
         """Отрисовка игры"""
-        # Активируем камеру
+        # Активируем камеру для игрового мира
         self.camera.use()
 
         # Рисуем карту
         self.map_loader.draw()
 
-        # сундуки
+        # Рисуем сундуки
         self.map_loader.event_manager.draw()
 
-        # Рисуем игрока
+        # Рисуем игрока и монстров
         self.player_list.draw()
-
-        # Рисуем монстров и лут
         self.monsters.draw()
-        # self.loot_on_ground.draw()
 
-        # Отключаем камеру для UI (если нужно)
-        self.default_camera.use()
-        # Переключаемся на UI камеру
+        # ВАЖНО: отладочную информацию рисуем ТОЖЕ под камерой!
+        self.entity_manager.draw_debug()
+
+        # Переключаемся на UI камеру (полный экран)
         self.default_camera.use()
 
+        # Рисуем UI элементы (здоровье, уведомления и т.д.)
         if C.debug_mode:
+            # FPS и координаты
             text = f"x:{int(self.player.center_x // self.tile_size)} y:{int(self.player.center_y // self.tile_size)}"
             arcade.Text(text,
                         self.gsm.window.width - 3 * self.tile_size,
                         self.gsm.window.height - self.tile_size,
-                        C.DEEPSEEK_COLOR,
-                        18).draw()
+                        C.DEEPSEEK_COLOR, 18).draw()
+
             arcade.Text(f"FPS: {self.fps}",
                         self.gsm.window.width - 3 * self.tile_size,
                         self.gsm.window.height - 0.5 * self.tile_size,
-                        C.DEEPSEEK_COLOR,
-                        18).draw()
+                        C.DEEPSEEK_COLOR, 18).draw()
 
-        self.entity_manager.draw_debug()
         # Рисуем UI элементы
         for ui_element in self.ui_elements:
             ui_element.draw()
 
-            # Рисуем оповещения
-            ns.draw(
-                x=self.tile_size / 2,
-                y=self.gsm.window.height - self.tile_size / 2
-            )
+        # Рисуем уведомления
+        ns.draw(
+            x=self.tile_size / 2,
+            y=self.gsm.window.height - self.tile_size / 2
+        )
 
     def _pickup_loot(self):
         """Подбирает предметы с земли"""

@@ -221,22 +221,24 @@ class GameData:
         """Получить зону по ID"""
         return self.monster_zones.get(zone_id)
 
-    def find_nearest_zone(self, x, y, max_distance=500):
-        """Найти ближайшую зону к точке"""
+    def find_nearest_zone(self, x, y, max_distance=1000):
+        """Находит ближайшую зону к точке"""
         nearest_zone = None
         min_distance = float('inf')
 
         for zone_id, zone in self.monster_zones.items():
             zone_x, zone_y, zone_w, zone_h = zone["rect"]
+
             # Центр зоны
             center_x = zone_x + zone_w / 2
             center_y = zone_y + zone_h / 2
 
+            # Расстояние до центра зоны
             distance = ((x - center_x) ** 2 + (y - center_y) ** 2) ** 0.5
 
             if distance < min_distance and distance <= max_distance:
                 min_distance = distance
-                nearest_zone = zone
+                nearest_zone = zone.copy()
                 nearest_zone["id"] = zone_id
 
         return nearest_zone
