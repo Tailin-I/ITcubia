@@ -1,13 +1,17 @@
+from arcade.color import BLACK
+from arcade.types import RGBOrA255
+
 from .base_entity import Entity
 from ..core.resource_manager import resource_manager
 from ..core.game_data import game_data
+from ..ui.health_bar import HealthBar
 from ..ui.notification_system import notifications as ns
 
 
 class Monster(Entity):
     """Простой монстр"""
 
-    def __init__(self, monster_id: str, monster_type: str, position, properties=None, scale=1.0):
+    def __init__(self, monster_id: str, monster_type: str, position: list[float], properties=None, scale=1.0):
         # Грузим текстуру
         texture = resource_manager.load_texture("monsters/bug.png")
 
@@ -36,6 +40,16 @@ class Monster(Entity):
 
         # Загружаем свойства из GameData
         self._load_properties_from_data()
+
+        self.health_bar = HealthBar(
+            self,
+            x= position[0],
+            y=position[1] + self.height,
+            width=100,
+            height=10,
+            font_size=8,
+            border=1
+        )
 
         if not self.is_alive:
             self.visible = False
@@ -87,18 +101,20 @@ class Monster(Entity):
         """Обновление с поддержкой поведения"""
         super().update(delta_time)
 
-        # Если монстр мертв, скрываем его
-        if not self.is_alive:
-            self.visible = False
-            # Можно добавить анимацию смерти
-            return
+        self.health_bar.x =self.center_x
+        self.health_bar.y = self.center_y + self.height
 
-        # Простое преследование для теста (очень простое!)
-        if player and self._can_see_player(player):
+
+        # Простое преследование для теста
+        if self._can_see_player(player):
             self._simple_chase(player, delta_time)
 
         # Базовое поведение
         self._update_behavior(delta_time, player, collision_layer)
+    def draw(self):
+
+        self.health_bar.draw()
+
 
     def _simple_chase(self, player, delta_time):
         """Простое преследование игрока"""
@@ -118,6 +134,7 @@ class Monster(Entity):
             # Двигаем монстра
             self.center_x += dx * self.chase_speed * delta_time * 60
             self.center_y += dy * self.chase_speed * delta_time * 60
+
 
     def _update_behavior(self, delta_time, player, collision_layer):
         """Обновляет поведение монстра"""
@@ -142,16 +159,37 @@ class Monster(Entity):
     def _can_see_player(self, player):
         """Может ли монстр видеть игрока"""
         distance = self._get_distance_to_player(player)
-
         # Проверяем зрение
         if distance > self.vision_range:
             return False
 
-        # Проверяем находится ли игрок в зоне (если есть зона)
-        if self.zone_rect:
-            if not self._is_point_in_zone(player.center_x, player.center_y):
-                return False
+        # # Проверяем находится ли игрок в зоне (если есть зона)
+        # if not self._is_point_in_zone(player.center_x, player.center_y):
+        #     return False
 
         # TODO: Добавить проверку на препятствия (стены)
 
         return True
+
+
+    @property
+    def chase_speed(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("chase_speed")
+
+    @chase_speed.setter
+    def chase_speed(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data["chase_speed"] = value
+
+    @property
+    def vision_range(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("vision_range")
+
+    @vision_range.setter
+    def vision_range(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data["vision_range"] = value

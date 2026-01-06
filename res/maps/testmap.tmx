@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="10" nextobjectid="107">
  <tileset firstgid="1" source="first.tsx"/>
- <tileset firstgid="157" source="first.tsx"/>
  <layer id="1" name="ground" width="150" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0rENACAMA0FPzEJZiLFoWAEpRFec3Lr4SlIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8LnV4ANz7Lu64gVdAQAAAADTHca9vao=
+   eJzt0rENACAMA0EPxGwslGVpWAEpRFec3Lr4SlIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8Lnd4ANzrLu64gVdAQAAAADTHYKLvQ4=
   </data>
  </layer>
  <layer id="2" name="walls" width="150" height="50">
@@ -90,7 +89,8 @@
   <object id="94" name="second_bug" type="bug" x="356" y="2005.34">
    <properties>
     <property name="behavior" value="aggressive"/>
-    <property name="health" type="int" value="10"/>
+    <property name="health" type="int" value="12"/>
+    <property name="speed" type="int" value="4"/>
    </properties>
    <point/>
   </object>
@@ -98,6 +98,8 @@
    <properties>
     <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="20"/>
+    <property name="max_health" type="int" value="23"/>
+    <property name="speed" type="int" value="1"/>
    </properties>
    <point/>
   </object>
@@ -111,9 +113,9 @@
   </object>
   <object id="97" name="hidden_bug" type="bug" x="946.667" y="2974.67">
    <properties>
-    <property name="aggro_range" type="int" value="50"/>
     <property name="behavior" value="aggressive"/>
-    <property name="health" type="int" value="6"/>
+    <property name="max_health" type="int" value="6"/>
+    <property name="vision_range" type="int" value="50"/>
    </properties>
    <point/>
   </object>

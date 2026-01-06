@@ -18,6 +18,8 @@ class Entity(arcade.Sprite):
         self.textures = texture_list
         self.cur_texture_index = 0
         self.time_elapsed = 0
+        self.data = game_data.get_entity_data(self.entity_id)
+
 
 
     @property
@@ -52,6 +54,32 @@ class Entity(arcade.Sprite):
         data["is_alive"] = value
         self.logger.debug(f"Монстр {self.entity_id}: is_alive = {value}")
 
+
+    @property
+    def change_x(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("position")[0]
+
+    @change_x.setter
+    def change_x(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data.get("position")[0] = value
+
+    @property
+    def change_y(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("position")[1]
+
+    @change_y.setter
+    def change_y(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data.get("position")[1] = value
+
+
+
     def update(self, delta_time: float = 1 / 60, *args, **kwargs) -> None:
         """Базовое обновление"""
         self.time_elapsed += delta_time
+

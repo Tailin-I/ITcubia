@@ -34,24 +34,22 @@ class EntityManager:
 
         return current_map_monsters
 
-    def spawn_monster(self, monster_type: str, position, properties=None, scale=1.0, map_name: str = None):
+    def spawn_monster(self,  monster_id: str, monster_type: str, position, properties=None, map_name: str = None, scale=1.0):
         """
         Создает монстра.
         position: координаты (x, y) в пикселях
         scale: масштаб спрайта (не влияет на координаты!)
         """
-        # Уникальный ID
-        monster_id = f"monster_{monster_type}_{len(self.entities)}_{map_name or 'unknown'}"
-
-        if map_name and not isinstance(map_name, str):
-            self.logger.error(f"ОШИБКА: map_name должен быть строкой, получен {type(map_name)}")
-            return None
 
         # ПРОВЕРЯЕМ: если монстр уже существует - возвращаем его
-        if monster_id in self.entities:
+        if monster_id in self.entities.keys():
             existing = self.entities[monster_id]
             self.logger.info(f"Монстр {monster_id} уже существует")
             return existing
+        else:
+            print(self.entities.keys())
+            print(monster_id)
+            print()
 
         # ПРОВЕРЯЕМ: если монстр мертв в game_data - не создаем
         data = game_data.get_entity_data(monster_id)
@@ -65,7 +63,8 @@ class EntityManager:
             monster_type=monster_type,
             position=position,
             custom_props=properties,
-            map_name=map_name
+            map_name=map_name,
+            scale = scale
         )
 
         # Находим ближайшую зону
@@ -160,21 +159,27 @@ class EntityManager:
             if monster.is_alive:
                 data = game_data.get_entity_data(monster.entity_id)
                 # Радиус агрессии
-                if hasattr(monster, 'aggro_range'):
+                if hasattr(monster, 'vision_range'):
                     arcade.draw_circle_outline(
                         monster.center_x, monster.center_y,
-                        monster.aggro_range,
+                        monster.vision_range,
                         arcade.color.RED, 1
                     )
 
                 # ID и координаты
                 arcade.Text(
                     data["id"],
-                    monster.center_x, monster.center_y + 15,
+                    monster.center_x, monster.center_y + monster.height+10,
                     arcade.color.WHITE, 15,
                     anchor_x="center"
                 ).draw()
 
+                # arcade.Text(
+                #     f"({int(monster.center_x)},{int(monster.center_y)})",
+                #     monster.center_x, monster.center_y - 10,
+                #     arcade.color.CYAN, 15,
+                #     anchor_x="center"
+                # ).draw()
 
 
 # Глобальный экземпляр

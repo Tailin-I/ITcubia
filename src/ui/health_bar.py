@@ -6,7 +6,7 @@ from .ui_component import UIComponent
 class HealthBar(UIComponent):
     """Горизонтальная шкала здоровья"""
 
-    def __init__(self, entity, x, y, width=200, height=20):
+    def __init__(self, entity, x, y, width=200, height=20, font_size=12, border=2):
         super().__init__(x, y, width, height)
         self.entity = entity  # Сущность, за которой следим
 
@@ -14,7 +14,8 @@ class HealthBar(UIComponent):
         self.bg_color = arcade.color.DARK_SLATE_GRAY
         self.fill_color = arcade.color.RED
         self.border_color = arcade.color.GOLD
-        self.border_width = 2
+        self.border_width = border
+        self.font_size = font_size
 
     def draw(self):
         if not self.visible:
@@ -48,8 +49,9 @@ class HealthBar(UIComponent):
 
         # Текст (опционально)
         arcade.Text(
-            f"HP: {self.entity.health}/{self.entity.max_health}",
+            f"{self.entity.health}/{self.entity.max_health}",
             self.x, self.y,
-            arcade.color.WHITE, 12,
+            arcade.color.WHITE,
+            self.font_size,
             anchor_x="center", anchor_y="center"
         ).draw()

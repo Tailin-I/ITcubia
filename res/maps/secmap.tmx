@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="9">
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="10">
  <tileset firstgid="1" source="first.tsx"/>
  <layer id="1" name="ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -10,7 +10,9 @@
   <object id="7" name="bug" type="bug" x="1638.67" y="3156">
    <properties>
     <property name="behavior" value="aggressive"/>
-    <property name="health" type="int" value="10"/>
+    <property name="max_health" type="int" value="100"/>
+    <property name="scale" type="int" value="3"/>
+    <property name="vision_range" type="int" value="300"/>
    </properties>
    <point/>
   </object>
@@ -19,12 +21,6 @@
   <object id="8" name="bug_zone" type="zone" x="1072" y="2518.67" width="1196" height="904"/>
  </objectgroup>
  <objectgroup id="2" name="events">
-  <object id="1" name="go to top" type="teleport" x="1257.58" y="3351.21" width="481.818" height="72.7273">
-   <properties>
-    <property name="target_x" type="int" value="25"/>
-    <property name="target_y" type="int" value="48"/>
-   </properties>
-  </object>
   <object id="4" name="first_chest_here" type="chest" x="1893.33" y="3297.33" width="202.667" height="137.333">
    <properties>
     <property name="lock" value="&lt;&gt;"/>

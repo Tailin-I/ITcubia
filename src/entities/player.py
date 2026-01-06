@@ -4,6 +4,7 @@ from arcade import SpriteList
 from .base_entity import Entity
 from .monster import Monster
 from config import constants as C
+from ..core.game_data import game_data
 
 
 class Player(Entity):
@@ -30,11 +31,7 @@ class Player(Entity):
         self.cur_texture_index = self.texture_indexes["down"]
 
         # Позиция из GameData
-        pos_data = self.data_source.get_entity_data("player")
-        if pos_data:
-            pos = pos_data.get("position")
-            self.center_x = pos["x"]
-            self.center_y = pos["y"]
+        self.center_x, self.center_y = game_data.get_player_position()
 
         # Инициализируем текстуру
         self.set_texture(self.cur_texture_index)
@@ -174,25 +171,3 @@ class Player(Entity):
         elif not C.ghost_mode and self.color != C.player_color:
             # Возвращаем нормальный цвет
             self.color = C.player_color
-
-    @property
-    def change_x(self):
-        """Читаем из GameData, не копируем"""
-        data = self.data_source.get_entity_data(self.entity_id)
-        return data.get("position")[0] if data else 0
-
-    @change_x.setter
-    def change_x(self, value):
-        data = self.data_source.get_entity_data(self.entity_id)
-        data.get("position")[0] = value
-
-    @property
-    def change_y(self):
-        """Читаем из GameData, не копируем"""
-        data = self.data_source.get_entity_data(self.entity_id)
-        return data.get("position")[1] if data else 0
-
-    @change_y.setter
-    def change_y(self, value):
-        data = self.data_source.get_entity_data(self.entity_id)
-        data.get("position")[1] = value

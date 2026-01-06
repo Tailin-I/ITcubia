@@ -50,7 +50,7 @@ class GameplayState(BaseState):
         self.map_loader = MapLoader()
 
         # Загружаем Tiled карту
-        start_map = "testmap"
+        start_map = "secmap"
         self.map_loader.load( f"maps/{start_map}.tmx")
         self.monsters = arcade.SpriteList()
 
@@ -80,9 +80,9 @@ class GameplayState(BaseState):
         self.camera = arcade.camera.Camera2D()
 
         # Получаем позицию из game_data
-        pos = self.game_data.get_player_position()
-        self.player.center_x = pos[0] * self.scale_factor
-        self.player.center_y = pos[1] * self.scale_factor
+        # pos = self.game_data.get_player_position()
+        # self.player.center_x = pos[0] * self.scale_factor
+        # self.player.center_y = pos[1] * self.scale_factor
 
         # UI элементы
         self.ui_elements = []
@@ -117,15 +117,6 @@ class GameplayState(BaseState):
             height=20
         )
         self.ui_elements.append(self.health_bar)
-
-        # Сохраняем оригинальные координаты для масштабирования
-        for ui_element in self.ui_elements:
-            ui_element.original_x = ui_element.x
-            ui_element.original_y = ui_element.y
-            if hasattr(ui_element, 'width'):
-                ui_element.original_width = ui_element.width
-            if hasattr(ui_element, 'height'):
-                ui_element.original_height = ui_element.height
 
         # Устанавливаем начальные значения
         self.deepseek_bar.set_value(75, 100)
@@ -293,12 +284,14 @@ class GameplayState(BaseState):
         # Рисуем сундуки
         self.map_loader.event_manager.draw()
 
+        self.entity_manager.draw_debug()
         # Рисуем игрока и монстров
         self.player_list.draw()
         self.monsters.draw()
+        for monster in self.monsters:
+            monster.draw()
 
-        # ВАЖНО: отладочную информацию рисуем ТОЖЕ под камерой!
-        self.entity_manager.draw_debug()
+
 
         # Переключаемся на UI камеру (полный экран)
         self.default_camera.use()

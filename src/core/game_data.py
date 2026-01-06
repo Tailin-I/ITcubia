@@ -1,5 +1,6 @@
 import logging
 import pickle
+from typing import Dict
 
 from ..ui.notification_system import notifications as ns
 from config import constants as C
@@ -47,10 +48,8 @@ class GameData:
                 "max_health": 20,
                 "damage": 1,
                 "speed": 2,
-                "aggro_range": 150,
                 "vision_range": 200,
                 "behavior": "aggressive",
-                # "patrol_speed": 1.5,
                 "chase_speed": 3,
                 "loot_table": []
             }
@@ -92,6 +91,7 @@ class GameData:
             with open(filename, 'rb') as f:
                 data = pickle.load(f)
                 self.__dict__.update(data)  # Обновляем все данные
+
         except FileNotFoundError:
             self.logger.warning("Файл сохранения не найден, используем значения по умолчанию")
 
@@ -243,7 +243,7 @@ class GameData:
 
         return nearest_zone
 
-    def create_monster_data(self, monster_id, monster_type, position, custom_props=None,  map_name=None):
+    def create_monster_data(self, monster_id, monster_type, position, custom_props: Dict=None,  map_name=None, scale=1):
         """Создать данные монстра с учетом дефолтных и кастомных свойств"""
         # Копируем шаблон для этого типа
         monster_data = self.monster_templates[monster_type].copy()
@@ -256,14 +256,19 @@ class GameData:
             "is_alive": True,
             "zone_id": None,  # Будет установлено позже
             "custom_properties": custom_props or {},
-            "map_name": map_name
+            "map_name": map_name,
+            "scale": scale
         })
 
         # Перезаписываем свойствами из Tiled
         if custom_props:
             for key, value in custom_props.items():
                 if key in monster_data:
+                    print(key, value)
                     monster_data[key] = value
+
+            if "health" not in custom_props.keys():
+                monster_data["health"] = monster_data["max_health"]
 
         return monster_data
 

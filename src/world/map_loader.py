@@ -262,8 +262,8 @@ class MapLoader:
                 return None
 
             # Тип монстра
-            monster_type = getattr(obj, 'type', 'bug').lower()
-
+            monster_type = getattr(obj, 'type').lower()
+            scale = getattr(obj, 'scale', 1)
             # Свойства из Tiled
             properties = {}
             if hasattr(obj, 'properties'):
@@ -271,12 +271,15 @@ class MapLoader:
                 if isinstance(props, dict):
                     properties = props.copy()
 
-            # Создаем монстра (scale=1, координаты уже правильные)
+            monster_id = f"monster_{monster_type}_{index}_{map_name}"
+
             monster = entity_manager.spawn_monster(
+                monster_id=monster_id,
                 monster_type=monster_type,
                 position=(x, y),
                 properties=properties,
-                map_name = map_name
+                map_name = map_name,
+                scale = scale
             )
 
             if monster:
