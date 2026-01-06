@@ -1,6 +1,8 @@
 from typing import Dict, Any
 
 import arcade
+
+from ..core.game_data import game_data
 from ..ui.notification_system import notifications as ns
 
 from .event import GameEvent
@@ -28,7 +30,7 @@ class ChestEvent(GameEvent):
         loot_str = properties.get("loot", "")
         self.loot_items = ItemFactory.parse_loot_string(loot_str)
 
-        self.logger.info(f"Создан сундук: id={event_id}, loot='{loot_str}', items={len(self.loot_items)}")
+        self.logger.debug(f"Создан сундук: id={event_id}, loot='{loot_str}', items={len(self.loot_items)}")
 
 
     def activate(self, player, game_state):
@@ -101,12 +103,16 @@ class ChestEvent(GameEvent):
 
     def _save_state(self):
         """Сохраняет состояние сундука"""
-        if hasattr(self, 'event_manager') and self.event_manager:
-            self.event_manager.save_event_state(self.event_id, {
+
+        # Создаем или обновляем данные о сундуке
+        chest_data = {
+                "id": self.event_id,
+                "type": "chest",
                 "is_empty": self.is_empty,
                 "map_name": self.map_name
-            })
-
+            }
+            # Можно сохранить в monsters_data или создать отдельное хранилище
+        game_data.monsters_data[self.event_id] = chest_data #TODO
     def _add_to_inventory(self, player, item):
         """Добавляет предмет в инвентарь игрока"""
         inventory = player.inventory  # Это свойство из Player класса
@@ -145,3 +151,5 @@ class ChestEvent(GameEvent):
 
         # Еще вводим
         return None, False, self.player_sequence
+
+

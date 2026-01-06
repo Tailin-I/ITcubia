@@ -37,25 +37,22 @@ class Monster(Entity):
         # Загружаем свойства из GameData
         self._load_properties_from_data()
 
+        if not self.is_alive:
+            self.visible = False
+            self.logger.info(f"Монстр {monster_id} уже мертв")
+
     def _load_properties_from_data(self):
         """Загружает свойства из GameData"""
         data = self.data_source.get_entity_data(self.entity_id)
         if data:
-            # Устанавливаем свойства
-            self.aggro_range = data.get("aggro_range", 150)
-            self.vision_range = data.get("vision_range", 200)
-            self.behavior = data.get("behavior", "passive")
-            # self.patrol_speed = data.get("patrol_speed", 1.5)
-            self.chase_speed = data.get("chase_speed", 3.0)
+            # Устанавливаем свойства как атрибуты
+            for key, value in data.items():
+                if key not in ["id", "type", "position"]:  # Исключаем базовые поля
+                    setattr(self, key, value)
 
-            # Зона
-            self.zone_id = data.get("zone_id")
-
-            # Находим rect зоны
-            if self.zone_id:
-                zone = self.data_source.get_monster_zone(self.zone_id)
-                if zone:
-                    self.zone_rect = zone.get("rect")
+            # Если монстр мертв - скрываем
+            if not data.get("is_alive", True):
+                self.visible = False
 
     def interact(self):
         """Взаимодействие с игроком - двусторонний урон"""
@@ -65,7 +62,7 @@ class Monster(Entity):
             monster_damage = data.get("damage", 1)
             game_data.take_damage(monster_damage)
 
-            # Игрок наносит урон монстру (просто для теста)
+            # Игрок наносит урон монстру
             player_damage = game_data.player_data.get("strength", 1)
             current_health = data.get("health", 1)
 
@@ -75,16 +72,16 @@ class Monster(Entity):
 
             # Если здоровье закончилось - монстр умирает
             if new_health <= 0:
-                data["is_alive"] = False
+                # ВАЖНО: используем сеттер, который сохранит в game_data
+                self.is_alive = False  # Это вызовет сеттер
                 self.visible = False
                 ns.notification(f"Монстр побежден!")
 
-                # Можно добавить опыт или лут
-                exp_reward = 10  # Просто пример
+                # Добавляем опыт
+                exp_reward = 10
                 game_data.add_exp(exp_reward)
 
             ns.notification(f"Вы получили {monster_damage} урона, монстр получил {player_damage}")
-
     # Также добавим метод для обработки смерти в update:
     def update(self, delta_time: float = 1 / 60, player=None, collision_layer=None):
         """Обновление с поддержкой поведения"""

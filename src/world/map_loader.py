@@ -39,8 +39,6 @@ class MapLoader:
             # Извлекаем имя карты из пути
             map_name = Path(map_file).stem
 
-            game_data.monster_zones.clear()
-
             self.event_manager = EventManager()
 
             # Полный путь к файлу
@@ -75,7 +73,7 @@ class MapLoader:
             self.containers_layer = self.tile_map.sprite_lists.get("containers")
 
             # Загружаем события (сундуки, телепорты)
-            self._load_events(scale)
+            self._load_events(scale, map_name)
 
             # Создаем сцену
             self.scene = arcade.Scene.from_tilemap(self.tile_map)

@@ -50,15 +50,18 @@ class GameplayState(BaseState):
         self.map_loader = MapLoader()
 
         # Загружаем Tiled карту
-        self.map_loader.load(
-            "maps/testmap.tmx"
-        )
+        start_map = "testmap"
+        self.map_loader.load( f"maps/{start_map}.tmx")
         self.monsters = arcade.SpriteList()
 
-        loaded_monsters = self.map_loader.load_entities(self.entity_manager)
-        for monster in loaded_monsters:
-            self.monsters.append(monster)
-            self.logger.debug(f"Монстр добавлен: {monster.entity_id}")
+        # Загружаем монстров для стартовой карты
+        for monster in self.entity_manager.monsters:
+            if monster and monster.is_alive and start_map in monster.entity_id:
+                self.monsters.append(monster)
+
+        # Устанавливаем текущую карту
+        self.entity_manager.set_current_map(start_map)
+
         # Предметы на земле
         self.loot_on_ground = arcade.SpriteList()
 
@@ -137,20 +140,13 @@ class GameplayState(BaseState):
     def teleport_to(self, x: int, y: int, map: str = None):
         """
         Телепортирует игрока в указанные координаты.
-        Если указан map_path - загружает новую карту.
         """
         # Если нужно сменить карту
         if map:
             path = f"maps/{map}.tmx"
             self.logger.info(f"Смена карты: {map}")
 
-            # Очищаем монстров предыдущей карты
-            self.entity_manager.clear_monsters()
-
-            # Устанавливаем текущую карту в EntityManager
-            self.entity_manager.set_current_map(map)
-
-            # Устанавливаем текущую карту в EntityManager
+            # Устанавливаем текущую карту
             self.entity_manager.set_current_map(map)
 
             # Загружаем новую карту
@@ -159,11 +155,21 @@ class GameplayState(BaseState):
                 self.logger.error(f"Не удалось загрузить карту: {map}")
                 return False
 
-            # Загружаем монстров для новой карты
-            loaded_monsters = self.map_loader.load_entities(map)
-            for monster in loaded_monsters:
-                if monster and monster.is_alive:
+            # Очищаем список монстров для отрисовки
+            self.monsters.clear()
+
+            # Получаем монстров для этой карты из EntityManager
+            current_map_monsters = self.entity_manager.get_monsters_for_current_map()
+
+
+
+            for monster in current_map_monsters:
+                if monster and monster.is_alive and self.entity_manager.current_map_name in monster.entity_id:
+                    print(f'монстр {monster.entity_id} добавлен на карту {self.entity_manager.current_map_name}')
                     self.monsters.append(monster)
+
+
+
 
             # Обновляем слой коллизий
             self.collision_layer = self.map_loader.get_collision_layer()
@@ -236,11 +242,6 @@ class GameplayState(BaseState):
 
         self.entity_manager.update_all(delta_time, self.player, self.collision_layer)
 
-        # Обновляем список монстров для отрисовки
-        self.monsters.clear()
-        for monster in self.entity_manager.monsters:
-            if monster.is_alive:
-                self.monsters.append(monster)
         # Подбираем лут
         self._pickup_loot()
 

@@ -175,3 +175,24 @@ class Player(Entity):
             # Возвращаем нормальный цвет
             self.color = C.player_color
 
+    @property
+    def change_x(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("position")[0] if data else 0
+
+    @change_x.setter
+    def change_x(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data.get("position")[0] = value
+
+    @property
+    def change_y(self):
+        """Читаем из GameData, не копируем"""
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("position")[1] if data else 0
+
+    @change_y.setter
+    def change_y(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data.get("position")[1] = value

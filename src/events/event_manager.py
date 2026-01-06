@@ -6,6 +6,7 @@ from .event import GameEvent
 from .chest_event import ChestEvent
 from .teleport_event import TeleportEvent
 from config import  constants as C
+from ..core.game_data import game_data
 from ..core.resource_manager import resource_manager
 # from ..ui.notification_system import notifications as ns
 
@@ -86,7 +87,15 @@ class EventManager:
             # Создаем событие
             if event_type == "chest":
                 event = ChestEvent(event_id, name, (x, y, width, height), properties)
-                event.map_name = map_name  # Устанавливаем карту
+                event.map_name = map_name
+
+                # Восстанавливаем состояние из game_data
+                saved_data = game_data.monsters_data.get(event_id)
+                if saved_data and saved_data.get("is_empty", False):
+                    event.is_empty = True
+                    if event.sprite:
+                        event.sprite.update_visual()
+
                 return event
             elif event_type == "teleport":
                 event = TeleportEvent(event_id, name, (x, y, width, height), properties)

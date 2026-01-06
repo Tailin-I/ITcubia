@@ -20,25 +20,21 @@ class EntityManager:
         self.current_map_name = map_name
         self.logger.info(f"Установлена карта: {map_name}")
 
-    def clear_monsters(self):
-        """Очищает ВСЕХ монстров (для смены карты)"""
-        for monster in self.monsters[:]:
-            self.remove_entity(monster.entity_id)
-        self.logger.info("Все монстры очищены")
-
     def get_monsters_for_current_map(self):
         """Возвращает монстров только для текущей карты (на основе данных в GameData)"""
+        if not self.current_map_name:
+            return []
+
         current_map_monsters = []
 
         for monster in self.monsters:
-            # Получаем данные монстра из GameData
-            data = game_data.get_entity_data(monster.entity_id)
-            if data and data.get("map_name") == self.current_map_name:
+            # Простая проверка по ID - если в ID есть имя текущей карты
+            if self.current_map_name in monster.entity_id:
                 current_map_monsters.append(monster)
 
         return current_map_monsters
 
-    def spawn_monster(self, monster_type: str, position, properties=None, scale=1.0, map_name: str = None) -> Monster:
+    def spawn_monster(self, monster_type: str, position, properties=None, scale=1.0, map_name: str = None):
         """
         Создает монстра.
         position: координаты (x, y) в пикселях
@@ -46,6 +42,23 @@ class EntityManager:
         """
         # Уникальный ID
         monster_id = f"monster_{monster_type}_{len(self.entities)}_{map_name or 'unknown'}"
+
+        if map_name and not isinstance(map_name, str):
+            self.logger.error(f"ОШИБКА: map_name должен быть строкой, получен {type(map_name)}")
+            return None
+
+        # ПРОВЕРЯЕМ: если монстр уже существует - возвращаем его
+        if monster_id in self.entities:
+            existing = self.entities[monster_id]
+            self.logger.info(f"Монстр {monster_id} уже существует")
+            return existing
+
+        # ПРОВЕРЯЕМ: если монстр мертв в game_data - не создаем
+        data = game_data.get_entity_data(monster_id)
+        if data and not data.get("is_alive", True):
+            self.logger.info(f"Монстр {monster_id} мертв")
+            return None
+
         # Создаем данные
         monster_data = game_data.create_monster_data(
             monster_id=monster_id,
@@ -77,6 +90,11 @@ class EntityManager:
         if nearest_zone:
             monster.zone_id = nearest_zone["id"]
             monster.zone_rect = nearest_zone["rect"]
+
+        monster_data["map_name"] = map_name
+
+        # Сохраняем
+        game_data.add_monster(monster_id, monster_data)
 
         # Добавляем в менеджер
         self.entities[monster_id] = monster
@@ -117,23 +135,30 @@ class EntityManager:
 
         # Рисуем зоны
         for zone_id, zone in game_data.monster_zones.items():
+            if zone.get("map_name") != self.current_map_name:
+                continue
             x, y, w, h = zone["rect"]
-            arcade.draw_rect_outline(
+            arcade.draw_rect_filled(
                 arcade.rect.XYWH(x + w / 2, y + h / 2, w, h),
-                arcade.color.YELLOW, 2
+                C.MENU_BACKGROUND_COLOR_TRANSLUCENT
             )
 
             # Название зоны
             arcade.Text(
                 f"Zone: {zone_id}",
                 x + w / 2, y + h / 2,
-                arcade.color.YELLOW, 10,
+                arcade.color.YELLOW, 15,
                 anchor_x="center", anchor_y="center"
             ).draw()
 
         # Рисуем информацию о монстрах
         for monster in self.monsters:
+
+            if game_data.get_entity_data(monster.entity_id)["map_name"] != self.current_map_name:
+                continue
+
             if monster.is_alive:
+                data = game_data.get_entity_data(monster.entity_id)
                 # Радиус агрессии
                 if hasattr(monster, 'aggro_range'):
                     arcade.draw_circle_outline(
@@ -144,18 +169,12 @@ class EntityManager:
 
                 # ID и координаты
                 arcade.Text(
-                    f"{monster.entity_id}",
+                    data["id"],
                     monster.center_x, monster.center_y + 15,
-                    arcade.color.WHITE, 8,
+                    arcade.color.WHITE, 15,
                     anchor_x="center"
                 ).draw()
 
-                arcade.Text(
-                    f"({int(monster.center_x)},{int(monster.center_y)})",
-                    monster.center_x, monster.center_y - 10,
-                    arcade.color.CYAN, 8,
-                    anchor_x="center"
-                ).draw()
 
 
 # Глобальный экземпляр

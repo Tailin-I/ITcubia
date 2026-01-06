@@ -212,6 +212,7 @@ class CheatConsoleState(BaseState):
     def _execute_command(self, command):
         if command == "GODMOD":
             health_to_add = 9999
+            self.gsm.current_state.player.max_health = health_to_add
             self.gsm.current_state.player.health = health_to_add
             self.text_to_draw = [
                 "Помни кто здесь бог!",

@@ -6,10 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="правка монстров 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/events/chest_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/chest_event.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/events/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/event_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/cheat_console_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/cheat_console_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/health_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/health_bar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
