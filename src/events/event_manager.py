@@ -7,7 +7,7 @@ from .chest_event import ChestEvent
 from .teleport_event import TeleportEvent
 from config import  constants as C
 from ..core.resource_manager import resource_manager
-from ..ui.notification_system import notifications as ns
+# from ..ui.notification_system import notifications as ns
 
 
 class EventManager:
@@ -24,14 +24,32 @@ class EventManager:
         # Визуальные спрайты (будут созданы из Tile Layer "chests_visual")
         self.chest_sprites = arcade.SpriteList()
 
-    def load_events_from_objects(self, object_list, scale: float = 1.0):
+        # Словарь для сохранения состояния событий (можно сохранять в GameData или в файл)
+        self.event_states = {}  # {event_id: {"is_empty": bool, ...}}
+
+    def save_event_state(self, event_id: str, state_data: dict):
+        """Сохраняет состояние события"""
+        self.event_states[event_id] = state_data.copy()
+        self.logger.debug(f"Сохранено состояние для события {event_id}: {state_data}")
+
+    def get_event_state(self, event_id: str) -> dict:
+        """Возвращает сохраненное состояние события"""
+        return self.event_states.get(event_id, {})
+
+    def load_events_from_objects(self, object_list, scale: float = 1.0, map_name: str = None):
         """Загружает события (зоны взаимодействия) из events"""
         for i, obj in enumerate(object_list):
-            event = self._create_event_from_object(obj, scale, i)
+            event = self._create_event_from_object(obj, scale, i, map_name)
             if event:
+                # Восстанавливаем состояние из сохраненного
+                saved_state = self.get_event_state(event.event_id)
+                if saved_state:
+                    event.is_empty = saved_state.get("is_empty", False)
+                    event.logger.info(f"Восстановлено состояние для {event.event_id}: is_empty={event.is_empty}")
+
                 self.events.append(event)
 
-    def _create_event_from_object(self, obj, scale: float, index: int):
+    def _create_event_from_object(self, obj, scale: float, index: int, map_name: str = None):
         """Создаёт события"""
         try:
             if hasattr(obj, 'shape') and isinstance(obj.shape, list) and len(obj.shape) >= 4:
@@ -63,15 +81,19 @@ class EventManager:
             properties = getattr(obj, 'properties', {})
             event_type = getattr(obj, 'type', 'trigger').lower()
             name = getattr(obj, 'name','!')
-            event_id = properties.get('id', f"{event_type}_{index}")
+            event_id = properties.get('id', f"{event_type}_{index}_{map_name or 'unknown'}")
 
             # Создаем событие
             if event_type == "chest":
-                return ChestEvent(event_id, name, (x, y, width, height), properties)
+                event = ChestEvent(event_id, name, (x, y, width, height), properties)
+                event.map_name = map_name  # Устанавливаем карту
+                return event
             elif event_type == "teleport":
-                return TeleportEvent(event_id, name,(x, y, width, height), properties)
+                event = TeleportEvent(event_id, name, (x, y, width, height), properties)
+                return event
             else:
-                return GameEvent(event_id, name, event_type, (x, y, width, height), properties)
+                event = GameEvent(event_id, name, event_type, (x, y, width, height), properties)
+                return event
 
         except Exception as e:
             self.logger.warning(f"❌ Ошибка создания события {index}: {e}")

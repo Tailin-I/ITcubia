@@ -22,6 +22,8 @@ class ChestEvent(GameEvent):
         self.is_empty = False
         self.player_sequence = ""
 
+        self.map_name = None
+
         # Добыча
         loot_str = properties.get("loot", "")
         self.loot_items = ItemFactory.parse_loot_string(loot_str)
@@ -84,6 +86,7 @@ class ChestEvent(GameEvent):
 
     def _open_chest(self, player):
         """Открыть сундук и выдать добычу"""
+
         for item in self.loot_items:
             self._add_to_inventory(player, item)
 
@@ -92,6 +95,17 @@ class ChestEvent(GameEvent):
         # Обновляем визуал если есть спрайт
         if self.sprite:
             self.sprite.update_visual()
+
+        # Сохраняем состояние
+        self._save_state()
+
+    def _save_state(self):
+        """Сохраняет состояние сундука"""
+        if hasattr(self, 'event_manager') and self.event_manager:
+            self.event_manager.save_event_state(self.event_id, {
+                "is_empty": self.is_empty,
+                "map_name": self.map_name
+            })
 
     def _add_to_inventory(self, player, item):
         """Добавляет предмет в инвентарь игрока"""

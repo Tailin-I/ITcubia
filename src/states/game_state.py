@@ -150,6 +150,9 @@ class GameplayState(BaseState):
             # Устанавливаем текущую карту в EntityManager
             self.entity_manager.set_current_map(map)
 
+            # Устанавливаем текущую карту в EntityManager
+            self.entity_manager.set_current_map(map)
+
             # Загружаем новую карту
             success = self.map_loader.load(path)
             if not success:
@@ -159,7 +162,7 @@ class GameplayState(BaseState):
             # Загружаем монстров для новой карты
             loaded_monsters = self.map_loader.load_entities(map)
             for monster in loaded_monsters:
-                if monster.is_alive:
+                if monster and monster.is_alive:
                     self.monsters.append(monster)
 
             # Обновляем слой коллизий

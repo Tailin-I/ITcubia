@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="переделка монстра + фикс карт">
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="правка монстров 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/secmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/secmap.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/chest_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/chest_event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/event_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
@@ -482,7 +482,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767613332048</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="правка монстров 1">
+      <option name="closed" value="true" />
+      <created>1767626257900</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1767626257900</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -534,7 +542,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="работа над структурой, перед упрознененте gamestate" />
     <MESSAGE value="работа над структурой, добавлен примитивный прототип лобби и игры" />
     <MESSAGE value="перед обновлением overlay" />
     <MESSAGE value="перед большим обновлением управления" />
@@ -559,7 +566,8 @@
     <MESSAGE value="переделка монстра" />
     <MESSAGE value="переделка монстра 2" />
     <MESSAGE value="переделка монстра + фикс карт" />
-    <option name="LAST_COMMIT_MESSAGE" value="переделка монстра + фикс карт" />
+    <MESSAGE value="правка монстров 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="правка монстров 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

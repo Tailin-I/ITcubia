@@ -39,6 +39,8 @@ class MapLoader:
             # Извлекаем имя карты из пути
             map_name = Path(map_file).stem
 
+            game_data.monster_zones.clear()
+
             self.event_manager = EventManager()
 
             # Полный путь к файлу
@@ -98,18 +100,19 @@ class MapLoader:
             self.logger.error(f"Ошибка загрузки карты: {e}")
             return False
 
-    def _load_events(self, scale: float):
-        """Загружает события из Tiled"""
+    def _load_events(self, scale: float, map_name: str = None):
+        """Загружает события из Tiled с восстановлением состояния"""
         for layer_name, object_list in self.tile_map.object_lists.items():
             if layer_name.lower() == "events":
-                self.event_manager.load_events_from_objects(object_list, scale)
+                # Передаем имя карты в менеджер событий
+                self.event_manager.load_events_from_objects(object_list, scale, map_name)
                 break
 
         # Создаем визуальные спрайты сундуков
         if self.containers_layer:
-            self._create_chest_sprites_from_layer(self.containers_layer, scale)
+            self._create_chest_sprites_from_layer(self.containers_layer, scale, map_name)
 
-    def _create_chest_sprites_from_layer(self, containers_layer, scale):
+    def _create_chest_sprites_from_layer(self, containers_layer, scale, map_name: str = None):
         """Создает спрайты сундуков"""
         if not containers_layer:
             return
@@ -134,10 +137,18 @@ class MapLoader:
                         scale=scale
                     )
                     chest_event.set_sprite(sprite)
+                    chest_event.map_name = map_name  # Устанавливаем карту для сундука
                     self.event_manager.chest_sprites.append(sprite)
+
+                    # Восстанавливаем состояние сундука
+                    saved_state = self.event_manager.get_event_state(chest_event.event_id)
+                    if saved_state:
+                        chest_event.is_empty = saved_state.get("is_empty", False)
+                        if chest_event.is_empty and sprite:
+                            sprite.update_visual()
+
                 except Exception as e:
                     self.logger.warning(f"Ошибка создания спрайта: {e}")
-
     def _calculate_bounds(self):
         """Вычисляет границы карты в пикселях"""
         if not self.tile_map:
