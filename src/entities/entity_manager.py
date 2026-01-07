@@ -34,7 +34,7 @@ class EntityManager:
 
         return current_map_monsters
 
-    def spawn_monster(self,  monster_id: str, monster_type: str, position, properties=None, map_name: str = None, scale=1.0):
+    def spawn_monster(self,  monster_id: str, monster_type: str, position, properties=None, map_name: str = None):
         """
         Создает монстра.
         position: координаты (x, y) в пикселях
@@ -63,8 +63,7 @@ class EntityManager:
             monster_type=monster_type,
             position=position,
             custom_props=properties,
-            map_name=map_name,
-            scale = scale
+            map_name=map_name
         )
 
         # Находим ближайшую зону
@@ -81,8 +80,7 @@ class EntityManager:
             monster_id=monster_id,
             monster_type=monster_type,
             position=position,
-            properties=properties,
-            scale=scale
+            properties=properties
         )
 
         # Привязываем к зоне

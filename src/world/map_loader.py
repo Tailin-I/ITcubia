@@ -263,7 +263,6 @@ class MapLoader:
 
             # Тип монстра
             monster_type = getattr(obj, 'type').lower()
-            scale = getattr(obj, 'scale', 1)
             # Свойства из Tiled
             properties = {}
             if hasattr(obj, 'properties'):
@@ -278,8 +277,7 @@ class MapLoader:
                 monster_type=monster_type,
                 position=(x, y),
                 properties=properties,
-                map_name = map_name,
-                scale = scale
+                map_name = map_name
             )
 
             if monster:

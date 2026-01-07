@@ -90,6 +90,7 @@
    <properties>
     <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="12"/>
+    <property name="scale" type="int" value="5"/>
     <property name="speed" type="int" value="4"/>
    </properties>
    <point/>
@@ -99,6 +100,7 @@
     <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="20"/>
     <property name="max_health" type="int" value="23"/>
+    <property name="scale" type="int" value="2"/>
     <property name="speed" type="int" value="1"/>
    </properties>
    <point/>

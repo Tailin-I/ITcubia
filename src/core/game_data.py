@@ -17,7 +17,7 @@ class GameData:
         self.player_data = {
             "id": "player",
             "type": "player",
-            "position": {"x": 10, "y": 5},
+            "position": {"x": 10, "y": 20},
             "level": 1,
             "exp": 0,
             "req_exp": self.base_req_exp,
@@ -51,7 +51,8 @@ class GameData:
                 "vision_range": 200,
                 "behavior": "aggressive",
                 "chase_speed": 3,
-                "loot_table": []
+                "loot_table": [],
+                "scale": 1
             }
             # добавить другие типы позже
         }
@@ -256,8 +257,7 @@ class GameData:
             "is_alive": True,
             "zone_id": None,  # Будет установлено позже
             "custom_properties": custom_props or {},
-            "map_name": map_name,
-            "scale": scale
+            "map_name": map_name
         })
 
         # Перезаписываем свойствами из Tiled

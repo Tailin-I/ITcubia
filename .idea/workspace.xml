@@ -12,9 +12,6 @@
       <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/health_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/health_bar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +88,7 @@
       <recent name="$PROJECT_DIR$/src/states" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.export structure">
     <configuration name="export structure" type="PythonConfigurationType" factoryName="Python">
       <module name="ITCUBIA" />
       <option name="ENV_FILES" value="" />

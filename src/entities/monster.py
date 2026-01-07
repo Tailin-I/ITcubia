@@ -148,6 +148,7 @@ class Monster(Entity):
             return True  # Если зоны нет, считаем что везде можно
 
         zone_x, zone_y, zone_w, zone_h = self.zone_rect
+        print(self.zone_rect)
         return (zone_x <= x <= zone_x + zone_w and
                 zone_y <= y <= zone_y + zone_h)
 
@@ -163,9 +164,9 @@ class Monster(Entity):
         if distance > self.vision_range:
             return False
 
-        # # Проверяем находится ли игрок в зоне (если есть зона)
-        # if not self._is_point_in_zone(player.center_x, player.center_y):
-        #     return False
+        # Проверяем находится ли игрок в зоне (если есть зона)
+        if not self._is_point_in_zone(player.center_x, player.center_y):
+            return False
 
         # TODO: Добавить проверку на препятствия (стены)
 

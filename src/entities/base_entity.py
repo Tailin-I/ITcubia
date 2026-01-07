@@ -8,12 +8,12 @@ class Entity(arcade.Sprite):
     """Главный класс для всех сущностей"""
 
     def __init__(self, entity_id, texture_list, scale=1):
+
         super().__init__(texture_list[0], scale)
         self.logger = logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")
 
         self.entity_id = entity_id
         self.data_source = game_data  # Ссылка на центральное хранилище
-
         # Сохраняем текстуры для анимации
         self.textures = texture_list
         self.cur_texture_index = 0
