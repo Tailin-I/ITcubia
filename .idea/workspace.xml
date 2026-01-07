@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="доделка сохранения">
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="УДАЛЕНИЕ ЗОН">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/secmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/secmap.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/testmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testmap.tmx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +82,7 @@
       <recent name="$PROJECT_DIR$/src/states" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.export structure">
+  <component name="RunManager" selected="Python.main">
     <configuration name="export structure" type="PythonConfigurationType" factoryName="Python">
       <module name="ITCUBIA" />
       <option name="ENV_FILES" value="" />
@@ -500,7 +494,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767719499220</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="УДАЛЕНИЕ ЗОН">
+      <option name="closed" value="true" />
+      <created>1767812408280</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1767812408280</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -552,7 +554,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="перед обновлением overlay" />
     <MESSAGE value="перед большим обновлением управления" />
     <MESSAGE value="исправлен esc" />
     <MESSAGE value="кринж версия камеры и тайл менеджера" />
@@ -577,7 +578,8 @@
     <MESSAGE value="переделка монстра + фикс карт" />
     <MESSAGE value="правка монстров 1" />
     <MESSAGE value="доделка сохранения" />
-    <option name="LAST_COMMIT_MESSAGE" value="доделка сохранения" />
+    <MESSAGE value="УДАЛЕНИЕ ЗОН" />
+    <option name="LAST_COMMIT_MESSAGE" value="УДАЛЕНИЕ ЗОН" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
