@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="коммит для Сони">
-      <change afterPath="$PROJECT_DIR$/src/states/dialogue_state.py" afterDir="false" />
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="здравствуйте, Марина Александровна">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frame/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/frame/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/maps/secmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/secmap.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +57,7 @@
   "keyToString": {
     "Python.export structure.executor": "Run",
     "Python.export_structure.executor": "Run",
+    "Python.game_state.executor": "Run",
     "Python.gamepanel.executor": "Run",
     "Python.generate_structure.executor": "Run",
     "Python.main.executor": "Run",
@@ -66,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/Tailin/PycharmProjects/ITCUBIA/res/monsters",
+    "last_opened_file_path": "D:/yl/PythonProject1488/frame/main.py",
     "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
 }]]></component>
@@ -87,52 +86,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="export structure" type="PythonConfigurationType" factoryName="Python">
-      <module name="ITCUBIA" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/export_structure.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="generate_structure" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="ITCUBIA" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/generate_structure.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="ITCUBIA" />
+      <module name="PythonProject1488" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -140,6 +95,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (PythonProject1488)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -153,11 +109,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Python.export structure" />
-      <item itemvalue="Python.generate_structure" />
-      <item itemvalue="Python.main" />
-    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -511,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767820174410</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="здравствуйте, Марина Александровна">
+      <option name="closed" value="true" />
+      <created>1767868716839</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1767868716839</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -563,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="исправлен esc" />
     <MESSAGE value="кринж версия камеры и тайл менеджера" />
     <MESSAGE value="норм версия камеры и тайлменеджера(но грязи в коде все равно навалом)" />
     <MESSAGE value="перед ui" />
@@ -588,6 +546,7 @@
     <MESSAGE value="доделка сохранения" />
     <MESSAGE value="УДАЛЕНИЕ ЗОН" />
     <MESSAGE value="коммит для Сони" />
-    <option name="LAST_COMMIT_MESSAGE" value="коммит для Сони" />
+    <MESSAGE value="здравствуйте, Марина Александровна" />
+    <option name="LAST_COMMIT_MESSAGE" value="здравствуйте, Марина Александровна" />
   </component>
 </project>

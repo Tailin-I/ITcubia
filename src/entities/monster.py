@@ -112,9 +112,7 @@ class Monster(Entity):
         self.health_bar.y = self.center_y + self.height
 
         # Основная логика поведения
-        if self._can_see_player(player):
-            if self.dialogue_said:
-                self
+        if self.can_see_player(player):
             self.current_state = "chase"
             self._chase_player(player, delta_time)
         elif not self._is_point_in_zone():
@@ -225,7 +223,7 @@ class Monster(Entity):
         return (zone_x <= self.center_x <= zone_x + zone_w and
                 zone_y <= self.center_y <= zone_y + zone_h)
 
-    def _can_see_player(self, player) -> bool:
+    def can_see_player(self, player) -> bool:
         """Может ли монстр видеть игрока"""
         if not player:
             return False
