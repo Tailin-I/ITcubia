@@ -73,7 +73,7 @@ def setup_logging():
 
 def main():
     logger = logging.getLogger(__name__)
-    logger.info("Начало игровой сессии...")
+    logger.info("пососи")
     logger.debug("Параметры запуска: %s", sys.argv)
     logger.info(f"версия аркейда {arcade.__version__}")
 
