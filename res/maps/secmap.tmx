@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="12">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="12">
  <tileset firstgid="1" source="first.tsx"/>
  <layer id="1" name="ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -10,9 +10,9 @@
   <object id="7" name="bug" type="bug" x="1638.67" y="3156">
    <properties>
     <property name="behavior" value="aggressive"/>
-    <property name="max_health" type="int" value="100"/>
+    <property name="max_health" type="int" value="10"/>
     <property name="scale" type="int" value="3"/>
-    <property name="vision_range" type="int" value="400"/>
+    <property name="vision_range" type="int" value="100"/>
    </properties>
    <point/>
   </object>
@@ -21,7 +21,7 @@
     <property name="chase_speed" type="int" value="1"/>
     <property name="health" type="int" value="40"/>
     <property name="max_health" type="int" value="50"/>
-    <property name="vision_range" type="int" value="700"/>
+    <property name="vision_range" type="int" value="300"/>
    </properties>
    <point/>
   </object>

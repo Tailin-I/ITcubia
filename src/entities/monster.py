@@ -41,6 +41,9 @@ class Monster(Entity):
         # Для возврата в зону
         self.return_target = None
 
+        # Для уникализации диалога
+        self.dialogue_said = False
+
         # Загружаем свойства из GameData
         self._load_properties_from_data()
 
@@ -110,6 +113,8 @@ class Monster(Entity):
 
         # Основная логика поведения
         if self._can_see_player(player):
+            if self.dialogue_said:
+                self
             self.current_state = "chase"
             self._chase_player(player, delta_time)
         elif not self._is_point_in_zone():
