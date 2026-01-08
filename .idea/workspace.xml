@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="УДАЛЕНИЕ ЗОН">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/monster.py" afterDir="false" />
+    <list default="true" id="377e0106-b0ef-4a6d-b5f8-49cae34fa61e" name="Changes" comment="коммит для Сони">
+      <change beforePath="$PROJECT_DIR$/res/maps/secmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/secmap.tmx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -502,7 +501,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767812408280</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="коммит для Сони">
+      <option name="closed" value="true" />
+      <created>1767820174409</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1767820174410</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -554,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="перед большим обновлением управления" />
     <MESSAGE value="исправлен esc" />
     <MESSAGE value="кринж версия камеры и тайл менеджера" />
     <MESSAGE value="норм версия камеры и тайлменеджера(но грязи в коде все равно навалом)" />
@@ -579,7 +585,8 @@
     <MESSAGE value="правка монстров 1" />
     <MESSAGE value="доделка сохранения" />
     <MESSAGE value="УДАЛЕНИЕ ЗОН" />
-    <option name="LAST_COMMIT_MESSAGE" value="УДАЛЕНИЕ ЗОН" />
+    <MESSAGE value="коммит для Сони" />
+    <option name="LAST_COMMIT_MESSAGE" value="коммит для Сони" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

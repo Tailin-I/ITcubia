@@ -12,16 +12,16 @@
     <property name="behavior" value="aggressive"/>
     <property name="max_health" type="int" value="100"/>
     <property name="scale" type="int" value="3"/>
-    <property name="vision_range" type="int" value="300"/>
+    <property name="vision_range" type="int" value="400"/>
    </properties>
    <point/>
   </object>
   <object id="11" name="nagibator" type="bug" x="786" y="992">
    <properties>
-    <property name="chase_speed" type="int" value="5"/>
+    <property name="chase_speed" type="int" value="1"/>
     <property name="health" type="int" value="40"/>
     <property name="max_health" type="int" value="50"/>
-    <property name="vision_range" type="int" value="70"/>
+    <property name="vision_range" type="int" value="700"/>
    </properties>
    <point/>
   </object>
