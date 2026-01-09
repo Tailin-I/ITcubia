@@ -232,6 +232,7 @@ class GameplayState(BaseState):
                 monster.update(delta_time, self.player, self.collision_layer)
                 if not monster.dialogue_said and monster.can_see_player(self.player):
                     self.gsm.push_overlay("dialogue")
+                    monster.dialogue_said = True
 
         self.entity_manager.update_all(delta_time, self.player, self.collision_layer)
 

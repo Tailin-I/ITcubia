@@ -1,114 +1,219 @@
-### Операционные системы ###
+# ============================================
+# ИГРОВОЙ ПРОЕКТ IT-КУБИЯ
+# .gitignore сгенерированный deepseek
+# ============================================
+
+### ПЛАТФОРМНЫЕ ФАЙЛЫ ###
+# ============================================
+
 # Linux
 *~
 .fuse_hidden*
 .directory
 .Trash-*
 .nfs*
+.dbus
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+._*
+.fseventsd
 
 # Windows
 Thumbs.db
-Thumbs.db:encryptable
 ehthumbs.db
-ehthumbs_vista.db
-[Dd]esktop.ini
+Desktop.ini
 $RECYCLE.BIN/
-*.stackdump
 *.cab
 *.msi
-*.msix
+*.msm
+*.msp
 *.lnk
+*.stackdump
 
-### Python ###
-# Кэш и временные файлы
+### PYTHON ###
+# ============================================
+
+# Кэш байт-кода Python
 __pycache__/
 *.py[cod]
 *$py.class
+.mypy_cache/
+.pyre/
 
-# Билды и дистрибутивы
+# Дистрибутивы и установщики
 build/
 dist/
+*.egg
 *.egg-info/
-*.manifest
-*.spec
+pip-wheel-metadata/
 
-# Виртуальные окружения
+# Среды разработки
 .venv/
 venv/
 env/
 ENV/
+env.bak/
+venv.bak/
 
-# Тесты и покрытие
+# Тестирование и покрытие
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 
-# Jupyter (если не используете)
+# Jupyter Notebook
 .ipynb_checkpoints
 
-### PyCharm ###
-# ВАЖНО: раскомментируйте строчку ниже, если хотите игнорировать ВСЮ папку .idea
- .idea/
+# PyInstaller
+*.manifest
+*.spec
 
-# ИЛИ выборочно (рекомендуется):
-#.idea/**/workspace.xml
-#.idea/**/tasks.xml
-#.idea/**/shelf
-#.idea/**/dictionaries
-#.idea/**/usage.statistics.xml
-#.idea/**/contentModel.xml
-#.idea/**/dataSources/
-#.idea/**/dataSources.ids
-#.idea/**/dataSources.local.xml
-#.idea/**/dbnavigator.xml
-#.idea/**/gradle.xml
-#.idea/**/libraries
-#.idea/**/misc.xml
-#.idea/**/modules.xml
-#.idea/**/uiDesigner.xml
-#.idea/**/runConfigurations/
-#.idea/**/sonarlint/
-#.idea/**/azureSettings.xml
-#.idea/codestream.xml
+# Cython отладки
+*.so
 
-# Файлы проектов
+### IDE И РЕДАКТОРЫ ###
+# ============================================
+
+# PyCharm/IntelliJ IDEA
+.idea/
 *.iml
 *.ipr
 *.iws
 out/
+*.swp
+*.swo
+.~lock.*
 
-# CMake
-cmake-build-*/
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
-### Игровой проект ITCUBIA ###
-# Логи игры
-logs/
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+.*.swp
+.*.swo
+*.un~
+
+### ПРОЕКТ-СПЕЦИФИЧНЫЕ ФАЙЛЫ ###
+# ============================================
+
+# Логи (все логи, кроме примера конфигурации)
+logs/*
+!logs/.gitkeep
 *.log
+*.log.*
 
-# Пользовательские настройки
-settings/
-key_bindings.json
-config.local.json
+# Пользовательские настройки (не коммитим пользовательские настройки)
+settings/key_bindings.json  # Комментируйте, если хотите сохранять настройки по умолчанию
+config/local_config.py
+config/*.local.*
 
-# Сохранения игрока (если будут)
+# Сохранения игры
 savegames/
 *.save
+*.sav
+*.dat
+autosave/
 
-# Временные файлы игры
+# Временные файлы
 temp/
 tmp/
 cache/
+*.tmp
+*.temp
 
 # Бэкапы
 *.bak
-*.backup
+*.backup*
+*_backup
+backup/
 
-# Скомпилированные ресурсы (если будут генерироваться)
+# Скомпилированные ресурсы
 compiled_res/
+.resources_cache/
 
-# Документация/сайт (если mkdocs)
+# Документация (если генерируется)
 site/
+docs/_build/
+docs/_site/
 
+# Экспорты и дампы
+*.dump
+export/
+dumps/
 
-# made by deep seek)
+### АРКАДНЫЕ ФАЙЛЫ ###
+# ============================================
+
+# Кэш текстур (если Arcade генерирует)
+.texture_cache/
+*.pyglet
+
+# Шейдеры (если используются)
+shader_cache/
+
+### АУДИО/ВИДЕО ###
+# ============================================
+
+# Временные аудио файлы
+*.wav.tmp
+*.mp3.tmp
+*.ogg.tmp
+
+# Кэш звуков
+sound_cache/
+
+### ИСКЛЮЧЕНИЯ ###
+# ============================================
+
+# Не удаляем эти файлы (нужны для работы)
+!savegames/.gitkeep
+!temp/.gitkeep
+!export/.gitkeep
+
+# Файлы-примеры (храним в репозитории)
+config/constants.example.py
+settings/key_bindings.example.json
+
+# README файлы в каждой директории (если есть)
+!*/README.md
+
+### ДОПОЛНИТЕЛЬНО ###
+# ============================================
+
+# Системные файлы
+.direnv/
+.envrc
+.env
+
+# Docker
+docker-compose.override.yml
+
+# Базы данных (если используются)
+*.db
+*.sqlite
+*.sqlite3
+
+# Профилирование
+.prof
+*.prof
