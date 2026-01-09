@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fba37d7-9b27-4e7f-b461-5e36a769c0de" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="3fba37d7-9b27-4e7f-b461-5e36a769c0de" name="Changes" comment="10 дней до сдачи :_)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/cheat_console_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/cheat_console_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/dialogue_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/dialogue_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/lock_picking_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/lock_picking_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/pause_menu_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/pause_menu_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/stats_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/stats_state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,16 +44,41 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.dialogue_state.executor": "Run",
     "Python.export_structure.executor": "Run",
     "Python.generate_structure.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.запись всего кода в файл.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/Tailin/PycharmProjects/ITcubia/frame/main.py"
+    "last_opened_file_path": "/home/Tailin/PycharmProjects/ITcubia/export_structure.py"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.запись всего кода в файл">
+    <configuration name="запись всего кода в файл" type="PythonConfigurationType" factoryName="Python">
+      <module name="ITcubia" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (ITcubia)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/export_structure.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ITcubia" />
       <option name="ENV_FILES" value="" />
@@ -76,6 +102,10 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.запись всего кода в файл" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -93,6 +123,15 @@
       <option name="presentableId" value="Default" />
       <updated>1767949911525</updated>
     </task>
+    <task id="LOCAL-00001" summary="10 дней до сдачи :_)">
+      <option name="closed" value="true" />
+      <created>1767964560423</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1767964560423</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -105,5 +144,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="10 дней до сдачи :_)" />
+    <option name="LAST_COMMIT_MESSAGE" value="10 дней до сдачи :_)" />
   </component>
 </project>

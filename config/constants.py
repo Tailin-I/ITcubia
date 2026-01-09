@@ -26,8 +26,6 @@ FOGGING_COLOR = (0, 0, 0, 200)  # Полупрозрачный чёрный
 DEEPSEEK_COLOR = (76, 106, 253)
 DEEPSEEK_COLOR_TRANSLUCENT = (76, 106, 253, 70)
 
-
-
 # читы
 cheat_mode = True
 debug_mode = False
@@ -37,6 +35,13 @@ ghost_mode = False
 player_color = (255, 255, 255, 255)  # Белый, непрозрачный
 ghost_color = (100, 100, 255, 128)  # Синий, полупрозрачный
 
-# # Текст оповещений
-# text_to_draw = []
-# remove_text_timer = 4
+
+def draw_dark_background():
+    """Полупрозрачный тёмный фон"""
+    arcade.draw_rect_filled(
+        arcade.rect.LRBT(
+            0,SCREEN_WIDTH,
+            0,
+            SCREEN_HEIGHT),
+        FOGGING_COLOR
+    )

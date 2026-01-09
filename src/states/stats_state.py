@@ -21,7 +21,6 @@ class StatsState(BaseState):
         self.main_color = C.UI_MAIN_COLOR
         self.title_color = C.UI_TITLE_COLOR
         self.menu_background_color = C.MENU_BACKGROUND_COLOR_TRANSLUCENT
-        self.bg_color = C.FOGGING_COLOR
 
         # Размеры окна меню
         self.window_width = self.gsm.window.width // 2
@@ -46,14 +45,7 @@ class StatsState(BaseState):
 
     def draw(self):
         """Отрисовка меню паузы ПОВЕРХ игры"""
-        # Полупрозрачный тёмный фон
-        arcade.draw_rect_filled(
-            arcade.rect.LRBT(
-                0, self.gsm.window.width,
-                0,
-                self.gsm.window.height),
-            self.bg_color
-        )
+        C.draw_dark_background()
 
         # Окно меню (в центре экрана)
         window_x = self.gsm.window.width // 2

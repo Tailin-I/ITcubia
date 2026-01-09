@@ -68,13 +68,7 @@ class CheatConsoleState(BaseState):
 
     def draw(self):
         """Отрисовка консоли в своем стиле"""
-        # Полупрозрачный темный фон
-        arcade.draw_rect_filled(
-            arcade.rect.XYWH(
-                self.gsm.window.width // 2, self.gsm.window.height // 2,
-                self.gsm.window.width, self.gsm.window.height),
-            (0, 0, 0, 180)  # Полупрозрачный черный
-        )
+        C.draw_dark_background()
 
         # ---ПАНЕЛЬ КОНСОЛИ---
         panel_width = self.gsm.window.width // 2

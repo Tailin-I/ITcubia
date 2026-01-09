@@ -1,7 +1,7 @@
 import arcade
 from .base_state import BaseState
 from ..ui.notification_system import notifications as ns
-
+from config import constants as C
 
 class LockPickingState(BaseState):
     """Мини-игра для взлома сундуков"""
@@ -64,16 +64,7 @@ class LockPickingState(BaseState):
 
     def draw(self):
         """Отрисовка интерфейса взлома"""
-        # Полупрозрачный фон
-        arcade.draw_rect_filled(
-            arcade.rect.XYWH(
-                self.gsm.window.width // 2,
-                self.gsm.window.height // 2,
-                self.gsm.window.width,
-                self.gsm.window.height
-            ),
-            (0, 0, 0, 180)
-        )
+        C.draw_dark_background()
 
         # Окно взлома
         window_x = self.gsm.window.width // 2
