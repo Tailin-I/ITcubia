@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="12">
- <tileset firstgid="1" source="first.tsx"/>
+<map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="7" nextobjectid="18">
+ <tileset firstgid="1" source="../../../ITCUBIA/res/maps/first.tsx"/>
  <layer id="1" name="ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztziERAAAIBLCXhKF/PkoguGNifpWkAAAAAAAAAOCZPnAAAHYNGVhORQ==
@@ -10,30 +10,47 @@
   <object id="7" name="bug" type="bug" x="1638.67" y="3156">
    <properties>
     <property name="behavior" value="aggressive"/>
-    <property name="max_health" type="int" value="10"/>
+    <property name="max_health" type="int" value="100"/>
     <property name="scale" type="int" value="3"/>
-    <property name="vision_range" type="int" value="100"/>
+    <property name="vision_range" type="int" value="400"/>
    </properties>
    <point/>
   </object>
-  <object id="11" name="nagibator" type="bug" x="786" y="992">
+  <object id="11" name="nagibator" type="bug" x="1519.33" y="1064.73">
    <properties>
     <property name="chase_speed" type="int" value="1"/>
     <property name="health" type="int" value="40"/>
     <property name="max_health" type="int" value="50"/>
-    <property name="vision_range" type="int" value="300"/>
+    <property name="vision_range" type="int" value="700"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="15" name="Алина" type="npc" x="182.667" y="3214.67">
+   <properties>
+    <property name="loot_table" value="healing_potion:3"/>
+    <property name="speed" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="16" name="Артемий" type="npc" x="360.606" y="927.273">
+   <properties>
+    <property name="active_topic" value="busy"/>
+    <property name="max_health" type="int" value="50"/>
+    <property name="scale" type="int" value="3"/>
    </properties>
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="6" name="zones">
   <object id="8" name="bug_zone" type="zone" x="1072" y="2518.67" width="1196" height="904"/>
-  <object id="10" name="sec_zone" type="zone" x="584" y="766" width="1500" height="904"/>
+  <object id="10" name="sec_zone" type="zone" x="987.03" y="766" width="1096.97" height="776.727"/>
+  <object id="17" name="Artemi's zome" type="zone" x="81.8182" y="327.273" width="615.152" height="1215.15"/>
+  <object id="14" name="Alina's zone" type="zone" x="69.3333" y="2937.33" width="702.667" height="497.333"/>
  </objectgroup>
  <objectgroup id="2" name="events">
   <object id="4" name="first_chest_here" type="chest" x="1893.33" y="3297.33" width="202.667" height="137.333">
    <properties>
-    <property name="lock" value="&lt;&gt;"/>
+    <property name="lock" value="&lt;&gt;&lt;"/>
     <property name="loot" value="healing_potion:7"/>
    </properties>
   </object>
@@ -44,10 +61,16 @@
     <property name="target_y" type="int" value="9"/>
    </properties>
   </object>
+  <object id="12" name="123" type="chest" x="64" y="1781.33" width="321.334" height="672">
+   <properties>
+    <property name="lock" value="&gt;&gt;&gt;&gt;&gt;"/>
+    <property name="loot" value="healing_potion:2, mana_potion:100"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="4" name="containers" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztzgENAAAIA6BntX8IY1w3SEACAAAAAAAAAADAB9MOHLeVUABj
+   eJztzgEJAAAIAKBoav9HdCIoQhcYAQAAAAAATMntAAAAAK/VduC4BrSAAGU=
   </data>
  </layer>
  <layer id="3" name="collisions" width="50" height="50">

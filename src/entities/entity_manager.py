@@ -2,7 +2,7 @@ import logging
 import arcade
 from typing import Dict, List
 from .base_entity import Entity
-from .monster import Monster
+from .creatures import Creature
 from ..core.game_data import game_data
 
 
@@ -12,7 +12,7 @@ class EntityManager:
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.entities: Dict[str, Entity] = {}  # Все сущности по ID
-        self.monsters: List[Monster] = []  # Только монстры
+        self.mob: List[Creature] = []  # Только монстры
         self.current_map_name = None
 
     def set_current_map(self, map_name: str):
@@ -27,14 +27,14 @@ class EntityManager:
 
         current_map_monsters = []
 
-        for monster in self.monsters:
+        for monster in self.mob:
             # Простая проверка по ID - если в ID есть имя текущей карты
             if self.current_map_name in monster.entity_id:
                 current_map_monsters.append(monster)
 
         return current_map_monsters
 
-    def spawn_monster(self,  monster_id: str, monster_type: str, position, properties=None, map_name: str = None):
+    def spawn_monster(self, mob_id: str, mob_name: str, mob_type: str, position, properties=None, map_name: str = None):
         """
         Создает монстра.
         position: координаты (x, y) в пикселях
@@ -42,25 +42,22 @@ class EntityManager:
         """
 
         # ПРОВЕРЯЕМ: если монстр уже существует - возвращаем его
-        if monster_id in self.entities.keys():
-            existing = self.entities[monster_id]
-            self.logger.info(f"Монстр {monster_id} уже существует")
+        if mob_id in self.entities.keys():
+            existing = self.entities[mob_id]
+            self.logger.info(f"Монстр {mob_id} уже существует")
             return existing
-        else:
-            print(self.entities.keys())
-            print(monster_id)
-            print()
 
         # ПРОВЕРЯЕМ: если монстр мертв в game_data - не создаем
-        data = game_data.get_entity_data(monster_id)
+        data = game_data.get_entity_data(mob_id)
         if data and not data.get("is_alive", True):
-            self.logger.info(f"Монстр {monster_id} мертв")
+            self.logger.info(f"Монстр {mob_id} мертв")
             return None
 
         # Создаем данные
         monster_data = game_data.create_monster_data(
-            monster_id=monster_id,
-            monster_type=monster_type,
+            monster_id=mob_id,
+            mob_name=mob_name,
+            monster_type=mob_type,
             position=position,
             custom_props=properties,
             map_name=map_name
@@ -73,12 +70,13 @@ class EntityManager:
             monster_data["zone_rect"] = nearest_zone["rect"]
 
         # Сохраняем
-        game_data.add_monster(monster_id, monster_data)
+        game_data.add_mob(mob_id, monster_data)
 
         # Создаем визуальный объект
-        monster = Monster(
-            monster_id=monster_id,
-            monster_type=monster_type,
+        monster = Creature(
+            creature_id=mob_id,
+            mob_name=mob_name,
+            creature_type=mob_type,
             position=position,
             properties=properties
         )
@@ -91,18 +89,18 @@ class EntityManager:
         monster_data["map_name"] = map_name
 
         # Сохраняем
-        game_data.add_monster(monster_id, monster_data)
+        game_data.add_mob(mob_id, monster_data)
 
         # Добавляем в менеджер
-        self.entities[monster_id] = monster
-        self.monsters.append(monster)
+        self.entities[mob_id] = monster
+        self.mob.append(monster)
 
-        self.logger.info(f"Монстр создан: {monster_id} на ({position[0]:.0f}, {position[1]:.0f})")
+        self.logger.info(f"{mob_name} создан: {mob_id} на ({position[0]:.0f}, {position[1]:.0f})")
         return monster
 
     def update_all(self, delta_time: float, player=None, collision_layer=None):
         """Обновляет всех монстров"""
-        for monster in self.monsters[:]:  # Копия списка для безопасного удаления
+        for monster in self.mob[:]:  # Копия списка для безопасного удаления
             if monster.is_alive:
                 monster.update(delta_time, player, collision_layer)
             else:
@@ -114,8 +112,8 @@ class EntityManager:
             entity = self.entities[entity_id]
 
             # Удаляем из списков
-            if isinstance(entity, Monster) and entity in self.monsters:
-                self.monsters.remove(entity)
+            if isinstance(entity, Creature) and entity in self.mob:
+                self.mob.remove(entity)
 
             # Удаляем спрайт
             entity.remove_from_sprite_lists()
@@ -131,7 +129,7 @@ class EntityManager:
             return
 
         # Рисуем зоны
-        for zone_id, zone in game_data.monster_zones.items():
+        for zone_id, zone in game_data.mob_zones.items():
             if zone.get("map_name") != self.current_map_name:
                 continue
             x, y, w, h = zone["rect"]
@@ -149,7 +147,7 @@ class EntityManager:
             ).draw()
 
         # Рисуем информацию о монстрах
-        for monster in self.monsters:
+        for monster in self.mob:
 
             if game_data.get_entity_data(monster.entity_id)["map_name"] != self.current_map_name:
                 continue

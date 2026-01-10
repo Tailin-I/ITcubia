@@ -1,39 +1,46 @@
 from .consumables import HealingPotion, ManaPotion
 from .keys import Key
 from .base_item import Item
+from ...core.resource_manager import resource_manager as rm
+
 
 class ItemFactory:
     """Создает предметы по ID"""
 
-
     @staticmethod
     def create(item_id: str, count: int = 1, **kwargs) -> Item:
         """Создает предмет по его ID"""
-
         # Консумаблы
         if item_id == "healing_potion":
-            return HealingPotion(count)
+            texture = rm.load_texture("consumables/potion_red.png")
+            return HealingPotion(count=count, texture=texture)
         elif item_id == "mana_potion":
-            return ManaPotion(count)
+            texture = rm.load_texture("consumables/manacrystal_full.png")
+            return ManaPotion(count=count, texture=texture)
 
         # Ключи
         elif item_id.startswith("key_"):
+            texture = rm.load_texture("consumables/key.png")
             key_type = item_id[4:] if "_" in item_id else "basic"
             name = kwargs.get("name", f"Ключ {key_type}")
-            return Key(key_id=key_type, name=name)
-
-        # # Золото (специальный случай)
-        # elif item_id == "gold":
-        #     from .currency import Gold
-        #     return Gold(count)
+            return Key(key_id=key_type, name=name, texture=texture)
 
         # По умолчанию - базовый предмет
         else:
-            from .base_item import Item
+            texture = kwargs.get("texture")
+            if not texture:
+                # Загружаем дефолтную текстуру
+                try:
+                    texture = rm.load_texture(f"items/{item_id}.png")
+                except:
+                    # Если нет текстуры, создаем пустую
+                    from arcade import Texture
+                    texture = Texture.create_filled(f"default_{item_id}", (32, 32), (128, 128, 128, 255))
+
             return Item(
                 item_id=item_id,
                 name=kwargs.get("name", item_id),
-                texture_path=kwargs.get("texture")
+                texture=texture
             )
 
     @staticmethod

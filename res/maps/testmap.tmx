@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.1-99-gec89c545" orientation="orthogonal" renderorder="left-down" width="150" height="50" tilewidth="70" tileheight="70" infinite="0" nextlayerid="10" nextobjectid="107">
- <tileset firstgid="1" source="first.tsx"/>
+ <tileset firstgid="1" source="../../../ITCUBIA/res/maps/first.tsx"/>
  <layer id="1" name="ground" width="150" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt0rENACAMA0EPxGwslGVpWAEpRFec3Lr4SlIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8Lnd4ANzrLu64gVdAQAAAADTHYKLvQ4=
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3SsQ0AIAwDQQ/EbCyUZWlYASlEV5zcuvhKUgAAAAAAAAAAAAAAAAAAAAAAAAAAAADwud3gA3Osu7riBV0BAAAAANMduerOGDB1AAA=
   </data>
  </layer>
  <layer id="2" name="walls" width="150" height="50">
-  <data encoding="base64" compression="zlib">
-   eJztnd1twzAMBjVE1swYHqAbF0ZaoAgSR5b58a93AN9sURLPciQ/ZBtj3AjCMLafALAEr0ABXoECvAIFeAUK8AoUdPCqwxi6Ub0m26g/ho5QE1Cw6hUuPuC5fA3zAgo8vNoOAvREzLOXV5H5wR91XWfb/xL2AfxRenW2bdatPqi9Ul4PeVF5xdnF/yaTV1fu68LR3tk6PMahaFdxn+e8R4QX6pyZvHrVF867tCjrn80rXPJFMc/ZvIIYKnjFOlMPTweuvo94l+VG+XtjxqtxcM3VHOCPx/P+qX2r/HgVR8ReaCbP1X6wXvmi8uhMOx41t/Iyc3iSqS/vUPbFcqwZ5+4vXR1eRbkXUPoKubGov+UzNXsvbuXGwgPLGuNVD7zWlzPtzexP8So32bz61CZOreM5dxm9ypQP1qjkFU7VIdvv9ug8YIPlOYMKnKqH5Xm4Ag+nqp5pZ8ZyHi2/SVDj2qzUbr/+bpi78news3Qd1zOrXu1YuAU9iVyvoC+d3zkQB16BArwCBXgFCvAKFPx6Ff0/iESv2J36BjB8+30=
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2d3W3DMAwGNUTWzBgeoBsXRlqgCBJHlvnxr3cA32xREs9yJD9kG2PcCMIwtp8AsASvQAFegQK8AgV4BQrwChR08KrDGLpRvSbbqD+GjlATULDqFS4+4Ll8DfMCCjy82g4C9ETMs5dXkfnBH3VdZ9v/EvYB/FF6dbZt1q0+qL1SXg95UXnF2cX/JpNXV+7rwtHe2To8xqFoV3Gf57xHhBfqnJm8etUXzru0KOufzStc8kUxz9m8ghgqeMU6Uw9PB66+j3iX5Ub5e2PGq3FwzdUc4I/H8/6pfav8eBVHxF5oJs/VfrBe+aLy6Ew7HjW38jJzeJKpL+9Q9sVyrBnn7i9dHV5FuRdQ+gq5sai/5TM1ey9u5cbCA8sa41UPvNaXM+3N7E/xKjfZvPrUJk6t4zl3Gb3KlA/WqOQVTtUh2+/26Dxgg+U5gwqcqoflebgCD6eqnmlnxnIeLb9JUOParNRuv/5umLvyd7CzdB3XM6te7Vi4BT2JXK+gL53fORAHXoECvAIFeAUK8AoU/HoV/T+IRK/YnfoGoxlgsDB1AAA=
   </data>
  </layer>
  <layer id="3" name="collisions" width="150" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt2uGOgjAQRWFerAnv/1T+UBNDULCdO52Zni9p1mQXkHoExG3btjcGQzA2wFB7jn3280AtdAUFuoICXUGBrqBQoavXPiCQ7F21ja4iyt4VYurtiuPDE8fKcxyvoODRFd8fzTXjeOrV1a/f0Vc96q7oZk3Krv5tiv7qUHel/HvEpeqKexdri9TVyHJVNMfhsB+7YL1d67xaznPeZwwv6m1G6ursucya91Wo5jVgV7TkTDHP0brCHBm6atwLTcezq9HzEeey2JTXG1ddnT1Gbh7v9zvnQZrKbcZnIbqqR9XRP+tRfR48bmN0+ejDU6Tn8o2yK8t9jTh3n6o23EvRlXoOssztyiy6snxP3V2WtmIb7cr6uERXNVh0ZelOp5muM1YVraurddJUP8+5i9hVpO2hT6auaCqPaNfts7cDG5b3GVRoKp+zrnpeQ+U9UHVTWe9pR2bV1ce6TL6T4DXOracr1Xd+Kxwzqu7XUc/1VTv8BI5GugK+Ufw/A0BXUKArKNAVFOgKCu+uGAzr8QCGCAwC
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3a4Y6CMBBFYV6sCe//VP5QE0NQsJ07nZmeL2nWZBeQegTEbdu2NwZDMDbAUHuOffbzQC10BQW6ggJdQYGuoFChq9c+IJDsXbWNriLK3hVi6u2K48MTx8pzHK+g4NEV3x/NNeN46tXVr9/RVz3qruhmTcqu/m2K/upQd6X8e8Sl6op7F2uL1NXIclU0x+GwH7tgvV3rvFrOc95nDC/qbUbq6uy5zJr3VajmNWBXtORMMc/RusIcGbpq3AtNx7Or0fMR57LYlNcbV12dPUZuHu/3O+dBmsptxmchuqpH1dE/61F9HjxuY3T56MNTpOfyjbIry32NOHefqjbcS9GVeg6yzO3KLLqyfE/dXZa2Yhvtyvq4RFc1WHRl6U6nma4zVhWtq6t10lQ/z7mL2FWk7aFPpq5oKo9o1+2ztwMblvcZVGgqn7Ouel5D5T1QdVNZ72lHZtXVx7pMvpPgNc6tpyvVd34rHDOq7tdRz/VVO/wEjka6Ar5R/D8DQFdQoCso0BUU6AoK764YDOvxAOSvGyUwdQAA
   </data>
  </layer>
  <objectgroup id="5" name="events">
@@ -81,8 +81,8 @@
   </object>
  </objectgroup>
  <layer id="6" name="containers" width="150" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt2LENACAMA8HMyv5DMAAFgiaxdDeBq+iVKgAAAAAAAAAAAAAAAABuVveAD4mbgWzuDgBAP00GAAAAAABv/NYBAE4aCQAAMmh3YLoN3f0Crw==
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3YsQ0AIAwDwczK/kMwAAWCJrF0N4Gr6JUqAAAAAAAAAAAAAAAAAG5W94APiZuBbO4OAEA/TQYAAAAAAG/81gEAThoJAAAyaHdgug0v6DtYMHUAAA==
   </data>
  </layer>
  <objectgroup id="8" name="entities">
@@ -109,7 +109,7 @@
    <properties>
     <property name="behavior" value="aggressive"/>
     <property name="health" type="int" value="50"/>
-    <property name="loot" value="healing_potion:3, key_door1:1"/>
+    <property name="loot_table" value="healing_potion:3, key_door1:1"/>
    </properties>
    <point/>
   </object>

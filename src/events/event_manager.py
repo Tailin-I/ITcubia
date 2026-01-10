@@ -5,9 +5,11 @@ from typing import List
 from .event import GameEvent
 from .chest_event import ChestEvent
 from .teleport_event import TeleportEvent
-from config import  constants as C
+from config import constants as C
 from ..core.game_data import game_data
 from ..core.resource_manager import resource_manager
+
+
 # from ..ui.notification_system import notifications as ns
 
 
@@ -53,44 +55,35 @@ class EventManager:
     def _create_event_from_object(self, obj, scale: float, index: int, map_name: str = None):
         """Создаёт события"""
         try:
-            if hasattr(obj, 'shape') and isinstance(obj.shape, list) and len(obj.shape) >= 4:
-                points = obj.shape
+            points = obj.shape
 
-                left = points[0][0]
-                top = points[0][1]
-                right = points[1][0]
-                bottom = points[3][1]
+            left = points[0][0]
+            top = points[0][1]
+            right = points[1][0]
+            bottom = points[3][1]
 
-                width = right - left
-                height = bottom - top
+            width = right - left
+            height = bottom - top
 
-                x = left
-                y = top
+            x = left
+            y = top
 
-                if height < 0:
-                    height = abs(height)
-                    y = bottom
-
-
-            else:
-                x = getattr(obj, 'x', 0) * scale
-                y = getattr(obj, 'y', 0) * scale
-                width = getattr(obj, 'width', self.tile_size) * scale
-                height = getattr(obj, 'height', self.tile_size) * scale
+            if height < 0:
+                height = abs(height)
+                y = bottom
 
             # Получаем свойства
             properties = getattr(obj, 'properties', {})
             event_type = getattr(obj, 'type', 'trigger').lower()
-            name = getattr(obj, 'name','!')
+            name = getattr(obj, 'name', '!')
             event_id = properties.get('id', f"{event_type}_{index}_{map_name or 'unknown'}")
 
             # Создаем событие
             if event_type == "chest":
                 event = ChestEvent(event_id, name, (x, y, width, height), properties)
                 event.map_name = map_name
-
                 # Восстанавливаем состояние из game_data
-                saved_data = game_data.monsters_data.get(event_id)
+                saved_data = game_data.mobs_data.get(event_id)
                 if saved_data and saved_data.get("is_empty", False):
                     event.is_empty = True
                     if event.sprite:
@@ -105,7 +98,7 @@ class EventManager:
                 return event
 
         except Exception as e:
-            self.logger.warning(f"❌ Ошибка создания события {index}: {e}")
+            self.logger.warning(f"Ошибка создания события {index}({name}): {e}")
             return None
 
     def find_nearest_chest_event(self, x: float, y: float, max_distance: float = None):
@@ -150,11 +143,8 @@ class EventManager:
             player.height
         )
 
-
-
         for event in self.events:
             if event.check_collision(player_rect):
-
 
                 # ДЛЯ ВСЕХ СОБЫТИЙ проверяем дистанцию через общий метод
                 if self._is_player_close_enough(player, event):
@@ -168,7 +158,6 @@ class EventManager:
                     else:
                         # Для других событий (телепортов) активируем сразу
                         event.activate(player, game_state)
-
 
     def _is_player_close_enough(self, player, event) -> bool:
         """Проверяет, достаточно ли близко игрок к событию."""

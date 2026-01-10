@@ -12,6 +12,7 @@ from ..world.map_loader import MapLoader
 from config import constants as C
 from src.entities.entity_manager import entity_manager
 
+
 class GameplayState(BaseState):
     """
     Состояние основной игры.
@@ -51,19 +52,16 @@ class GameplayState(BaseState):
 
         # Загружаем Tiled карту
         start_map = "secmap"
-        self.map_loader.load( f"maps/{start_map}.tmx")
-        self.monsters = arcade.SpriteList()
+        self.map_loader.load(f"maps/{start_map}.tmx")
+        self.mobs = arcade.SpriteList()
 
         # Загружаем монстров для стартовой карты
-        for monster in self.entity_manager.monsters:
+        for monster in self.entity_manager.mob:
             if monster and monster.is_alive and start_map in monster.entity_id:
-                self.monsters.append(monster)
+                self.mobs.append(monster)
 
         # Устанавливаем текущую карту
         self.entity_manager.set_current_map(start_map)
-
-        # Предметы на земле
-        self.loot_on_ground = arcade.SpriteList()
 
         self.map_left = 0
         self.map_bottom = 0
@@ -79,12 +77,6 @@ class GameplayState(BaseState):
         # Камера
         self.camera = arcade.camera.Camera2D()
 
-        # Получаем позицию из game_data
-        # pos = self.game_data.get_player_position()
-        # self.player.center_x = pos[0] * self.scale_factor
-        # self.player.center_y = pos[1] * self.scale_factor
-
-        # UI элементы
         self.ui_elements = []
 
         self.deepseek_bar = VerticalBar(
@@ -116,11 +108,13 @@ class GameplayState(BaseState):
             width=200,
             height=20
         )
-        self.ui_elements.append(self.health_bar)
+        self.gsm.ui_elements.append(self.health_bar)
 
         # Устанавливаем начальные значения
         self.deepseek_bar.set_value(75, 100)
         self.fatigue_bar.set_value(30, 100)
+
+        self.select_pressed = False
 
     def setup_map_limits(self, left, bottom, width, height):
         self.map_left = left
@@ -147,20 +141,15 @@ class GameplayState(BaseState):
                 return False
 
             # Очищаем список монстров для отрисовки
-            self.monsters.clear()
+            self.mobs.clear()
 
             # Получаем монстров для этой карты из EntityManager
             current_map_monsters = self.entity_manager.get_monsters_for_current_map()
 
-
-
             for monster in current_map_monsters:
                 if monster and monster.is_alive and self.entity_manager.current_map_name in monster.entity_id:
                     print(f'монстр {monster.entity_id} добавлен на карту {self.entity_manager.current_map_name}')
-                    self.monsters.append(monster)
-
-
-
+                    self.mobs.append(monster)
 
             # Обновляем слой коллизий
             self.collision_layer = self.map_loader.get_collision_layer()
@@ -225,24 +214,23 @@ class GameplayState(BaseState):
         """Обновление игровой логики"""
         if self.is_paused:
             return
-
         # Обновляем монстров
-        for monster in self.monsters:
+        for monster in self.mobs:
             if monster.is_alive:
                 monster.update(delta_time, self.player, self.collision_layer)
-                if not monster.dialogue_said and monster.can_see_player(self.player):
-                    self.gsm.push_overlay("dialogue")
-                    monster.dialogue_said = True
+                if monster.collides_with_sprite(self.player):
+                    monster.interact(self.player)
+                if monster.can_start_dialogue and self.select_pressed:
+                    self.gsm.push_overlay("dialogue", npc=monster)
+                    monster.can_start_dialogue = False
+                    self.select_pressed = False
+                    break
 
         self.entity_manager.update_all(delta_time, self.player, self.collision_layer)
 
-        # Подбираем лут
-        self._pickup_loot()
-
         # Обновляем игрока
-        self.player.update(delta_time, collision_layer=self.collision_layer, monsters=self.monsters)
-        # Обновляем оповещения
-        ns.update(delta_time)
+        self.player.update(delta_time, collision_layer=self.collision_layer)
+
 
         # Обновляем и проверяем события (КОЛЛИЗИИ!)
         if hasattr(self.map_loader, 'event_manager') and self.map_loader.event_manager:
@@ -290,11 +278,9 @@ class GameplayState(BaseState):
         self.entity_manager.draw_debug()
         # Рисуем игрока и монстров
         self.player_list.draw()
-        self.monsters.draw()
-        for monster in self.monsters:
+        self.mobs.draw()
+        for monster in self.mobs:
             monster.draw()
-
-
 
         # Переключаемся на UI камеру (полный экран)
         self.default_camera.use()
@@ -317,23 +303,7 @@ class GameplayState(BaseState):
         for ui_element in self.ui_elements:
             ui_element.draw()
 
-        # Рисуем уведомления
-        ns.draw(
-            x=self.tile_size / 2,
-            y=self.gsm.window.height - self.tile_size / 2
-        )
 
-    def _pickup_loot(self):
-        """Подбирает предметы с земли"""
-        picked_up = arcade.check_for_collision_with_list(self.player, self.loot_on_ground)
-
-        for loot in picked_up:
-            if hasattr(loot, 'item_data'):
-                item = loot.item_data
-                # TODO: Добавить в инвентарь
-                ns.notification(f"Подобран: {item.name}")
-
-            loot.remove_from_sprite_lists()
 
     def handle_key_press(self, key: int, modifiers: int):
         if not self.input_manager:
@@ -343,13 +313,20 @@ class GameplayState(BaseState):
         if self.input_manager.get_action("escape"):
             self._open_pause_menu()
 
+        if self.input_manager.get_action("select"):
+            self.select_pressed = True
+
         if self.input_manager.get_action("stats"):
             self.gsm.push_overlay("stats")
+
+        if self.input_manager.get_action("inventory"):
+            self.gsm.push_overlay("inventory")
 
         if C.cheat_mode:
             # F2 - чит-консоль
             if self.input_manager.get_action("cheat_console"):
                 self.gsm.push_overlay("cheat_console")
+
 
             if self.input_manager.get_action("ghost_mode"):
                 C.ghost_mode = not C.ghost_mode
@@ -358,8 +335,17 @@ class GameplayState(BaseState):
             if self.input_manager.get_action("show_area_mode"):
                 C.show_area_mode = not C.show_area_mode
             if self.input_manager.get_action("heal"):
-                self.game_data.heal(20)
-                self.game_data.add_exp(100)
+                if self.game_data.has_item("healing_potion"):
+                    from src.entities.items.consumables import HealingPotion
+                    potion = HealingPotion()
+                    if potion.use(self.player):
+                        self.game_data.remove_item("healing_potion", 1)
+                        ns.notification("Зелье лечения использовано")
+                else:
+                    ns.notification("Нет зелий лечения")
+
+    def handle_key_release(self, key: int, modifiers: int):
+        self.select_pressed = False
 
     def _init_ui(self):
         """Инициализирует UI элементы"""

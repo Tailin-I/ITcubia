@@ -3,16 +3,19 @@ from ...core.resource_manager import resource_manager as rm
 from ...ui.notification_system import notifications as ns
 
 
-
 class HealingPotion(Item):
     """Целебное зелье"""
 
-    def __init__(self, count: int = 1):
-        super().__init__(
+    def __init__(self, count: int = 1, texture=None):
+        # Если текстура не передана, загружаем по умолчанию
+        if texture is None:
+            from ...core.resource_manager import resource_manager as rm
+            texture = rm.load_texture("consumables/potion_red.png")
 
+        super().__init__(
             item_id="healing_potion",
             name="Целебное зелье",
-            texture_path=rm.get_resource_path("consumables/potion_red.png")
+            texture=texture
         )
         self.count = count
         self.is_consumable = True
@@ -32,11 +35,16 @@ class HealingPotion(Item):
 
 class ManaPotion(Item):
     """Зелье маны"""
-    def __init__(self, count: int = 1):
+
+    def __init__(self, count: int = 1, texture=None):
+        if texture is None:
+            from ...core.resource_manager import resource_manager as rm
+            texture = rm.load_texture("consumables/manacrystal_full.png")
+
         super().__init__(
             item_id="mana_potion",
             name="Зелье маны",
-            texture_path=rm.get_resource_path("consumables/manacrystal_full.png")
+            texture=texture
         )
         self.count = count
         self.is_consumable = True

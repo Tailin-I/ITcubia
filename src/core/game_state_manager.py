@@ -2,6 +2,8 @@ import logging
 from typing import Dict, Optional, List
 
 from src.states.base_state import BaseState
+from ..ui.notification_system import notifications as ns
+from config import constants as C
 
 
 class GameStateManager:
@@ -14,6 +16,8 @@ class GameStateManager:
         self.logger = logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}")
         self.window = window
 
+        # UI элементы
+        self.ui_elements = []
 
         # Все зарегистрированные состояния
         self.states: Dict[str, 'BaseState'] = {}
@@ -50,7 +54,6 @@ class GameStateManager:
         # Входим в новое состояние
         self.current_state = self.states[state_id]
         self.current_state.on_enter(**kwargs)
-
 
     def push_overlay(self, overlay_id: str, **kwargs):
         """Открывает состояние ПОВЕРХ текущего"""
@@ -123,6 +126,13 @@ class GameStateManager:
         if active_state:
             active_state.update(delta_time)
 
+        # Обновляем UI
+        for ui_element in self.ui_elements:
+            ui_element.update(delta_time)
+
+        # Обновляем оповещения
+        ns.update(delta_time)
+
     def draw(self):
         """Отрисовывает состояния в правильном порядке"""
         # Рисуем основное состояние
@@ -132,6 +142,16 @@ class GameStateManager:
         # Рисуем ВСЕ overlay по порядку (от нижнего к верхнему)
         for overlay in self.overlay_stack:
             overlay.draw()
+
+        # Рисуем UI элементы
+        for ui_element in self.ui_elements:
+                ui_element.draw()
+
+        # Рисуем уведомления
+        ns.draw(
+            x=C.TILE_SIZE // 2,
+            y=self.window.height - C.TILE_SIZE / 2
+        )
 
     def handle_key_press(self, key: int, modifiers: int):
         """Передает нажатие клавиши активному состоянию"""

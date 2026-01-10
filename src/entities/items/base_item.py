@@ -7,11 +7,14 @@ from typing import Dict, Any
 class Item(Entity):
     """Базовый класс для всех предметов"""
 
-    def __init__(self, item_id: str, name: str, texture_path: str, scale: float = 1.0):
-        # Загружаем текстуру
-        texture = arcade.load_texture(texture_path)
-        super().__init__(item_id, [texture], scale)
+    def __init__(self, item_id: str, name: str,  texture=None, scale: float = 1.0):
+        # Сохраняем текстуру
+        self._texture = texture
 
+        # Создаем список текстур для Entity
+        texture_list = [texture] if texture else []
+        super().__init__(item_id, texture_list, scale)
+        self.data = {}
 
         self.item_id = item_id
         self.name = name
@@ -25,7 +28,7 @@ class Item(Entity):
         self.is_consumable = False
         self.is_quest_item = False
 
-    def use(self, user):
+    def use(self, player):
         """Использовать предмет"""
 
     def get_info(self) -> Dict[str, Any]:
@@ -40,3 +43,7 @@ class Item(Entity):
 
     def __str__(self):
         return f"{self.name} (x{self.count})"
+
+    @property
+    def texture(self):
+        return self._texture

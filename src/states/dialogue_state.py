@@ -95,5 +95,5 @@ class DialogueState(BaseState):
             return
 
         elif self.gsm.input_manager.get_action("select"):
-
+            self.gsm.pop_overlay()
             self.last_key_time = current_time

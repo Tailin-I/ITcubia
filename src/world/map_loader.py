@@ -86,7 +86,7 @@ class MapLoader:
                 for container in self.containers_layer:
                     container.visible = False
             # При загрузке зон добавляем имя карты
-            self.load_monster_zones(map_name)
+            self.load_mob_zones(map_name)
 
             # При загрузке существ передаем имя карты
             self.load_entities(map_name)
@@ -166,7 +166,7 @@ class MapLoader:
             'height': height_px,
         }
 
-    def load_monster_zones(self, map_name: str = None):
+    def load_mob_zones(self, map_name: str = None):
         """Загружает зоны для монстров (прямоугольники)"""
         zones = []
 
@@ -176,7 +176,7 @@ class MapLoader:
                     zone = self._create_zone_from_object(obj, i, map_name)
                     if zone:
                         zones.append(zone)
-                        game_data.add_monster_zone(zone["id"], zone)
+                        game_data.add_mob_zone(zone["id"], zone)
 
                 self.logger.info(f"Загружено зон для карты '{map_name}': {len(zones)}")
                 break
@@ -224,23 +224,23 @@ class MapLoader:
 
     def load_entities(self, map_name: str = None):
         """Загружает существ (монстры и NPC) для конкретной карты"""
-        monsters = []
+        mob_list = []
 
         if not self.tile_map:
-            return monsters
+            return mob_list
 
         # Загружаем существ
         for layer_name, object_list in self.tile_map.object_lists.items():
             if layer_name.lower() == 'entities':
                 for index, obj in enumerate(object_list):
-                    monster = self._create_entity_from_object(obj, index, map_name)
-                    if monster:
-                        monsters.append(monster)
+                    mob = self._create_entity_from_object(obj, index, map_name)
+                    if mob:
+                        mob_list.append(mob)
 
-                self.logger.info(f"Загружено существ для карты '{map_name}': {len(monsters)}")
+                self.logger.info(f"Загружено существ для карты '{map_name}': {len(mob_list)}")
                 break
 
-        return monsters
+        return mob_list
 
     def _create_entity_from_object(self, obj, index: int, map_name: str = None):
         """Создает сущность из точечного объекта Tiled"""
@@ -262,7 +262,8 @@ class MapLoader:
                 return None
 
             # Тип монстра
-            monster_type = getattr(obj, 'type').lower()
+            mob_type = getattr(obj, 'type').lower()
+            mob_name = getattr(obj, 'name').lower()
             # Свойства из Tiled
             properties = {}
             if hasattr(obj, 'properties'):
@@ -270,18 +271,19 @@ class MapLoader:
                 if isinstance(props, dict):
                     properties = props.copy()
 
-            monster_id = f"monster_{monster_type}_{index}_{map_name}"
+            monster_id = f"creature_{mob_type}_{index}_{map_name}"
 
             monster = entity_manager.spawn_monster(
-                monster_id=monster_id,
-                monster_type=monster_type,
+                mob_id=monster_id,
+                mob_name=mob_name,
+                mob_type=mob_type,
                 position=(x, y),
                 properties=properties,
                 map_name = map_name
             )
 
             if monster:
-                self.logger.debug(f"Создан {monster_type} на ({x}, {y})")
+                self.logger.debug(f"Создан {mob_type} на ({x}, {y})")
                 return monster
 
         except Exception as e:

@@ -8,6 +8,7 @@ from src.core.resource_manager import resource_manager
 from src.core.asset_loader import AssetLoader
 from src.states.cheat_console_state import CheatConsoleState
 from src.states.dialogue_state import DialogueState
+from src.states.inventory_state import InventoryState
 from src.states.lobby_state import LobbyState
 from src.states.game_state import GameplayState
 from src.states.lock_picking_state import LockPickingState
@@ -72,6 +73,7 @@ class MainWindow(arcade.Window):
         lock_state = LockPickingState(self.gsm, self.asset_loader)
         stats_state = StatsState(self.gsm, self.asset_loader)
         dialogue_state = DialogueState(self.gsm, self.asset_loader)
+        inventory_state = InventoryState(self.gsm, self.asset_loader)
 
         # Регистрация состояний
         self.gsm.register_state("lobby", lobby_state)
@@ -82,6 +84,7 @@ class MainWindow(arcade.Window):
         self.gsm.register_state("lock_picking", lock_state)
         self.gsm.register_state("stats", stats_state)
         self.gsm.register_state("dialogue", dialogue_state)
+        self.gsm.register_state("inventory", inventory_state)
 
         self.logger.info(f"Зарегистрировано состояний: {len(self.gsm.states)}")
 

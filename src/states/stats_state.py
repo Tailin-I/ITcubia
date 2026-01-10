@@ -12,7 +12,6 @@ class StatsState(BaseState):
         self.level = None
         self.exp = None
         self.req_exp = None
-        self.health = None
         self.speed = None
         self.strength = None
 
@@ -30,7 +29,6 @@ class StatsState(BaseState):
         self.level = self._get_player("level")
         self.exp = self._get_player("exp")
         self.req_exp = self._get_player("req_exp")
-        self.health = self._get_player("health")
         self.speed = self._get_player("speed")
         self.strength = self._get_player("strength")
 

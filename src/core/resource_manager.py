@@ -30,6 +30,7 @@ class ResourceManager:
 
     def load_texture(self, relative_path: str) -> arcade.Texture:
         """Загрузить текстуру с кэшированием"""
+
         if relative_path in self._textures:
             return self._textures[relative_path]
 

@@ -16,17 +16,20 @@ class GameData:
         # Данные игрока
         self.player_data = {
             "id": "player",
+            "name": "Игрок",
             "type": "player",
             "position": {"x": 10, "y": 20},
             "level": 1,
             "exp": 0,
             "req_exp": self.base_req_exp,
             "health": 39,
-            "max_health": 40,
+            "max_health": 400,
             "strength": 1,
             "speed": 10,
             # Инвентарь
-            "inventory": [],
+            "inventory": [
+                {'id': 'healing_potion', 'name': 'Целебное зелье', 'count': 1, 'stackable': True},
+            ],
             "equipment": {
                 "weapon": None,
                 "accessory_1": None,
@@ -36,33 +39,46 @@ class GameData:
         }
 
         # Данные монстров (загружаются из Tiled)
-        self.monsters_data = {}
+        self.mobs_data = {}
 
         # Данные зон для монстров
-        self.monster_zones = {}
+        self.mob_zones = {}
 
         # Шаблоны монстров (дефолтные значения)
-        self.monster_templates = {
+        self.mob_templates = {
             "bug": {
                 "health": 20,
                 "max_health": 20,
                 "damage": 1,
-                "speed": 2,
+                "speed": 1,
                 "vision_range": 200,
                 "behavior": "aggressive",
                 "chase_speed": 3,
                 "loot_table": [],
                 "scale": 1
+            },
+            "npc": {
+                "health": 100,
+
+                "max_health": 100,
+                "damage": 1,
+                "speed": 1,
+                "vision_range": 150,
+                "behavior": "passive",
+                "chase_speed": 2,
+                "loot_table": [],
+                "scale": 1,
+                "can_dialogue": True,  # <-- может разговаривать
+                "initial_topic": "greeting"
             }
-            # добавить другие типы позже
         }
 
     def get_entity_data(self, entity_id):
         """Получить данные любой сущности"""
         if entity_id == "player":
             return self.player_data
-        elif entity_id in self.monsters_data:
-            return self.monsters_data[entity_id]
+        elif entity_id in self.mobs_data:
+            return self.mobs_data[entity_id]
 
     def update_entity_data(self, entity_id, updates):
         """Обновить данные сущности"""
@@ -71,14 +87,17 @@ class GameData:
             data.update(updates)
             # Здесь можно триггерить события
 
-    def add_monster(self, monster_id, monster_data):
+    def add_mob(self, mob_id, monster_data):
         """Добавить монстра"""
-        self.monsters_data[monster_id] = monster_data
+        self.mobs_data[mob_id] = monster_data
 
-    def remove_monster(self, monster_id):
+    def remove_mob(self, mob_id):
         """Удалить монстра"""
-        if monster_id in self.monsters_data:
-            del self.monsters_data[monster_id]
+        if mob_id in self.mobs_data:
+
+            del self.mobs_data[mob_id]
+
+
 
     def save_to_file(self, filename="savegame.dat"):
         """Сохраняем в бинарный файл"""
@@ -190,7 +209,6 @@ class GameData:
 
     def take_damage(self, amount: int):
         """Получение урона"""
-        ns.notification(f"получен урон: {amount}")
         return self.change_player_stat("health", "subtract", amount)
 
     def add_exp(self, amount: int):
@@ -210,24 +228,20 @@ class GameData:
             self.change_player_stat("health", "add", amount)
         return success
 
-    def add_item(self, item_id, count=1):
-        """Добавляет предмет в инвентарь"""
-        pass
-
-    def add_monster_zone(self, zone_id, zone_data):
+    def add_mob_zone(self, zone_id, zone_data):
         """Добавить зону для монстров"""
-        self.monster_zones[zone_id] = zone_data
+        self.mob_zones[zone_id] = zone_data
 
     def get_monster_zone(self, zone_id):
         """Получить зону по ID"""
-        return self.monster_zones.get(zone_id)
+        return self.mob_zones.get(zone_id)
 
     def find_nearest_zone(self, x, y, max_distance=1000):
         """Находит ближайшую зону к точке"""
         nearest_zone = None
         min_distance = float('inf')
 
-        for zone_id, zone in self.monster_zones.items():
+        for zone_id, zone in self.mob_zones.items():
             zone_x, zone_y, zone_w, zone_h = zone["rect"]
 
             # Центр зоны
@@ -244,15 +258,16 @@ class GameData:
 
         return nearest_zone
 
-    def create_monster_data(self, monster_id, monster_type, position, custom_props: Dict=None,  map_name=None, scale=1):
+    def create_monster_data(self, monster_id, mob_name, monster_type, position, custom_props: Dict=None,  map_name=None, scale=1):
         """Создать данные монстра с учетом дефолтных и кастомных свойств"""
         # Копируем шаблон для этого типа
-        monster_data = self.monster_templates[monster_type].copy()
+        monster_data = self.mob_templates[monster_type].copy()
 
         # Добавляем обязательные поля
         monster_data.update({
             "id": monster_id,
             "type": monster_type,
+            "name": mob_name,
             "position": {"x": position[0], "y": position[1]},
             "is_alive": True,
             "zone_id": None,  # Будет установлено позже
@@ -271,6 +286,68 @@ class GameData:
                 monster_data["health"] = monster_data["max_health"]
 
         return monster_data
+
+    def add_item(self, item_id: str, name: str = None, count: int = 1, stackable: bool = True):
+        """Добавляет предмет в инвентарь игрока"""
+        inventory = self.player_data["inventory"]
+        ns.notification(f"+{count} {name}")
+        # Ищем уже существующий предмет
+        if stackable:
+            for item in inventory:
+                if item["id"] == item_id:
+                    item["count"] += count
+                    return True
+
+        # Если предмет не найден или не стакаемый - добавляем новый
+        inventory.append({
+            "id": item_id,
+            "name": name or item_id,
+            "count": count,
+            "stackable": stackable,
+            "type": "item"  # Тип для категоризации
+        })
+
+
+        return True
+
+    def remove_item(self, item_id: str, count: int = 1):
+        """Удаляет предмет из инвентаря"""
+        inventory = self.player_data["inventory"]
+
+        for i, item in enumerate(inventory):
+            if item["id"] == item_id:
+                if item["stackable"]:
+                    item["count"] -= count
+                    if item["count"] <= 0:
+                        inventory.pop(i)
+                else:
+                    inventory.pop(i)
+                return True
+        return False
+
+    def get_item_count(self, item_id: str) -> int:
+        """Возвращает количество предметов в инвентаре"""
+        for item in self.player_data["inventory"]:
+            if item["id"] == item_id:
+                return item["count"]
+        return 0
+
+    def has_item(self, item_id: str, min_count: int = 1) -> bool:
+        """Проверяет наличие предмета в инвентаре"""
+        return self.get_item_count(item_id) >= min_count
+
+    def get_inventory_size(self) -> int:
+        """Возвращает текущее количество занятых слотов"""
+        return len(self.player_data["inventory"])
+
+    def get_total_inventory_capacity(self) -> int:
+        """Возвращает общее количество слотов (бесконечный инвентарь)"""
+        return int(float('inf'))  # Бесконечный инвентарь
+
+    def can_add_item(self, item_id: str, stackable: bool = True) -> bool:
+        """Проверяет, можно ли добавить предмет"""
+        # В бесконечном инвентаре всегда можно добавить
+        return True
 
 
 # Глобальный экземпляр (будет один на всю игру)

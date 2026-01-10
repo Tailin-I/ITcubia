@@ -30,6 +30,7 @@ class InputManager:
             'escape': ["ESCAPE"],
 
             'stats': ["B"],
+            'inventory': ["I", 'TAB'],
 
             'heal': ["H"],
             'cheat_console': ["F2"],

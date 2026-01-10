@@ -2,7 +2,7 @@ import arcade
 from arcade import SpriteList
 
 from .base_entity import Entity
-from .monster import Monster
+from .creatures import Creature
 from config import constants as C
 from ..core.game_data import game_data
 
@@ -20,6 +20,7 @@ class Player(Entity):
         self.texture_dict = texture_dict
         self.input_manager = input_manager
 
+
         # Маппинг направлений
         self.texture_indexes = {
             "up": 0,  # текстуры 0 и 1
@@ -36,17 +37,15 @@ class Player(Entity):
         # Инициализируем текстуру
         self.set_texture(self.cur_texture_index)
 
+
+
     @property
     def speed(self):
-        """Скорость из GameData"""
-        data = self.data_source.get_entity_data("player")
-        return data.get("speed", 10) if data else 10
+        return self.data.get("speed")
 
     @property
     def inventory(self):
-        """Инвентарь из GameData"""
-        data = self.data_source.get_entity_data("player")
-        return data.get("inventory", [])
+        return self.data.get("inventory")
 
     def update(self, delta_time: float = 1 / 60, *args, **kwargs) -> None:
         super().update(delta_time)
@@ -85,12 +84,11 @@ class Player(Entity):
 
         # Перемещение с учетом коллизий
         collision_layer = kwargs.get('collision_layer')
-        monsters = kwargs.get('monsters')
 
-        self._move_with_tiled_collision(collision_layer, monsters, dx, dy)
+        self._move_with_tiled_collision(collision_layer, dx, dy)
         self._update_ghost_appearance()
 
-    def _move_with_tiled_collision(self, collision_layer, monsters: SpriteList[Monster], dx, dy):
+    def _move_with_tiled_collision(self, collision_layer, dx, dy):
         """
         метод коллизий.
         """
@@ -108,12 +106,6 @@ class Player(Entity):
         if arcade.check_for_collision_with_list(self, collision_layer):
             self.center_x = old_x
             self.center_y = old_y
-        if arcade.check_for_collision_with_list(self, monsters):
-            for m in monsters:
-                if m.collides_with_sprite(self):
-                    m.interact()
-            self.center_y = old_y
-            self.center_x = old_x
 
     def _set_direction_texture(self, direction):
         """Сразу устанавливает первую текстуру направления"""
@@ -171,3 +163,18 @@ class Player(Entity):
         elif not C.ghost_mode and self.color != C.player_color:
             # Возвращаем нормальный цвет
             self.color = C.player_color
+
+
+    @property
+    def damage(self):
+        return self.strength
+
+    @property
+    def strength(self):
+        data = self.data_source.get_entity_data(self.entity_id)
+        return data.get("strength", 0)
+
+    @strength.setter
+    def strength(self, value):
+        data = self.data_source.get_entity_data(self.entity_id)
+        data["strength"] = value

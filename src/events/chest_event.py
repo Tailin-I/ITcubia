@@ -90,7 +90,7 @@ class ChestEvent(GameEvent):
         """Открыть сундук и выдать добычу"""
 
         for item in self.loot_items:
-            self._add_to_inventory(player, item)
+            self._add_to_inventory(item)
 
         self.is_empty = True
 
@@ -100,6 +100,9 @@ class ChestEvent(GameEvent):
 
         # Сохраняем состояние
         self._save_state()
+        print(player.inventory)
+
+
 
     def _save_state(self):
         """Сохраняет состояние сундука"""
@@ -112,28 +115,17 @@ class ChestEvent(GameEvent):
                 "map_name": self.map_name
             }
             # Можно сохранить в monsters_data или создать отдельное хранилище
-        game_data.monsters_data[self.event_id] = chest_data #TODO
-    def _add_to_inventory(self, player, item):
-        """Добавляет предмет в инвентарь игрока"""
-        inventory = player.inventory  # Это свойство из Player класса
+        game_data.mobs_data[self.event_id] = chest_data #TODO
 
-        # Ищем, есть ли уже такой предмет
-        found = False
-        for inv_item in inventory:
-            if inv_item.get("id") == item.item_id and item.is_stackable:
-                inv_item["count"] += item.count
-                found = True
-                break
+    def _add_to_inventory(self, item):
+        """Добавляет предмет в инвентарь игрока через GameData"""
+        game_data.add_item(
+            item_id=item.item_id,
+            name=item.name,
+            count=item.count,
+            stackable=item.is_stackable
+        )
 
-        if not found:
-            inventory.append({
-                "id": item.item_id,
-                "name": item.name,
-                "count": item.count,
-                "stackable": item.is_stackable
-            })
-
-        ns.notification(f"+{item.count} {item.name}")
 
     def check_lock_attempt(self, direction: str) -> tuple:
         """

@@ -5,13 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fba37d7-9b27-4e7f-b461-5e36a769c0de" name="Changes" comment="10 дней до сдачи :_)">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/cheat_console_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/cheat_console_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/frame/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/secmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/secmap.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/maps/testmap.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testmap.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/asset_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/asset_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/game_state_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/game_state_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/input_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/input_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/resource_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/resource_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/base_entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/entity_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/entity_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/items/base_item.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/items/base_item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/items/consumables.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/items/consumables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/items/item_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/items/item_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/items/keys.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/items/keys.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/monster.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/chest_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/chest_event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/event_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/dialogue_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/dialogue_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/lock_picking_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/lock_picking_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/states/pause_menu_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/pause_menu_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/game_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/game_state.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/states/stats_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/stats_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/world/map_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/world/map_loader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,43 +37,54 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d646a676b70c6331fd75416d0d3ff6d20f167069" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Tailin-I"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Tailin-I&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Tailin-I/ITcubia.git",
-    "accountId": "d2dfd492-f406-4a8b-b96d-0533637bfc51"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Tailin-I/ITcubia.git&quot;,
+    &quot;accountId&quot;: &quot;d2dfd492-f406-4a8b-b96d-0533637bfc51&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="380wh0a6zkkXz2zVcASy2h9f0go" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.dialogue_state.executor": "Run",
-    "Python.export_structure.executor": "Run",
-    "Python.generate_structure.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.запись всего кода в файл.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/Tailin/PycharmProjects/ITcubia/export_structure.py"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.dialogue_state.executor&quot;: &quot;Run&quot;,
+    &quot;Python.export_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_structure.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.запись всего кода в файл.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/Tailin/PycharmProjects/ITcubia/export_structure.py&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python.запись всего кода в файл">
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\yl\PythonProject182\frame" />
+      <recent name="D:\yl\PythonProject182\config" />
+    </key>
+  </component>
+  <component name="RunManager">
     <configuration name="запись всего кода в файл" type="PythonConfigurationType" factoryName="Python">
       <module name="ITcubia" />
       <option name="ENV_FILES" value="" />
@@ -65,7 +94,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.11 (ITcubia)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -88,7 +116,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.11 (ITcubia)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
